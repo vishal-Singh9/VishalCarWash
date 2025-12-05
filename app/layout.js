@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <SessionProvider>
           <Navigation />
-          <main className="flex-1">
+          <main className="flex-1 pt-24 md:pt-28">
             {children}
           </main>
 
