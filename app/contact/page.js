@@ -81,12 +81,24 @@ export default function Contact() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
-            <p className="text-xl text-blue-100">
-              Get in touch with us for any queries or to book an appointment
+      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
+        </div>
+        
+        {/* Decorative blobs */}
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block px-4 py-2 mb-6 text-sm font-medium text-blue-100 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+              Get In Touch
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Contact Us</h1>
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+              Have questions or need to book an appointment? Our team is here to help you with all your car care needs.
             </p>
           </div>
         </div>

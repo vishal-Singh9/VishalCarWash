@@ -2,17 +2,26 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { Calendar, Car, User, Mail, Phone, Trash2, Edit, CheckCircle, XCircle, Clock as ClockIcon } from 'lucide-react';
+import { Calendar, Car, User, Mail, Phone, Trash2, Edit, CheckCircle, XCircle, Clock as ClockIcon, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { format } from 'date-fns';
 
 function MyBookingsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState(null);
+  const [cancelling, setCancelling] = useState(null);
   const [error, setError] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({
@@ -50,41 +59,61 @@ function MyBookingsPage() {
     }
   };
 
-  const handleCancel = async (id) => {
-    if (!window.confirm('Are you sure you want to cancel this booking?')) return;
+  const updateBookingStatus = async (id, status) => {
+    if (!window.confirm(`Are you sure you want to mark this booking as ${status}?`)) return;
     
     try {
+      setUpdatingStatus(id);
       const response = await fetch(`/api/bookings/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'cancelled' })
+        body: JSON.stringify({ status })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to cancel booking');
+        throw new Error(`Failed to update booking status to ${status}`);
       }
       
-      toast.success('Booking cancelled successfully');
-      fetchBookings();
+      toast.success(`Booking marked as ${status} successfully`);
+      await fetchBookings();
     } catch (err) {
-      console.error('Error cancelling booking:', err);
-      toast.error('Failed to cancel booking');
+      console.error(`Error updating booking status to ${status}:`, err);
+      toast.error(`Failed to update booking status. Please try again.`);
+    } finally {
+      setUpdatingStatus(null);
+      setCancelling(null);
     }
   };
 
+  const handleCancel = (id) => updateBookingStatus(id, 'cancelled');
+  const markAsPending = (id) => updateBookingStatus(id, 'pending');
+  const markAsCompleted = (id) => updateBookingStatus(id, 'completed');
+
   const handleEdit = (booking) => {
+    // Format the date to YYYY-MM-DD for the date input
+    const formattedDate = new Date(booking.date).toISOString().split('T')[0];
+    
     setEditingId(booking._id);
     setEditForm({
-      date: booking.date.split('T')[0], // Format date for date input
+      date: formattedDate,
       time: booking.time,
       notes: booking.notes || ''
     });
+    
+    // Smooth scroll to the form
+    setTimeout(() => {
+      const element = document.getElementById(`edit-form-${booking._id}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   const handleUpdate = async (id) => {
     try {
+      setUpdating(true);
       const response = await fetch(`/api/bookings/${id}`, {
         method: 'PATCH',
         headers: {
@@ -101,22 +130,53 @@ function MyBookingsPage() {
         throw new Error('Failed to update booking');
       }
       
-      toast.success('Booking updated successfully');
       setEditingId(null);
-      fetchBookings();
+      toast.success('Booking updated successfully!');
+      await fetchBookings();
     } catch (err) {
       console.error('Error updating booking:', err);
-      toast.error('Failed to update booking');
+      toast.error('Failed to update booking. Please try again.');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    try {
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long'
+      }).format(date);
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return dateString; // Return the original string if there's an error
+    }
+  };
+
+  const getStatusVariant = (status) => {
+    switch (status) {
+      case 'confirmed':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'completed':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'pending':
+      default:
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
     }
   };
 
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-lg text-gray-600">Loading your bookings...</p>
+      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="h-12 w-12 animate-spin text-blue-600 mb-4" />
+            <p className="text-gray-600 text-lg">Loading your bookings...</p>
           </div>
         </div>
       </div>
@@ -125,142 +185,213 @@ function MyBookingsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-red-50 border-l-4 border-red-400 p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <XCircle className="h-5 w-5 text-red-400" />
+      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-red-50 border-red-200">
+            <CardHeader className="pb-3">
+              <div className="flex items-center space-x-2">
+                <XCircle className="h-6 w-6 text-red-500" />
+                <CardTitle className="text-red-800">Error loading bookings</CardTitle>
               </div>
-              <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
-          </div>
+              <CardDescription className="text-red-700">
+                {error}
+              </CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button variant="outline" onClick={fetchBookings} className="border-red-300 text-red-700">
+                Try Again
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     );
   }
 
-
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-            My Bookings
-          </h1>
-          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-            View and manage your upcoming car wash appointments
-          </p>
-        </div>
-
+      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">My Bookings</h1>
+            <p className="mt-3 text-lg text-gray-500">
+              View and manage your car wash appointments
+            </p>
+          </div>
+          
           {bookings.length === 0 ? (
-            <div key="no-bookings" className="text-center py-12">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                />
-              </svg>
-              <h3 className="mt-2 text-lg font-medium text-gray-900">No bookings yet</h3>
-              <p className="mt-1 text-sm text-gray-500">Get started by booking a car wash service.</p>
+            <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-blue-50">
+                <Car className="h-12 w-12 text-blue-600" />
+              </div>
+              <h3 className="mt-6 text-xl font-medium text-gray-900">No bookings yet</h3>
+              <p className="mt-2 text-gray-500 max-w-md mx-auto">
+                You havenot made any bookings yet. Book your first car wash service now!
+              </p>
               <div className="mt-6">
-                <Link
-                  href="/booking"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Book a Service
+                <Link href="/booking">
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    Book a Service
+                  </Button>
                 </Link>
               </div>
             </div>
           ) : (
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-              <ul className="divide-y divide-gray-200">
-                {bookings.map((booking) => (
-                <li key={`booking-${booking._id}`} className="px-4 py-4 sm:px-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center">
-                        <div className={`flex-shrink-0 rounded-md p-3 ${
-                          booking.status === 'completed' ? 'bg-green-100 text-green-600' :
-                          booking.status === 'cancelled' ? 'bg-red-100 text-red-600' :
-                          'bg-blue-100 text-blue-600'
-                        }`}>
-                          {booking.status === 'completed' ? (
-                            <CheckCircle className="h-6 w-6" />
-                          ) : booking.status === 'cancelled' ? (
-                            <XCircle className="h-6 w-6" />
-                          ) : (
-                            <ClockIcon className="h-6 w-6" />
-                          )}
+            <div className="space-y-6">
+              {bookings.map((booking) => (
+                <Card key={booking._id} className="overflow-hidden hover:shadow-md transition-shadow duration-200">
+                  <CardHeader className="pb-3 border-b border-gray-100 bg-gray-50">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div>
+                        <div className="flex items-center space-x-3">
+                          <h2 className="text-xl font-semibold text-gray-900">
+                            {booking.service?.name || 'Car Wash Service'}
+                          </h2>
+                          <Badge variant="outline" className={getStatusVariant(booking.status)}>
+                            {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                          </Badge>
                         </div>
-                        <div className="ml-4">
-                          <div className="flex items-center">
-                            <h2 className="text-lg font-medium text-gray-900">
-                              {booking.service || 'Car Wash Service'}
-                            </h2>
-                            <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              booking.status === 'completed' 
-                                ? 'bg-green-100 text-green-800' 
-                                : booking.status === 'cancelled'
-                                ? 'bg-red-100 text-red-800'
-                                : 'bg-yellow-100 text-yellow-800'
-                            }`}>
-                              {booking.status?.charAt(0).toUpperCase() + booking.status?.slice(1) || 'Pending'}
-                            </span>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Booking ID: <span className="font-mono">{booking._id.slice(-8).toUpperCase()}</span>
+                        </p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <ClockIcon className="h-3.5 w-3.5 mr-1" />
+                          {booking.time}
+                        </span>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-4">
+                        <div className="flex items-start">
+                          <Calendar className="h-5 w-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Appointment Date</p>
+                            <p className="text-gray-900">{formatDate(booking.date)}</p>
                           </div>
-                          <div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                            <div className="mt-2 flex items-center text-sm text-gray-500">
-                              <Calendar className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
-                              {new Date(booking.date).toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                              })}
+                        </div>
+                        {booking.vehicle && (
+                          <div className="flex items-start">
+                            <Car className="h-5 w-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-sm font-medium text-gray-500">Vehicle</p>
+                              <p className="text-gray-900">
+                                {booking.vehicle.make} {booking.vehicle.model} ({booking.vehicle.year})
+                              </p>
+                              <p className="text-sm text-gray-500">{booking.vehicle.licensePlate}</p>
                             </div>
-                            <div className="mt-2 flex items-center text-sm text-gray-500">
-                              <ClockIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
-                              {booking.time}
-                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex items-start">
+                          <User className="h-5 w-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Customer</p>
+                            <p className="text-gray-900">{session?.user?.name}</p>
+                            <p className="text-sm text-gray-500 flex items-center">
+                              <Mail className="h-3.5 w-3.5 mr-1.5 inline" />
+                              {session?.user?.email}
+                            </p>
+                            {session?.user?.phone && (
+                              <p className="text-sm text-gray-500 flex items-center mt-1">
+                                <Phone className="h-3.5 w-3.5 mr-1.5 inline" />
+                                {session.user.phone}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
-                      {booking.notes && (
-                        <div className="mt-2 text-sm text-gray-500">
-                          <p className="text-sm text-gray-500">{booking.notes}</p>
-                        </div>
-                      )}
                     </div>
-                    <div className="ml-4 flex-shrink-0">
-                      {editingId !== booking._id && (
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => handleEdit(booking)}
-                            className="text-blue-600 hover:text-blue-900"
-                          >
-                            <Edit className="h-5 w-5" />
-                          </button>
-                          <button
+
+                    {booking.notes && (
+                      <div className="mt-6">
+                        <p className="text-sm font-medium text-gray-500 mb-2">Special Instructions</p>
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                          <p className="text-gray-700 whitespace-pre-line">{booking.notes}</p>
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                  {booking.status === 'confirmed' && (
+                    <CardFooter className="bg-gray-50 border-t border-gray-100 px-6 py-4">
+                      <div className="flex flex-wrap gap-3 justify-between w-full">
+                        <div className="flex flex-wrap gap-2">
+                          {booking.status === 'confirmed' ? (
+                            <Button 
+                              variant="outline" 
+                              onClick={() => handleEdit(booking)}
+                              disabled={updatingStatus === booking._id}
+                              className="flex-1 sm:flex-none"
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Reschedule
+                            </Button>
+                          ) : booking.status === 'pending' ? (
+                            <div className="flex items-center text-sm text-amber-600">
+                              <ClockIcon className="h-4 w-4 mr-1" />
+                              This booking is pending
+                            </div>
+                          ) : booking.status === 'completed' && (
+                            <div className="flex items-center text-sm text-green-600">
+                              <CheckCircle className="h-4 w-4 mr-1" />
+                              Service Completed
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-2 justify-end">
+                          {booking.status === 'confirmed' && (
+                            <Button 
+                              variant="outline" 
+                              onClick={() => markAsPending(booking._id)}
+                              disabled={updatingStatus === booking._id}
+                              className="border-amber-500 text-amber-700 hover:bg-amber-50 hover:text-amber-800"
+                            >
+                              {updatingStatus === booking._id ? (
+                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              ) : (
+                                <ClockIcon className="h-4 w-4 mr-2" />
+                              )}
+                              Mark as Pending
+                            </Button>
+                          )}
+                          
+                          {booking.status === 'pending' && (
+                            <Button 
+                              variant="outline" 
+                              onClick={() => markAsCompleted(booking._id)}
+                              disabled={updatingStatus === booking._id}
+                              className="border-green-500 text-green-700 hover:bg-green-50 hover:text-green-800"
+                            >
+                              {updatingStatus === booking._id ? (
+                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              ) : (
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                              )}
+                              Mark as Completed
+                            </Button>
+                          )}
+                          
+                          <Button 
+                            variant="destructive" 
                             onClick={() => handleCancel(booking._id)}
-                            className="text-red-600 hover:text-red-900"
+                            disabled={updatingStatus === booking._id}
+                            className="flex-1 sm:flex-none"
                           >
-                            <Trash2 className="h-5 w-5" />
-                          </button>
+                            {updatingStatus === booking._id && cancelling === booking._id ? (
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4 mr-2" />
+                            )}
+                            {booking.status === 'cancelled' ? 'Remove' : 'Cancel'}
+                          </Button>
                         </div>
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                    </CardFooter>
+                  )}
                   {editingId === booking._id && (
                     <div className="space-y-4 mt-4 p-4 border-t border-gray-200">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -331,11 +462,10 @@ function MyBookingsPage() {
                       </div>
                     </div>
                   )}
-                </li>
+                </Card>
               ))}
-            </ul>
-          </div>
-        )}
+            </div>
+          )}
         </div>
       </div>
     </ProtectedRoute>

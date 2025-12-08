@@ -1,6 +1,8 @@
 'use client';
 
-import { Award, Users, Target, Heart, CheckCircle } from 'lucide-react';
+import { Award, Users, Target, Heart, CheckCircle, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function About() {
   const values = [
@@ -36,7 +38,7 @@ export default function About() {
 
   const teamMembers = [
     {
-      name: 'Vishal Kumar',
+      name: 'Vishal Thakur',
       role: 'Founder & CEO',
       image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg'
     },
@@ -57,71 +59,193 @@ export default function About() {
     }
   ];
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
-    <div>
+    <motion.div
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      variants={staggerContainer}
+    >
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Us</h1>
-            <p className="text-xl text-blue-100">
-              Your trusted partner in premium car care since 2008
+      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
+              Our Journey Since 2008
+            </span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              About Us
+            </h1>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Your trusted partner in premium car care, delivering excellence in every detail since 2008
             </p>
-          </div>
+            <motion.div 
+              className="mt-10"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <a 
+                href="#contact" 
+                className="inline-flex items-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Get in Touch
+                <ChevronRight className="ml-2 w-5 h-5" />
+              </a>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Story Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-900">Our Story</h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Vishal Car Wash was founded in 2008 with a simple mission: to provide the best car wash and detailing services in the region. What started as a small operation with just three team members has grown into a trusted name in automotive care.
-              </p>
-              <p className="text-lg text-gray-600 mb-4">
-                Over the years, we've served thousands of satisfied customers, always maintaining our commitment to quality, professionalism, and environmental responsibility. Our team of experienced professionals uses the latest equipment and eco-friendly products to ensure your vehicle gets the care it deserves.
-              </p>
-              <p className="text-lg text-gray-600">
-                Today, we're proud to be the go-to choice for car owners who demand excellence. Whether it's a quick wash or comprehensive detailing, we treat every vehicle with the same level of care and attention to detail.
-              </p>
-            </div>
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.pexels.com/photos/6872163/pexels-photo-6872163.jpeg"
-                alt="Our Facility"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+            variants={fadeInUp}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="mb-2 text-blue-600 font-semibold">Our Journey</div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+                More Than Just a <span className="text-blue-600">Car Wash</span>
+              </h2>
+              <div className="space-y-6 text-gray-600">
+                <p className="text-lg">
+                  Founded in 2008, Vishal Car Wash began with a simple mission: to provide the best car wash and detailing services in the region. What started as a small operation with just three team members has grown into a trusted name in automotive care.
+                </p>
+                <p className="text-lg">
+                  Over the years, we have served thousands of satisfied customers, always maintaining our commitment to quality, professionalism, and environmental responsibility. Our team of experienced professionals uses the latest equipment and eco-friendly products to ensure your vehicle gets the care it deserves.
+                </p>
+                <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                  <p className="text-blue-800 font-medium">
+                     We believe in building relationships, not just cleaning cars. Every vehicle that comes through our doors is treated with the utmost care and attention to detail.
+                  </p>
+                  <div className="mt-4 flex items-center">
+                    <div className="h-10 w-10 rounded-full bg-blue-200 flex items-center justify-center text-blue-800 font-bold">
+                      VT
+                    </div>
+                    <div className="ml-3">
+                      <div className="font-semibold">Vishal Thakur</div>
+                      <div className="text-sm text-blue-600">Founder & CEO</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div 
+              className="relative group"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:shadow-2xl">
+                <img
+                  src="https://images.pexels.com/photos/6872163/pexels-photo-6872163.jpeg"
+                  alt="Our Facility"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-bold mb-2">State-of-the-Art Facility</h3>
+                    <p className="text-blue-100">Eco-friendly equipment and premium products</p>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-600 rounded-full z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Our Values</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              The principles that guide everything we do
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+              Our Foundation
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Core <span className="text-blue-600">Values</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              The principles that guide every service we provide and every interaction we have
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          </motion.div>
+          
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             {values.map((value, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-xl transition transform hover:-translate-y-2"
+              <motion.div 
+                key={index} 
+                className="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
+                variants={fadeInUp}
+                whileHover={{ y: -10 }}
               >
-                <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <value.icon className="w-10 h-10 text-blue-600" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-300"></div>
+                <div className="w-16 h-16 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl mb-6 group-hover:bg-blue-100 transition-colors duration-300">
+                  <value.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
-              </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
+                  <span>Learn more</span>
+                  <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -159,35 +283,94 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Meet Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              The dedicated professionals behind our success
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+              Our Experts
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Meet Our <span className="text-blue-600">Team</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              The passionate professionals dedicated to keeping your vehicle in pristine condition
             </p>
+          </motion.div>
+          
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-transparent -skew-y-3 -rotate-1 rounded-3xl"></div>
+            <motion.div 
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {teamMembers.map((member, index) => (
+                <motion.div 
+                  key={index} 
+                  className="group bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
+                  variants={fadeInUp}
+                  whileHover={{ y: -10 }}
+                >
+                  <div className="relative h-80 overflow-hidden">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                      <div className="space-y-2 text-white">
+                        <h3 className="text-2xl font-bold">{member.name}</h3>
+                        <p className="text-blue-300">{member.role}</p>
+                        <div className="flex space-x-3 mt-3">
+                          <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-blue-600 flex items-center justify-center transition-colors">
+                            <span className="sr-only">Twitter</span>
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                            </svg>
+                          </a>
+                          <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-blue-600 flex items-center justify-center transition-colors">
+                            <span className="sr-only">LinkedIn</span>
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 text-center">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{member.name}</h3>
+                    <p className="text-blue-600">{member.role}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition transform hover:-translate-y-2"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-bold mb-1 text-gray-900">{member.name}</h3>
-                  <p className="text-blue-600 font-medium">{member.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          <motion.div 
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <p className="text-lg text-gray-600 mb-6">Join our team of passionate professionals</p>
+            <motion.a
+              href="#"
+              className="inline-flex items-center px-8 py-3 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              View Open Positions
+              <ChevronRight className="ml-2 w-5 h-5" />
+            </motion.a>
+          </motion.div>
         </div>
       </section>
 
@@ -225,6 +408,6 @@ export default function About() {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 }

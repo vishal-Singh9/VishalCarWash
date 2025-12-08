@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
 import bcrypt from 'bcryptjs';
@@ -11,6 +12,19 @@ export const authOptions = {
     databaseName: 'carwash',
   }),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: 'user', // Default role for Google sign-ins
+        };
+      },
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -50,7 +64,7 @@ export const authOptions = {
           };
         } catch (error) {
           console.error('Authorization error:', error);
-          throw new Error(error.message || 'Authentication failed');
+          throw new Error(error.message || 'An error occurred during authentication');
         }
       },
     }),
@@ -58,20 +72,16 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Initial sign in
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
+        token.role = user.role || 'user';
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.id = token.id;
         session.user.role = token.role;
       }
       return session;
@@ -82,7 +92,6 @@ export const authOptions = {
     error: '/auth/error',
     newUser: '/auth/signup',
   },
-  secret: process.env.NEXTAUTH_SECRET || 'your-secret-key-for-development',
   debug: process.env.NODE_ENV === 'development',
 };
 
