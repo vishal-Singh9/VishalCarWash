@@ -10,7 +10,7 @@ import { Gallery } from './components/home/Gallery';
 import { Pricing } from './components/home/Pricing';
 import { Contact } from './components/home/Contact';
 import { Newsletter } from './components/home/Newsletter';
-import { useServices } from '../hooks/useServices';
+import { useServices } from './hooks/useServices';
 import Hero from './components/home/Hero';
 import Footer from './components/Footer';
 

@@ -65,12 +65,12 @@ export function Navigation() {
         transition={{ type: 'spring', stiffness: 280, damping: 16, bounce: 0.2 }}
         className={cn(
           'fixed w-full z-50 transition-all duration-300',
-          isScrolled 
-            ? 'bg-white/95 shadow-sm py-2 text-gray-800 border-b border-gray-100/50' 
-            : pathname === '/' 
-              ? 'bg-transparent text-white py-3' 
-              : 'bg-white/95 text-gray-800 py-3 border-b border-gray-100/50',
-          'backdrop-blur-md'
+          'bg-white/95 shadow-sm py-2 text-gray-800 border-b border-gray-100/50',
+          'backdrop-blur-md',
+          {
+            'text-white border-transparent': pathname === '/' && !isScrolled,
+            'py-3': !isScrolled
+          }
         )}
       >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
