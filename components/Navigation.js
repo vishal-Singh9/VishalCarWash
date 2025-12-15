@@ -65,16 +65,16 @@ export function Navigation() {
         transition={{ type: 'spring', stiffness: 280, damping: 16, bounce: 0.2 }}
         className={cn(
           'fixed w-full z-50 transition-all duration-300',
-          'bg-white/95 shadow-sm py-2 text-gray-800 border-b border-gray-100/50',
+          'bg-white/95 shadow-sm py-1 sm:py-2 text-gray-800 border-b border-gray-100/50',
           'backdrop-blur-md',
           {
             'text-white border-transparent': pathname === '/' && !isScrolled,
-            'py-3': !isScrolled
+            'py-2 sm:py-3': !isScrolled
           }
         )}
       >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
+        <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
           {/* Left side - Logo and Brand Name */}
           <div className="flex items-center">
             <Link 
@@ -88,7 +88,7 @@ export function Navigation() {
                 className="relative flex items-center"
               >
                 {/* Logo */}
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-white shadow-md mr-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-white shadow-md mr-2 sm:mr-3">
                   <img 
                     src="/images/nissan.jpeg" 
                     alt="Vishal Car Wash Logo" 
@@ -100,21 +100,21 @@ export function Navigation() {
                 <motion.div className="flex flex-col">
                   <motion.span 
                     className={cn(
-                      'text-xl md:text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent',
+                      'text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent',
                       isScrolled || pathname !== '/' 
                         ? 'from-blue-600 to-cyan-500' 
                         : 'from-white to-blue-100',
-                      'transition-all duration-300 tracking-tight leading-none'
+                      'transition-all duration-300 tracking-tight leading-none whitespace-nowrap'
                     )}
                   >
                     Vishal Car Wash
                   </motion.span>
                   <span className={cn(
-                    'text-xs md:text-sm font-medium mt-0.5',
+                    'text-[10px] xs:text-xs sm:text-xs md:text-sm font-medium mt-0.5',
                     isScrolled || pathname !== '/' 
                       ? 'text-gray-500' 
                       : 'text-white/80',
-                    'transition-colors duration-300'
+                    'transition-colors duration-300 whitespace-nowrap'
                   )}>
                     Professional Car Care
                   </span>
@@ -131,7 +131,7 @@ export function Navigation() {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-1 flex-1 justify-center px-4">
             <LayoutGroup>
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
@@ -204,7 +204,7 @@ export function Navigation() {
           </nav>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
             {status === 'authenticated' ? (
               <div className="relative">
                 <motion.button 
@@ -386,9 +386,9 @@ export function Navigation() {
             {status === 'authenticated' && (
               <Link 
                 href="/profile" 
-                className={`p-2 rounded-full ${isScrolled || pathname !== '/' ? 'bg-gray-100 text-gray-800' : 'bg-white/10 text-white'}`}
+                className={`p-1.5 sm:p-2 rounded-full ${isScrolled || pathname !== '/' ? 'bg-gray-100 text-gray-800' : 'bg-white/10 text-white'}`}
               >
-                <User className="h-5 w-5" />
+                <User className="h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
             )}
             <motion.button
@@ -417,7 +417,7 @@ export function Navigation() {
               transition={{ duration: 0.3, ease: 'easeInOut' }}
               className="md:hidden overflow-hidden"
             >
-              <div className="px-4 pt-2 pb-4 space-y-2 bg-white/95 backdrop-blur-lg rounded-xl shadow-xl mx-2 my-2 border border-gray-100">
+              <div className="px-3 sm:px-4 pt-2 pb-4 space-y-2 bg-white/95 backdrop-blur-lg rounded-xl shadow-xl mx-1 sm:mx-2 my-1 sm:my-2 border border-gray-100">
                 {status === 'authenticated' && (
                   <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg mb-2">
                     <div className="flex items-center space-x-3">
@@ -440,11 +440,11 @@ export function Navigation() {
                         key={item.name}
                         href={item.href}
                         className={cn(
-                          'flex items-center px-4 py-3 rounded-lg text-base font-medium',
+                          'flex items-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium',
                           isActive
                             ? 'bg-blue-50 text-blue-700'
                             : 'text-gray-700 hover:bg-gray-50',
-                          'transition-colors duration-200'
+                          'transition-colors duration-200 w-full'
                         )}
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -453,7 +453,7 @@ export function Navigation() {
                         })}
                         {item.name}
                         {isActive && (
-                          <span className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></span>
+                          <span className="ml-auto w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
                         )}
                       </Link>
                     );
@@ -468,7 +468,7 @@ export function Navigation() {
                   <Link
                     href="/booking"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center w-full px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-lg shadow-md transition-all duration-300"
+                    className="flex items-center justify-center w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-lg shadow-md transition-all duration-300"
                   >
                     <Calendar className="w-5 h-5 mr-2" />
                     Book Now
@@ -482,7 +482,7 @@ export function Navigation() {
                       className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <User className="w-4 h-4 mr-3 text-gray-500" />
+                      <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-gray-500" />
                       My Profile
                     </Link>
                     <Link
@@ -490,7 +490,7 @@ export function Navigation() {
                       className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <Calendar className="w-4 h-4 mr-3 text-gray-500" />
+                      <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-gray-500" />
                       My Bookings
                     </Link>
                     <button
@@ -501,7 +501,7 @@ export function Navigation() {
                       }}
                       className="flex items-center w-full px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-1"
                     >
-                      <LogOut className="w-4 h-4 mr-3" />
+                      <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 sm:mr-3" />
                       Sign out
                     </button>
                   </div>
@@ -509,14 +509,14 @@ export function Navigation() {
                   <div className="pt-2 border-t border-gray-200 mt-2">
                     <Link
                       href="/auth/signin"
-                      className="block w-full px-4 py-2 text-base font-medium text-center text-blue-600 hover:bg-blue-50 rounded-md mb-2"
+                      className="block w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base font-medium text-center text-blue-600 hover:bg-blue-50 rounded-md mb-2"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Sign in
                     </Link>
                     <Link
                       href="/auth/signup"
-                      className="block w-full px-4 py-2.5 text-base font-medium text-center text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-lg shadow-md transition-all duration-300"
+                      className="block w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-center text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-lg shadow-md transition-all duration-300"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Create Account
