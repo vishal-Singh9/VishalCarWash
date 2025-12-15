@@ -1,61 +1,142 @@
 'use client';
 
-import { Award, Users, Target, Heart, CheckCircle, ChevronRight } from 'lucide-react';
+import { Award, Users, Target, Heart, CheckCircle, ChevronRight, Star, Shield, Leaf, Clock, Sparkles, MessageSquare, Truck, Headset } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function About() {
   const values = [
     {
       icon: Award,
       title: 'Excellence',
-      description: 'We strive for perfection in every service we provide'
+      description: 'We strive for perfection in every service we provide',
+      color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Users,
       title: 'Customer First',
-      description: 'Your satisfaction is our top priority'
+      description: 'Your satisfaction is our top priority',
+      color: 'from-emerald-500 to-emerald-600'
     },
     {
       icon: Target,
       title: 'Precision',
-      description: 'Attention to detail in every wash and detail'
+      description: 'Attention to detail in every wash and detail',
+      color: 'from-amber-500 to-amber-600'
     },
     {
       icon: Heart,
       title: 'Passion',
-      description: 'We love what we do and it shows in our work'
+      description: 'We love what we do and it shows in our work',
+      color: 'from-rose-500 to-rose-600'
     }
   ];
 
   const milestones = [
-    { year: '2008', event: 'Founded Vishal Car Wash' },
-    { year: '2012', event: 'Expanded to 3 locations' },
-    { year: '2016', event: 'Introduced eco-friendly products' },
-    { year: '2020', event: 'Served 10,000+ customers' },
-    { year: '2024', event: 'Award for Best Car Wash Service' }
+    { 
+      year: '2008', 
+      event: 'Founded Vishal Car Wash',
+      icon: '🚗',
+      description: 'Started our journey with a single location and a vision for exceptional car care'
+    },
+    { 
+      year: '2012', 
+      event: 'Expanded to 3 locations',
+      icon: '📍',
+      description: 'Grew our presence to serve more customers across the city'
+    },
+    { 
+      year: '2016', 
+      event: 'Introduced eco-friendly products',
+      icon: '🌱',
+      description: 'Committed to sustainability with environmentally friendly cleaning solutions'
+    },
+    { 
+      year: '2020', 
+      event: 'Served 10,000+ customers',
+      icon: '👥',
+      description: 'Reached a significant milestone in our journey of customer satisfaction'
+    },
+    { 
+      year: '2024', 
+      event: 'Award for Best Car Wash Service',
+      icon: '🏆',
+      description: 'Recognized for excellence in service quality and customer experience'
+    }
   ];
 
   const teamMembers = [
     {
       name: 'Vishal Thakur',
       role: 'Founder & CEO',
-      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg'
+      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
+      bio: 'With over 15 years in the automotive industry, Vishal founded Vishal Car Wash with a vision to revolutionize car care services.'
     },
     {
       name: 'Rajesh Singh',
       role: 'Operations Manager',
-      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg'
+      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg',
+      bio: 'Rajesh ensures our operations run smoothly and efficiently, maintaining our high standards of service.'
     },
     {
       name: 'Priya Sharma',
       role: 'Customer Service Head',
-      image: 'https://images.pexels.com/photos/3756681/pexels-photo-3756681.jpeg'
+      image: 'https://images.pexels.com/photos/3756681/pexels-photo-3756681.jpeg',
+      bio: 'Priya leads our customer service team, ensuring every client receives exceptional support and care.'
     },
     {
       name: 'Amit Patel',
       role: 'Lead Detailer',
-      image: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg'
+      image: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg',
+      bio: 'Amit brings 10+ years of detailing expertise, transforming vehicles with meticulous attention to detail.'
+    }
+  ];
+
+  const stats = [
+    { value: '15+', label: 'Years Experience', icon: <Award className="w-8 h-8" /> },
+    { value: '25K+', label: 'Cars Washed', icon: <Truck className="w-8 h-8" /> },
+    { value: '98%', label: 'Happy Customers', icon: <Star className="w-8 h-8" /> },
+    { value: '24/7', label: 'Support', icon: <Headset className="w-8 h-8" /> }
+  ];
+
+  const testimonials = [
+    {
+      quote: "Best car wash service I've ever used! My car looks brand new every time.",
+      author: "Rahul Verma",
+      role: "Loyal Customer",
+      rating: 5
+    },
+    {
+      quote: "The eco-friendly approach is what brought me in, but the outstanding service is what keeps me coming back.",
+      author: "Neha Kapoor",
+      role: "Environmental Enthusiast",
+      rating: 5
+    },
+    {
+      quote: "Professional staff and excellent attention to detail. Highly recommend their premium detailing service.",
+      author: "Arjun Mehta",
+      role: "Car Enthusiast",
+      rating: 5
+    }
+  ];
+
+  const faqs = [
+    {
+      question: "How often should I get my car washed?",
+      answer: "We recommend a basic wash every 2 weeks to maintain your car's appearance and protect its paint. However, this can vary based on weather conditions and where you typically park."
+    },
+    {
+      question: "Are your cleaning products safe for my car's paint?",
+      answer: "Absolutely! We use only pH-balanced, eco-friendly products that are specifically designed to be gentle on your car's finish while effectively removing dirt and grime."
+    },
+    {
+      question: "Do you offer mobile car washing services?",
+      answer: "Yes, we provide convenient mobile washing services for our customers. Our team comes to your location with all the necessary equipment to give your car a professional clean."
+    },
+    {
+      question: "What's included in your premium detailing package?",
+      answer: "Our premium detailing includes a thorough interior and exterior cleaning, paint decontamination, polish, wax, interior vacuuming, leather treatment, and glass cleaning."
     }
   ];
 
@@ -180,10 +261,13 @@ export default function About() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:shadow-2xl">
-                <img
+                <Image
                   src="https://images.pexels.com/photos/6872163/pexels-photo-6872163.jpeg"
                   alt="Our Facility"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
                   <div className="text-white">
@@ -320,10 +404,12 @@ export default function About() {
                   whileHover={{ y: -10 }}
                 >
                   <div className="relative h-80 overflow-hidden">
-                    <img
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                       <div className="space-y-2 text-white">
@@ -374,38 +460,288 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-20">
+      {/* Stats Section */}
+      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {stats.map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  {stat.icon}
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+              Our Advantages
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Why Choose <span className="text-blue-600">Vishal Car Wash</span>?
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We go beyond just cleaning cars - we deliver exceptional experiences
+            </p>
+          </motion.div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.pexels.com/photos/5717568/pexels-photo-5717568.jpeg"
-                alt="Quality Service"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-900">Why Choose Vishal Car Wash?</h2>
-              <div className="space-y-4">
-                {[
-                  'Experienced and trained professionals',
-                  'State-of-the-art equipment and facilities',
-                  'Eco-friendly products and water-saving techniques',
-                  'Flexible scheduling and quick service',
-                  'Competitive pricing with no hidden costs',
-                  'Customer satisfaction guarantee',
-                  'Convenient location with easy access',
-                  'Loyalty programs and special offers'
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start">
-                    <CheckCircle className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-700">{item}</span>
+            <div className="relative group">
+              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://images.pexels.com/photos/5717568/pexels-photo-5717568.jpeg"
+                  alt="Quality Service"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-bold mb-2">Premium Service</h3>
+                    <p className="text-blue-100">Experience the difference of professional car care</p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
+            <div className="space-y-6">
+              {[
+                {
+                  icon: <Sparkles className="w-6 h-6 text-blue-600" />,
+                  title: 'Expert Team',
+                  description: 'Our certified professionals are trained in the latest car care techniques and use only premium products.'
+                },
+                {
+                  icon: <Leaf className="w-6 h-6 text-emerald-600" />,
+                  title: 'Eco-Friendly',
+                  description: 'We use biodegradable, water-based products that are tough on dirt but gentle on your car and the environment.'
+                },
+                {
+                  icon: <Clock className="w-6 h-6 text-amber-600" />,
+                  title: 'Time-Saving',
+                  description: 'Our efficient processes mean you spend less time waiting and more time enjoying your clean car.'
+                },
+                {
+                  icon: <Shield className="w-6 h-6 text-indigo-600" />,
+                  title: 'Satisfaction Guaranteed',
+                  description: 'Not happy with the results? We ll make it right. Your satisfaction is our priority.'
+                }
+              ].map((feature, index) => (
+                <motion.div 
+                  key={index}
+                  className="flex items-start p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mt-1 mr-4 transition-colors">
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+              
+              <motion.div 
+                className="pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                <a 
+                  href="/services" 
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:shadow-lg transition-all"
+                >
+                  Explore Our Services
+                  <ChevronRight className="ml-2 w-5 h-5" />
+                </a>
+              </motion.div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+              Testimonials
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              What Our <span className="text-blue-600">Customers Say</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Do not just take our word for it - hear from our satisfied customers
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div 
+                key={index}
+                className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                    />
+                  ))}
+                </div>
+                <p className="text-gray-700 italic mb-6">{testimonial.quote}</p>
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-gray-200 mr-4 overflow-hidden">
+                    <Image 
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.author)}&background=random`}
+                      alt={testimonial.author}
+                      width={48}
+                      height={48}
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">{testimonial.author}</h4>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+              Have Questions?
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Frequently Asked <span className="text-blue-600">Questions</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Find answers to common questions about our services
+            </p>
+          </motion.div>
+          
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div 
+                key={index}
+                className="border border-gray-200 rounded-xl overflow-hidden"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <div className="p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-gray-900">{faq.question}</h3>
+                    <ChevronRight className="w-5 h-5 text-gray-400 transition-transform" />
+                  </div>
+                  <div className="mt-3 text-gray-600">
+                    {faq.answer}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+            
+            <motion.div 
+              className="pt-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <p className="text-gray-600 mb-4">Still have questions? We are here to help!</p>
+              <a 
+                href="/contact" 
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:shadow-lg transition-all"
+              >
+                Contact Us
+                <MessageSquare className="ml-2 w-5 h-5" />
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div 
+            className="max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Experience the Difference?</h2>
+            <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+              Book your car wash today and see why thousands of customers trust us with their vehicles
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <motion.a
+                href="/booking"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Book Now
+                <ChevronRight className="ml-2 w-5 h-5" />
+              </motion.a>
+              <motion.a
+                href="tel:+1234567890"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Call Us Now
+              </motion.a>
+            </div>
+          </motion.div>
         </div>
       </section>
     </motion.div>

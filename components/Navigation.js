@@ -55,6 +55,7 @@ export function Navigation() {
       icon: <Phone className="w-4 h-4 mr-2" />,
       highlight: 'from-rose-500 to-pink-400'
     },
+    
   ];
 
   return (
@@ -65,10 +66,9 @@ export function Navigation() {
         transition={{ type: 'spring', stiffness: 280, damping: 16, bounce: 0.2 }}
         className={cn(
           'fixed w-full z-50 transition-all duration-300',
-          'bg-white/95 shadow-sm py-1 sm:py-2 text-gray-800 border-b border-gray-100/50',
+          'bg-black shadow-sm py-1 sm:py-2 text-white border-b border-gray-800/50',
           'backdrop-blur-md',
           {
-            'text-white border-transparent': pathname === '/' && !isScrolled,
             'py-2 sm:py-3': !isScrolled
           }
         )}
@@ -100,10 +100,8 @@ export function Navigation() {
                 <motion.div className="flex flex-col">
                   <motion.span 
                     className={cn(
-                      'text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent',
-                      isScrolled || pathname !== '/' 
-                        ? 'from-blue-600 to-cyan-500' 
-                        : 'from-white to-blue-100',
+                      'text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r bg-clip-text',
+                      'text-white',
                       'transition-all duration-300 tracking-tight leading-none whitespace-nowrap'
                     )}
                   >
@@ -111,9 +109,7 @@ export function Navigation() {
                   </motion.span>
                   <span className={cn(
                     'text-[10px] xs:text-xs sm:text-xs md:text-sm font-medium mt-0.5',
-                    isScrolled || pathname !== '/' 
-                      ? 'text-gray-500' 
-                      : 'text-white/80',
+                    'text-white/80',
                     'transition-colors duration-300 whitespace-nowrap'
                   )}>
                     Professional Car Care
@@ -142,8 +138,8 @@ export function Navigation() {
                     className={cn(
                       'relative px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 flex items-center group',
                       isActive 
-                        ? 'text-gray-900' 
-                        : 'text-gray-600 hover:text-gray-900',
+                        ? 'text-white' 
+                        : 'text-gray-300 hover:text-white',
                     )}
                   >
                     <span className="flex items-center z-10">
@@ -337,15 +333,22 @@ export function Navigation() {
                   <Link 
                     href="/auth/signin" 
                     className={cn(
-                      'px-4 py-2.5 rounded-lg font-medium transition-all text-sm',
-                      'border border-transparent',
-                      isScrolled || pathname !== '/' 
-                        ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-50/50' 
-                        : 'text-white/90 hover:text-white hover:bg-white/10',
-                      'transition-all duration-300'
+                      'px-5 py-2.5 rounded-lg font-medium transition-all text-sm flex items-center',
+                      'bg-gradient-to-r from-blue-600 to-cyan-500 text-white',
+                      'hover:from-blue-700 hover:to-cyan-600',
+                      'shadow-lg hover:shadow-blue-500/30',
+                      'relative overflow-hidden group'
                     )}
                   >
-                    Sign In
+                    <span className="relative z-10">Sign In</span>
+                    <motion.span 
+                      className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ 
+                        opacity: 1,
+                        transition: { duration: 0.3 }
+                      }}
+                    />
                   </Link>
                 </motion.div>
                 <motion.div 
@@ -363,7 +366,7 @@ export function Navigation() {
                       'relative overflow-hidden group'
                     )}
                   >
-                    <span className="relative z-10">Get Started</span>
+                    <span className="relative z-10">Sign Up</span>
                     <motion.span 
                       className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
                       initial={{ opacity: 0 }}
