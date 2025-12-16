@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
-import Image from 'next/image';
-import Nissan from "../../../public/images/nissan.jpeg"
 
-// Mock data - replace this with actual database queries in production
+// Gallery API - Returns car wash gallery images
 const galleryImages = [
   // Exterior Services
   {

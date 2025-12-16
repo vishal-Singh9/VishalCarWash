@@ -6,6 +6,7 @@ import clientPromise from '@/lib/mongodb';
 import bcrypt from 'bcryptjs';
 import User from '@/models/User';
 import dbConnect from '@/lib/db';
+import { ObjectId } from 'mongodb';
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise, {
@@ -18,10 +19,11 @@ export const authOptions = {
       profile(profile) {
         return {
           id: profile.sub,
+          _id: new ObjectId().toString(), // Ensure we have a valid _id
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          role: 'user', // Default role for Google sign-ins
+          role: 'user',
         };
       },
     }),
@@ -48,16 +50,15 @@ export const authOptions = {
             throw new Error('No user found with this email');
           }
           
-          // Check if password is correct
-          const isValid = await bcrypt.compare(credentials.password, user.password);
-          
-          if (!isValid) {
+          const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isPasswordValid) {
             throw new Error('Invalid password');
           }
           
-          // Return user object without password
+          // Return user object with ID and required fields
           return {
             id: user._id.toString(),
+            _id: user._id.toString(),
             name: user.name,
             email: user.email,
             role: user.role || 'user',
@@ -74,14 +75,18 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    async jwt({ token, user }) {
+    jwt: async ({ token, user }) => {
+      // Add user ID and role to the token when user signs in
       if (user) {
+        token.id = user.id;
         token.role = user.role || 'user';
       }
       return token;
     },
-    async session({ session, token }) {
+    session: async ({ session, token }) => {
+      // Add user ID and role to the session
       if (session?.user) {
+        session.user.id = token.id;
         session.user.role = token.role;
       }
       return session;

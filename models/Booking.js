@@ -11,6 +11,10 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    serviceId: {
+      type: String,
+      required: true,
+    },
     date: {
       type: Date,
       required: true,
@@ -24,9 +28,7 @@ const bookingSchema = new mongoose.Schema(
       enum: ['pending', 'confirmed', 'completed', 'cancelled'],
       default: 'pending',
     },
-    notes: {
-      type: String,
-    },
+    notes: String,
     vehicleType: {
       type: String,
       required: true,
@@ -35,6 +37,9 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    customerName: String,
+    customerEmail: String,
+    customerPhone: String,
   },
   { timestamps: true }
 );

@@ -13,6 +13,9 @@ import { Newsletter } from './components/home/Newsletter';
 import { useServices } from './hooks/useServices';
 import Hero from './components/home/Hero';
 import Footer from './components/Footer';
+import dynamic from 'next/dynamic';
+
+
 
 export default function Home() {
   const { services, loading, error } = useServices(6);
@@ -37,6 +40,7 @@ export default function Home() {
       <Contact />
       <CTA />
       <Footer />
+   
     </div>
   );
 }

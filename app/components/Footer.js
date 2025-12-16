@@ -167,6 +167,9 @@ export default function Footer() {
               <Link href="/sitemap" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Sitemap
               </Link>
+               <Link href="/help" className="text-gray-400 hover:text-white text-sm transition-colors">
+               Help
+              </Link>
             </div>
           </div>
         </div>
