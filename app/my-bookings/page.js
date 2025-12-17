@@ -42,7 +42,7 @@ function MyBookingsPage() {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/bookings');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch bookings');
@@ -64,7 +64,7 @@ function MyBookingsPage() {
     
     try {
       setUpdatingStatus(id);
-      const response = await fetch(`/api/bookings/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ function MyBookingsPage() {
   const handleUpdate = async (id) => {
     try {
       setUpdating(true);
-      const response = await fetch(`/api/bookings/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

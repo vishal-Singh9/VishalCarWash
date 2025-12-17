@@ -32,6 +32,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { API_ENDPOINTS } from '@/lib/api-config';
 
 // Animated gradient background component
 const AnimatedGradient = () => (
@@ -171,7 +172,7 @@ export default function SettingsPage() {
       
       // Sync with server if needed
       if (status === 'authenticated') {
-        await fetch('/api/user/settings', {
+        await fetch(API_ENDPOINTS.userSettings, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ settings: newSettings }),

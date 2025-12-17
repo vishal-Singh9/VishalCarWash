@@ -41,7 +41,7 @@ export default function ProfilePage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/user/update', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

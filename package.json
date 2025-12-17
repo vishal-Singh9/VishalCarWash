@@ -9,7 +9,8 @@
     "lint": "next lint",
     "seed": "node scripts/seedServices.mjs",
     "test-db": "node scripts/testConnection.js",
-    "verify": "node scripts/verifyMigration.js"
+    "verify": "node scripts/verifyMigration.js",
+    "test-api": "node scripts/testApiConfig.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -23,7 +23,14 @@ export async function POST(request) {
           success: false,
           message: 'Please provide all required fields' 
         },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -34,7 +41,14 @@ export async function POST(request) {
           success: false,
           message: 'Please provide a valid email address' 
         },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -45,7 +59,14 @@ export async function POST(request) {
           success: false,
           message: 'Password must be at least 6 characters long' 
         },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -60,7 +81,14 @@ export async function POST(request) {
           success: false,
           message: 'An account with this email already exists. Please sign in instead.' 
         },
-        { status: 409 }
+        { 
+          status: 409,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -95,43 +123,56 @@ export async function POST(request) {
         status: 201,
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
         },
       }
     );
   } catch (error) {
     console.error('Signup error:', error);
     
-    // Handle duplicate key error (in case of race condition)
+    // Handle specific error cases
+    let status = 500;
+    let message = 'Internal server error. Please try again.';
+    
     if (error.code === 11000) {
-      return NextResponse.json(
-        { 
-          success: false,
-          message: 'An account with this email already exists. Please sign in instead.' 
-        },
-        { status: 409 }
-      );
-    }
-
-    // Handle validation errors
-    if (error.name === 'ValidationError') {
+      // Duplicate key error (MongoDB)
+      status = 409;
+      message = 'An account with this email already exists. Please sign in instead.';
+    } else if (error.name === 'ValidationError') {
+      // Handle validation errors
+      status = 400;
       const messages = Object.values(error.errors).map(val => val.message);
-      return NextResponse.json(
-        { 
-          success: false,
-          message: 'Validation failed',
-          errors: messages 
-        },
-        { status: 400 }
-      );
+      message = messages.join(', ');
+    } else if (error.message) {
+      message = error.message;
     }
-
-    // Handle other errors
+    
     return NextResponse.json(
       { 
-        success: false,
-        message: 'An error occurred while creating your account. Please try again.' 
+        success: false, 
+        message 
       },
-      { status: 500 }
+      { 
+        status,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      }
     );
   }
 }
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+};

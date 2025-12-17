@@ -62,6 +62,32 @@ export default function Services() {
   const [activeCategory, setActiveCategory] = useState('all');
   const categories = useRef(['all', 'exterior', 'interior', 'premium']);
 
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/services`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch services: ${response.status} ${response.statusText}`);
+      }
+      const result = await response.json();
+      
+      // Check if the response has the expected structure
+      if (!result.success || !Array.isArray(result.data)) {
+        throw new Error('Invalid data format received from API');
+      }
+      
+      setServices(result.data || []);
+      setFilteredServices(result.data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+      setError(error.message);
+      setServices([]);
+      setFilteredServices([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchServices();
     // Add scroll reveal animation
@@ -81,13 +107,18 @@ export default function Services() {
   }, []);
 
   useEffect(() => {
+    if (!Array.isArray(services) || services.length === 0) {
+      setFilteredServices([]);
+      return;
+    }
+    
     let result = [...services];
     
     // Filter by search query
     if (searchQuery) {
       result = result.filter(service => 
-        service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        service.description.toLowerCase().includes(searchQuery.toLowerCase())
+        service.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        service.description?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     
@@ -106,22 +137,16 @@ export default function Services() {
     setFilteredServices(result);
   }, [services, searchQuery, priceRange, activeCategory]);
 
-  const fetchServices = async () => {
-    try {
-      const response = await fetch('/api/services');
-      if (!response.ok) {
-        throw new Error('Failed to fetch services');
-      }
-      const data = await response.json();
-      setServices(data);
-    } catch (error) {
-      console.error('Error fetching services:', error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
+  // Render error state
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -373,14 +398,14 @@ export default function Services() {
             </div>
           ) : (
             <>
-              {filteredServices.length > 0 ? (
+              {filteredServices?.length > 0 ? (
                 <motion.div 
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
                   className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16"
                 >
-                  {filteredServices.map((service, index) => (
+                  {filteredServices?.map((service, index) => (
                     <motion.div
                       key={service.id}
                       variants={fadeIn}

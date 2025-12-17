@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CheckCircle, ArrowRight, Clock, Shield, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS, buildApiUrl } from '@/lib/api-config';
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -13,15 +14,19 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('/api/services?limit=4');
+        const apiUrl = buildApiUrl(API_ENDPOINTS.services, { limit: 4 });
+        const response = await fetch(apiUrl);
         if (!response.ok) {
-          throw new Error('Failed to fetch services');
+          throw new Error(`Failed to fetch services: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
-        setServices(data);
+        console.log(data)
+        // Ensure we have an array of services
+        const servicesData = Array.isArray(data) ? data : data.services || [];
+        setServices(servicesData);
       } catch (error) {
         console.error('Error fetching services:', error);
-        setError(error.message);
+        setError(error.message || 'Failed to load services');
       } finally {
         setLoading(false);
       }
@@ -94,7 +99,7 @@ export default function Services() {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {services.map((service, index) => (
+              {services?.map((service, index) => (
                 <motion.div
                   key={service.id}
                   initial={{ opacity: 0, y: 20 }}

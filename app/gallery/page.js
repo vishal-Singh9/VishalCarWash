@@ -48,7 +48,7 @@ export default function Gallery() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('/api/gallery');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/gallery`);
         if (!response.ok) {
           throw new Error('Failed to fetch gallery images');
         }
@@ -152,7 +152,7 @@ export default function Gallery() {
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
-        const response = await fetch('/api/gallery');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/gallery`);
         if (!response.ok) {
           throw new Error('Failed to fetch gallery images');
         }

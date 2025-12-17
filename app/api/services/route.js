@@ -6,12 +6,30 @@ export async function GET() {
   try {
     await dbConnect();
     const services = await Service.find({ isActive: true }).sort({ price: 1 });
-    return NextResponse.json(services);
+    
+    const response = {
+      success: true,
+      status: 200,
+      message: 'Services retrieved successfully',
+      data: services,
+      count: services.length,
+      timestamp: new Date().toISOString()
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Error fetching services:', error);
-    return NextResponse.json(
-      { message: 'Error fetching services' },
-      { status: 500 }
-    );
+    
+    const response = {
+      success: false,
+      status: 500,
+      message: 'Failed to retrieve services',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      timestamp: new Date().toISOString()
+    };
+
+    return NextResponse.json(response, { status: 500 });
   }
 }
+
+export const dynamic = 'force-dynamic'; // Ensure fresh data on each request

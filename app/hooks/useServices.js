@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_ENDPOINTS, buildApiUrl } from '@/lib/api-config';
 
 // Fallback data in case the API is not available
 const FALLBACK_SERVICES = [
@@ -16,8 +17,9 @@ export function useServices(limit = 4) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        // Try to fetch from API first
-        const response = await fetch(`/api/services?limit=${limit}`, {
+        // Try to fetch from API first using configured endpoint
+        const apiUrl = buildApiUrl(API_ENDPOINTS.services, { limit });
+        const response = await fetch(apiUrl, {
           headers: {
             'Content-Type': 'application/json',
           },
