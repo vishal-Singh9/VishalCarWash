@@ -113,9 +113,12 @@ const MessageBubble = ({ message, isBotTyping, messages }) => {
           }}
         >
           <div className="whitespace-pre-wrap">{message.text}</div>
-          {isBotTyping && messages && messages.length > 0 && message.id === messages[messages.length - 1]?.id && (
-            <TypingIndicator />
-          )}
+          {isBotTyping &&
+            messages &&
+            messages.length > 0 &&
+            message.id === messages[messages.length - 1]?.id && (
+              <TypingIndicator />
+            )}
           <div
             className={`text-xs mt-1.5 text-right ${
               isBot ? "text-blue-500/70" : "text-blue-100/80"
@@ -155,13 +158,22 @@ class ErrorBoundary extends Component {
           <div className="bg-red-50 border-l-4 border-red-500 p-4 m-4 rounded-lg shadow-lg max-w-xs">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-red-500"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
                 <p className="text-sm text-red-700">
-                  Oops! Something went wrong with the chat. Please refresh the page to continue.
+                  Oops! Something went wrong with the chat. Please refresh the
+                  page to continue.
                 </p>
               </div>
             </div>
@@ -327,7 +339,7 @@ function ChatBot() {
       input.includes("where") ||
       input.includes("address")
     ) {
-      return "We're located at 123 Car Care Street, Mumbai, 400001. You can also find us on Google Maps for directions.";
+      return "We're located at Vill-Sagunaha ,Babatpur,Airport Road. You can also find us on Google Maps for directions.";
     } else {
       return "I'm here to help! Could you please provide more details about your query? You can ask about our services, pricing, or booking process.";
     }

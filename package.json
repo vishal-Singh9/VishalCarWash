@@ -6,7 +6,10 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node scripts/seedServices.mjs",
+    "test-db": "node scripts/testConnection.js",
+    "verify": "node scripts/verifyMigration.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

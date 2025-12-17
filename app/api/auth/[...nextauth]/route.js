@@ -10,7 +10,7 @@ import { ObjectId } from 'mongodb';
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise, {
-    databaseName: 'carwash',
+    databaseName: process.env.NEXTAUTH_DATABASE || 'VishalCarWash',
   }),
   providers: [
     GoogleProvider({
