@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { CheckCircle, ArrowRight, Clock, Shield, Award } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { API_ENDPOINTS, buildApiUrl } from '@/lib/api-config';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { CheckCircle, ArrowRight, Clock, Shield, Award } from "lucide-react";
+import { motion } from "framer-motion";
+import { API_ENDPOINTS, buildApiUrl } from "@/lib/api-config";
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -14,25 +14,57 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const apiUrl = buildApiUrl(API_ENDPOINTS.services, { limit: 4 });
-        const response = await fetch(apiUrl);
+        setLoading(true);
+        setError(null);
+
+        const apiUrl = buildApiUrl(API_ENDPOINTS.services);
+        console.log("Fetching services from:", apiUrl);
+
+        const response = await fetch(apiUrl, {
+          cache: "no-store", // Disable caching to ensure fresh data
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const responseData = await response.json();
+        console.log("API Response:", responseData);
+
         if (!response.ok) {
-          throw new Error(`Failed to fetch services: ${response.status} ${response.statusText}`);
+          throw new Error(
+            responseData.message ||
+              `Failed to fetch services: ${response.status} ${response.statusText}`
+          );
         }
-        const data = await response.json();
-        console.log(data)
-        // Ensure we have an array of services
-        const servicesData = Array.isArray(data) ? data : data.services || [];
-        setServices(servicesData);
+
+        if (!responseData.success) {
+          throw new Error(responseData.message || "Failed to load services");
+        }
+
+        // Ensure we have an array of services and limit to 4 for the homepage
+        const servicesData = responseData.data || [];
+        const limitedServices = Array.isArray(servicesData)
+          ? servicesData.slice(0, 4)
+          : [];
+
+        console.log("Setting services:", limitedServices);
+        setServices(limitedServices);
       } catch (error) {
-        console.error('Error fetching services:', error);
-        setError(error.message || 'Failed to load services');
+        console.error("Error fetching services:", error);
+        setError(
+          error.message || "Failed to load services. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchServices();
+
+    // Set up auto-refresh every 5 minutes
+    const refreshInterval = setInterval(fetchServices, 5 * 60 * 1000);
+
+    return () => clearInterval(refreshInterval);
   }, []);
 
   if (error) {
@@ -42,8 +74,16 @@ export default function Services() {
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-red-500"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
@@ -61,7 +101,7 @@ export default function Services() {
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -76,14 +116,18 @@ export default function Services() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto mb-6 rounded-full"></div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the ultimate in car care with our professional services, designed to keep your vehicle looking its best.
+            Experience the ultimate in car care with our professional services,
+            designed to keep your vehicle looking its best.
           </p>
         </motion.div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div
+                key={item}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
                 <div className="animate-pulse">
                   <div className="h-48 bg-gray-200"></div>
                   <div className="p-6 space-y-4">
@@ -110,56 +154,81 @@ export default function Services() {
                 >
                   <div className="relative h-48 overflow-hidden bg-gray-100">
                     <img
-                      src={service.image_url}
+                      src={service.image || "/images/placeholder-service.jpg"}
                       alt={service.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/images/placeholder-service.jpg';
+                        e.target.src = "/images/placeholder-service.jpg";
                       }}
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4">
                       <span className="inline-block bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        {service.duration || '30 min'}
+                        {service.duration || "30 min"}
                       </span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-start justify-between mb-3">
                       <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                         {service.name}
                       </h3>
-                      <div className="flex items-center text-yellow-400">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <svg key={star} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                      <div className="flex items-center bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {service.duration} min
                       </div>
                     </div>
-                    
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{service.description}</p>
-                    
-                    <div className="space-y-2 mb-6">
-                      {service.features && Array.isArray(service.features) && service.features.slice(0, 3).map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-gray-600">
-                          <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                          <span className="truncate">{feature}</span>
-                        </div>
-                      ))}
+
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 h-[60px]">
+                      {service.description}
+                    </p>
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                        <span>Professional Service</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                        <span>Quality Materials</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                        <span>Expert Technicians</span>
+                      </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-between border-t border-gray-100 pt-4">
                       <div className="text-left">
-                        <span className="text-xs text-gray-500">Starting from</span>
-                        <div className="text-2xl font-bold text-blue-600">₹{service.price}</div>
+                        <span className="text-xs text-gray-500">
+                          Starting from
+                        </span>
+                        <div className="flex items-baseline">
+                          <span className="text-2xl font-bold text-blue-600">
+                            ₹{service.price.toLocaleString()}
+                          </span>
+                          <span className="ml-1 text-sm text-gray-500">
+                            +GST
+                          </span>
+                        </div>
                       </div>
+
                       <Link
-                        href="/booking"
-                        className="relative inline-flex items-center justify-center px-5 py-2.5 overflow-hidden font-medium text-blue-600 rounded-full group bg-gradient-to-br from-blue-500 to-cyan-400 group-hover:from-blue-500 group-hover:to-cyan-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200"
+                        href={{
+                          pathname: "/booking",
+                          query: { service: service._id },
+                        }}
+                        className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-blue-600 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
                       >
-                        <span className="relative text-sm font-semibold">Book Now</span>
+                        <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-500 group-hover:translate-x-0 ease">
+                          <ArrowRight className="w-5 h-5" />
+                        </span>
+                        <span className="absolute flex items-center justify-center w-full h-full text-blue-500 transition-all duration-300 transform group-hover:translate-x-full ease">
+                          Book Now
+                        </span>
+                        <span className="relative invisible">Book Now</span>
                       </Link>
                     </div>
                   </div>
@@ -167,7 +236,7 @@ export default function Services() {
               ))}
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -175,28 +244,42 @@ export default function Services() {
               className="mt-16 bg-gradient-to-r from-blue-50 to-cyan-50 p-8 rounded-2xl border border-blue-100"
             >
               <div className="max-w-3xl mx-auto text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose Our Services?</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  Why Choose Our Services?
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                   <div className="p-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Clock className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Quick Service</h4>
-                    <p className="text-sm text-gray-600">Efficient and timely service to get you back on the road</p>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Quick Service
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Efficient and timely service to get you back on the road
+                    </p>
                   </div>
                   <div className="p-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Shield className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Quality Guarantee</h4>
-                    <p className="text-sm text-gray-600">Premium products and expert technicians</p>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Quality Guarantee
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Premium products and expert technicians
+                    </p>
                   </div>
                   <div className="p-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Award className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Satisfaction</h4>
-                    <p className="text-sm text-gray-600">100% satisfaction or your money back</p>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Satisfaction
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      100% satisfaction or your money back
+                    </p>
                   </div>
                 </div>
                 <div className="mt-10">

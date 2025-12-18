@@ -5,8 +5,7 @@ import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Navigation } from "@/components/Navigation";
 import ChatBot from "./components/ChatBot";
-import Link from "next/link";
-import { Phone, Mail, MapPin } from "lucide-react";
+import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +24,7 @@ export default function RootLayout({ children }) {
           <Navigation />
           <main className="flex-1 pt-16 md:pt-20">{children}</main>
           <ChatBot />
+          {/* <BackToTop /> */}
         </SessionProvider>
       </body>
     </html>

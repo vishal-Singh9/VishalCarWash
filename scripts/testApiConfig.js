@@ -32,6 +32,7 @@ const API_ENDPOINTS = {
   signup: `${API_BASE_URL}/api/auth/signup`,
   gallery: `${API_BASE_URL}/api/gallery`,
   contact: `${API_BASE_URL}/api/contact`,
+  reviews: `${API_BASE_URL}/api/reviews`,
 };
 
 // Display current configuration

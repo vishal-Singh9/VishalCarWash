@@ -5,28 +5,28 @@ import { Users, Clock, Users2, Star, ChevronRight } from 'lucide-react';
 
 const stats = [
   { 
-    number: '10,000+', 
+    number: '2000+', 
     label: 'Happy Customers',
     icon: <Users className="w-8 h-8 text-blue-100" />,
     color: 'from-blue-400 to-blue-500',
     delay: 0.1
   },
   { 
-    number: '15+', 
+    number: '5+', 
     label: 'Years Experience',
     icon: <Clock className="w-8 h-8 text-blue-100" />,
     color: 'from-emerald-400 to-emerald-500',
     delay: 0.2
   },
   { 
-    number: '50+', 
+    number: '15+', 
     label: 'Expert Team',
     icon: <Users2 className="w-8 h-8 text-blue-100" />,
     color: 'from-amber-400 to-amber-500',
     delay: 0.3
   },
   { 
-    number: '4.9', 
+    number: '5.0', 
     label: 'Average Rating',
     icon: <Star className="w-8 h-8 text-blue-100" />,
     color: 'from-rose-400 to-rose-500',
@@ -120,7 +120,7 @@ export default function Stats() {
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star 
                       key={star} 
-                      className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`} 
+                      className={`w-5 h-5 ${star <= 5 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`} 
                     />
                   ))}
                 </div>
@@ -139,7 +139,7 @@ export default function Stats() {
           className="mt-16 text-center"
         >
           <a 
-            href="#" 
+            href="/stories" 
             className="inline-flex items-center text-white font-medium group hover:text-blue-100 transition-colors"
           >
             Read our customer success stories

@@ -1,6 +1,4 @@
 'use client';
-
-import Link from 'next/link';
 import Stats from './components/home/Stats';
 import Features from './components/home/Features';
 import Services from './components/home/Services';
@@ -13,7 +11,6 @@ import { Newsletter } from './components/home/Newsletter';
 import { useServices } from './hooks/useServices';
 import Hero from './components/home/Hero';
 import Footer from './components/Footer';
-import dynamic from 'next/dynamic';
 
 
 
@@ -34,6 +31,7 @@ export default function Home() {
       <Features />
       <Services services={services} loading={loading} error={error} />
       <Testimonials />
+    
       <Gallery />
       <Pricing />
       <Newsletter />

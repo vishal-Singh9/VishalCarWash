@@ -24,7 +24,7 @@ export async function GET() {
       success: false,
       status: 500,
       message: 'Failed to retrieve services',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error:error,
       timestamp: new Date().toISOString()
     };
 

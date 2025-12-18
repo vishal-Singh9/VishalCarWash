@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Clock, ArrowRight, Loader2, Sparkles, Filter, X, ChevronDown } from 'lucide-react';
 
@@ -62,34 +63,53 @@ export default function Services() {
   const [activeCategory, setActiveCategory] = useState('all');
   const categories = useRef(['all', 'exterior', 'interior', 'premium']);
 
-  const fetchServices = async () => {
+  const fetchServices = useCallback(async (retryCount = 0) => {
+    const MAX_RETRIES = 2;
+    
     try {
       setLoading(true);
+      setError(null);
+      
       const response = await fetch(`/api/services`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch services: ${response.status} ${response.statusText}`);
-      }
       const result = await response.json();
       
+      if (!response.ok) {
+        throw new Error(result.error?.message || `Failed to fetch services: ${response.status} ${response.statusText}`);
+      }
+      
       // Check if the response has the expected structure
-      if (!result.success || !Array.isArray(result.data)) {
+      if (!result.success) {
+        throw new Error(result.error || 'Invalid response from server');
+      }
+      
+      if (!Array.isArray(result.data)) {
         throw new Error('Invalid data format received from API');
       }
       
-      setServices(result.data || []);
-      setFilteredServices(result.data || []);
+      setServices(result.data);
+      setFilteredServices(result.data);
     } catch (error) {
       console.error('Error fetching services:', error);
-      setError(error.message);
+      
+      // Retry logic for transient errors
+      if (retryCount < MAX_RETRIES && !error.message.includes('Invalid')) {
+        console.log(`Retrying... (${retryCount + 1}/${MAX_RETRIES})`);
+        // Wait 1 second before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return fetchServices(retryCount + 1);
+      }
+      
+      setError(error.message || 'Failed to load services. Please try again later.');
       setServices([]);
       setFilteredServices([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchServices();
+    
     // Add scroll reveal animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -99,12 +119,16 @@ export default function Services() {
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.service-card, .process-step, .additional-service').forEach(el => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+    // Observe all elements with these classes
+    const elements = document.querySelectorAll('.service-card, .process-step, .additional-service');
+    elements.forEach(el => observer.observe(el));
+    
+    // Cleanup function
+    return () => {
+      elements.forEach(el => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, [fetchServices]);
 
   useEffect(() => {
     if (!Array.isArray(services) || services.length === 0) {
@@ -414,15 +438,20 @@ export default function Services() {
                       <div className="grid grid-cols-1 md:grid-cols-2 h-full">
                         <div className="relative h-64 md:h-full overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
-                          <img
-                            src={service.image_url || '/images/car-wash-default.jpg'}
-                            alt={service.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = '/images/car-wash-default.jpg';
-                            }}
-                          />
+                          <div className="relative w-full h-full">
+                            <Image
+                              src={service.image }
+                              alt={service.name}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/images/car-wash-default.jpg';
+                              }}
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              priority={index < 3} // Only prioritize loading first 3 images
+                            />
+                          </div>
                           <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
                             <div className="inline-block bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2">
                               {service.category || 'Standard'}
