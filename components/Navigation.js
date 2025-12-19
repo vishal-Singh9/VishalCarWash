@@ -110,7 +110,7 @@ export function Navigation() {
                   {/* Logo */}
                   <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-white shadow-md mr-2 sm:mr-3">
                     <Image
-                      src="/images/Basic.webp"
+                      src="/images/vcw.webp"
                       alt="Car Wash Logo"
                       className="w-full h-full object-cover"
                       width={500}

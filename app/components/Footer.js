@@ -5,7 +5,7 @@ import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin } fr
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white mt-24 relative overflow-hidden">
+    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white  relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-5">
         <div className="absolute -top-20 -right-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>

@@ -1,22 +1,11 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import dbConnect from '@/lib/db';
 import Review from '@/models/Review';
-
-async function connectToDatabase() {
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    return { client, db };
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    throw new Error('Unable to connect to database');
-  }
-}
 
 // CORS headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
@@ -31,7 +20,8 @@ export async function POST(request) {
   try {
     const { name, email, rating, review: content } = await request.json();
     
-    const { db } = await connectToDatabase();
+    // Connect to database using the proper connection handler
+    await dbConnect();
     
     // Validate required fields
     if (!name || !content || !rating) {
@@ -59,11 +49,11 @@ export async function POST(request) {
       status: 'pending'
     });
     
-    await newReview.save();
+    const savedReview = await newReview.save();
     
     return new Response(JSON.stringify({ 
       success: true, 
-      data: newReview,
+      data: savedReview,
       message: 'Thank you for your review! It will be visible after moderation.' 
     }), {
       status: 200,
@@ -94,14 +84,36 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get('page') || '1');
+    const limit = parseInt(url.searchParams.get('limit') || '10');
+    const skip = (page - 1) * limit;
+
+    // Connect to database using the proper connection handler
     await dbConnect();
-    const reviews = await Review.find({ status: 'approved' })
-      .sort({ createdAt: -1 })
-      .limit(10);
     
-    return new Response(JSON.stringify({ success: true, data: reviews }), {
+    // Get total count for pagination
+    const total = await Review.countDocuments();
+    
+    // Get paginated and sorted reviews (newest first) - removed status filter
+    const reviews = await Review.find()
+      .sort({ createdAt: -1 }) // Sort by newest first
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    return new Response(JSON.stringify({ 
+      success: true, 
+      data: reviews,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +124,8 @@ export async function GET() {
     console.error('Error fetching reviews:', error);
     return new Response(JSON.stringify({
       success: false,
-      message: 'Error fetching reviews'
+      message: 'Error fetching reviews',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     }), {
       status: 500,
       headers: {

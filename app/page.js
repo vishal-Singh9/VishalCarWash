@@ -4,7 +4,7 @@ import Features from './components/home/Features';
 import Services from './components/home/Services';
 import { CTA } from './components/home/CTA';
 import { Testimonials } from './components/home/Testimonials';
-import { Gallery } from './components/home/Gallery';
+import { ShowGallery } from './components/home/ShowGallery';
 import { Pricing } from './components/home/Pricing';
 import { Contact } from './components/home/Contact';
 import { Newsletter } from './components/home/Newsletter';
@@ -32,7 +32,7 @@ export default function Home() {
       <Services services={services} loading={loading} error={error} />
       <Testimonials />
     
-      <Gallery />
+      <ShowGallery />
       <Pricing />
       <Newsletter />
       <Contact />

@@ -131,21 +131,7 @@ export default function Stats() {
           ))}
         </motion.div>
         
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="mt-16 text-center"
-        >
-          <a 
-            href="/stories" 
-            className="inline-flex items-center text-white font-medium group hover:text-blue-100 transition-colors"
-          >
-            Read our customer success stories
-            <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </a>
-        </motion.div>
+      
       </div>
     </section>
   );

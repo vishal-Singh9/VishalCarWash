@@ -170,11 +170,50 @@ export default function BookingPage() {
     }
   }, []);
 
+  // Handle URL parameters and service selection
   useEffect(() => {
     if (status === "authenticated") {
-      fetchServices();
+      fetchServices().then(() => {
+        // This will be handled in the fetchServices callback
+      });
     }
   }, [status, fetchServices]);
+  
+  // Add an effect to handle URL changes
+  useEffect(() => {
+    const handleRouteChange = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const serviceId = searchParams.get('service');
+      
+      if (serviceId && services.length > 0) {
+        const matchedService = services.find(service => 
+          service.name.toLowerCase().replace(/\s+/g, '-') === serviceId
+        );
+        
+        if (matchedService) {
+          setSelectedService(matchedService);
+          setActiveStep(2);
+          // Scroll to the booking form with a small delay to ensure the DOM is updated
+          setTimeout(() => {
+            const formSection = document.getElementById('booking-form');
+            if (formSection) {
+              formSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100);
+        }
+      }
+    };
+    
+    // Initial check
+    handleRouteChange();
+    
+    // Listen for route changes
+    window.addEventListener('popstate', handleRouteChange);
+    
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, [services]);
 
   // Pre-fill user data
   useEffect(() => {
@@ -645,7 +684,7 @@ export default function BookingPage() {
 
               {/* Step 2: Booking Details */}
               {activeStep === 2 && (
-                <div className="space-y-6">
+                <div id="booking-form" className="space-y-6">
                   <div className="text-center">
                     <h3 className="text-xl font-semibold text-gray-800">
                       Your Details

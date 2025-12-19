@@ -1,147 +1,163 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { MailCheck, ShieldCheck } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import {
+  MailCheck,
+  ShieldCheck,
+  Sparkles,
+  ChevronRight,
+  CheckCircle2,
+} from "lucide-react";
 
 export function Newsletter() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email) return;
-    
+    if (!validateEmail(email)) {
+      setIsValid(false);
+      return;
+    }
     setIsLoading(true);
-    
-    // Simulate API call
     setTimeout(() => {
-      console.log('Subscribed with:', email);
       setIsSubscribed(true);
-      setEmail('');
+      setEmail("");
       setIsLoading(false);
-    }, 1500);
-  };
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
+    }, 1200);
   };
 
   return (
-    <section className="relative py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-20 -top-20 w-96 h-96 bg-blue-500/20 rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute -left-20 -bottom-20 w-96 h-96 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl"></div>
-      </div>
+    <section className="relative py-24 md:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/carwashnews.webp')" }}
+      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
       <div className="relative container mx-auto px-4">
-        <motion.div 
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/10"
-        >
-          <motion.div 
-            variants={item}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-6"
-          >
-            <MailCheck className="w-8 h-8 text-white" />
-          </motion.div>
-          
-          <motion.h2 
-            variants={item}
-            className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100"
-          >
-            Stay in the Loop
-          </motion.h2>
-          
-          <motion.p 
-            variants={item}
-            className="text-xl mb-8 text-blue-100 max-w-2xl mx-auto"
-          >
-            Subscribe to our newsletter for exclusive offers, car care tips, and special discounts.
-          </motion.p>
-          
-          {isSubscribed ? (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-green-500/20 border border-green-400/30 rounded-xl p-6 text-center"
-            >
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 mb-4">
-                <ShieldCheck className="w-6 h-6 text-green-300" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">You are Subscribed!</h3>
-              <p className="text-green-100">Thank you for joining our community. Check your inbox for our welcome email.</p>
-            </motion.div>
-          ) : (
-            <motion.form 
-              variants={item}
-              onSubmit={handleSubmit}
-              className="space-y-4 max-w-2xl mx-auto"
-            >
-              <div className="flex flex-col sm:flex-row gap-3">
-                <div className="relative flex-grow">
-                  <Input 
-                    type="email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address" 
-                    className="w-full h-14 px-6 pr-12 text-gray-900 bg-white/90 backdrop-blur-sm border-0 shadow-lg focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-blue-600 rounded-xl"
-                    required
-                  />
-                  <MailCheck className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                </div>
-                <Button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="h-14 px-8 text-lg font-semibold whitespace-nowrap bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 rounded-xl"
-                >
-                  {isLoading ? 'Subscribing...' : 'Subscribe Now'}
-                </Button>
-              </div>
-              
-              <motion.p 
-                variants={item}
-                className="flex items-center justify-center text-sm text-blue-100 mt-4"
-              >
-                <ShieldCheck className="w-4 h-4 mr-2 text-blue-300" />
-                We respect your privacy. Unsubscribe at any time.
-              </motion.p>
-            </motion.form>
-          )}
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 text-center text-blue-100/80 text-sm"
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto rounded-3xl border border-white/10 
+                     bg-white/5 backdrop-blur-xl shadow-[0_0_80px_-20px_rgba(59,130,246,0.4)]
+                     p-8 md:p-12"
         >
-          Join over 10,000+ car enthusiasts who receive our weekly tips and offers
+          {/* Header */}
+          <div className="text-center mb-10">
+            <span
+              className="inline-flex items-center gap-2 px-4 py-1.5 
+                             rounded-full bg-blue-500/10 border border-blue-400/20
+                             text-blue-200 text-sm mb-6"
+            >
+              <Sparkles className="w-4 h-4" />
+              Newsletter
+            </span>
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Stay in the Loop
+            </h2>
+            <p className="text-white/80 max-w-xl mx-auto text-lg">
+              Exclusive offers, car care tips & special discounts — straight to
+              your inbox.
+            </p>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {isSubscribed ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="text-center py-12"
+              >
+                <div
+                  className="inline-flex items-center justify-center w-20 h-20 
+                                rounded-2xl bg-green-500/10 border border-green-400/30 mb-6"
+                >
+                  <CheckCircle2 className="w-10 h-10 text-green-400" />
+                </div>
+                <h3 className="text-2xl font-semibold mb-2">
+                  You’re Subscribed!
+                </h3>
+                <p className="text-white/80 max-w-md mx-auto mb-8">
+                  Thanks for joining us. Watch your inbox for exclusive updates.
+                </p>
+                <Button
+                  variant="outline"
+                  className="border-white/20 text-black hover:bg-white/20"
+                  onClick={() => setIsSubscribed(false)}
+                >
+                  Subscribe another email
+                </Button>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={`h-14 rounded-xl bg-white/5 border-2 
+                        ${!isValid ? "border-red-400" : "border-white/10"}
+                        focus:border-blue-400 focus:ring-blue-400/30
+                        text-white placeholder:text-white/60`}
+                    />
+                    {!isValid && (
+                      <p className="text-sm text-red-400 mt-2">
+                        Please enter a valid email address
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="h-14 px-8 rounded-xl font-medium 
+                               bg-gradient-to-r from-blue-500 to-indigo-600
+                               hover:from-blue-600 hover:to-indigo-700
+                               shadow-lg hover:shadow-xl transition"
+                  >
+                    {isLoading ? (
+                      "Subscribing..."
+                    ) : (
+                      <span className="flex items-center">
+                        Subscribe
+                        <ChevronRight className="ml-2 w-4 h-4" />
+                      </span>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Trust indicators */}
+                <div className="flex items-center justify-center gap-6 text-sm text-white/60 pt-2">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4" /> Privacy protected
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MailCheck className="w-4 h-4" /> No spam ever
+                  </span>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
