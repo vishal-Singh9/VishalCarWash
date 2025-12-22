@@ -26,16 +26,17 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden">
+      
       <Hero />
-      <Stats stats={stats} />
-      <Features />
+      {/* <Stats stats={stats} /> */}
       <Services services={services} loading={loading} error={error} />
+      <Features />
       <Testimonials />
     
       <ShowGallery />
       <Pricing />
-      <Newsletter />
-      <Contact />
+      {/* <Newsletter /> */}
+      {/* <Contact /> */}
       <CTA />
       <Footer />
    

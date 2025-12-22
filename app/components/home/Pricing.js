@@ -181,17 +181,18 @@ export function Pricing() {
             <Sparkles className="w-4 h-4 mr-2" />
             Pricing Plans
           </span>
-         <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700"
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-           Vishal Car Wash Pricing
+            Pricing
           </motion.h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto mb-6 rounded-full"></div>
           <motion.p
-            className="text-lg text-gray-600 mb-8"
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -200,6 +201,7 @@ export function Pricing() {
             Choose the perfect package for your vehicle. No hidden fees, just
             premium service.
           </motion.p>
+          
         </motion.div>
 
         <motion.div

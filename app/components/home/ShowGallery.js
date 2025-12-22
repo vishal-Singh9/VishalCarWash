@@ -98,16 +98,17 @@ export function ShowGallery() {
             Our Work Showcase
           </motion.span>
           <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700"
+            className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-           Vishal Car Wash Gallery
+            Gallery
           </motion.h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto mb-6 rounded-full"></div>
           <motion.p
-            className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto"
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -308,7 +309,7 @@ export function ShowGallery() {
             </div>
           </div> */}
 
-       {/* Enhanced Pagination */}
+          {/* Enhanced Pagination */}
           {/* View All Button */}
           <motion.div
             className="text-center mt-12"
@@ -326,8 +327,6 @@ export function ShowGallery() {
             </button>
           </motion.div>
         </div>
-
- 
       </div>
     </section>
   );

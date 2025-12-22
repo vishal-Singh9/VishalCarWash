@@ -180,7 +180,7 @@ export function Testimonials() {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl mb-6"
           >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-600 to-cyan-500">
               Loved by our
             </span>
             <span className="block mt-2">Valued Customers</span>

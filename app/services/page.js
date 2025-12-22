@@ -93,7 +93,6 @@ export default function Services() {
       
       // Retry logic for transient errors
       if (retryCount < MAX_RETRIES && !error.message.includes('Invalid')) {
-        console.log(`Retrying... (${retryCount + 1}/${MAX_RETRIES})`);
         // Wait 1 second before retrying
         await new Promise(resolve => setTimeout(resolve, 1000));
         return fetchServices(retryCount + 1);
@@ -495,7 +494,7 @@ export default function Services() {
                               <div className="text-3xl font-bold text-blue-600">₹{service.price}</div>
                             </div>
                             <Link
-                              href={`/booking?service=${service.id}`}
+                              href={`/booking?service=${encodeURIComponent(service.name.toLowerCase().replace(/\s+/g, '-'))}`}
                               className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-blue-600 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
                             >
                               <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-500 group-hover:translate-x-0 ease">
