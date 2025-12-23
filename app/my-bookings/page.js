@@ -38,7 +38,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { format, parseISO, isBefore, isAfter, addDays } from "date-fns";
-import { Progress } from "@/components/ui/progress";
 
 // Animation variants
 const container = {
