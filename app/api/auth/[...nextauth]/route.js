@@ -37,31 +37,43 @@ export const authOptions = {
         try {
           await dbConnect();
           
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error('Please provide email and password');
+          // Input validation
+          if (!credentials?.email?.trim() || !credentials?.password) {
+            console.error('Missing credentials');
+            throw new Error('Please provide both email and password');
           }
           
-          // Case-insensitive email search
+          const email = credentials.email.trim().toLowerCase();
+          console.log('Auth attempt for email:', email);
+          
+          // Case-insensitive email search with proper error handling
           const user = await User.findOne({ 
-            email: { $regex: new RegExp(`^${credentials.email}$`, 'i') } 
-          }).select('+password');
+            email: { $regex: new RegExp(`^${email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+          }).select('+password').lean();
           
           if (!user) {
-            throw new Error('No user found with this email');
+            console.error('No user found for email:', email);
+            throw new Error('Invalid email or password');
           }
           
+          console.log('User found, verifying password...');
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+          
           if (!isPasswordValid) {
-            throw new Error('Invalid password');
+            console.error('Invalid password for user:', email);
+            throw new Error('Invalid email or password');
           }
+          
+          console.log('Authentication successful for user:', email);
           
           // Return user object with ID and required fields
           return {
             id: user._id.toString(),
             _id: user._id.toString(),
             name: user.name,
-            email: user.email,
+            email: user.email.toLowerCase(), // Ensure email is always lowercase
             role: user.role || 'user',
+            image: user.image
           };
         } catch (error) {
           console.error('Authorization error:', error);

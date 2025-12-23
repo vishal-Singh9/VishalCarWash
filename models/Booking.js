@@ -40,6 +40,10 @@ const bookingSchema = new mongoose.Schema(
     customerName: String,
     customerEmail: String,
     customerPhone: String,
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
