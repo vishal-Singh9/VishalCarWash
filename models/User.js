@@ -22,7 +22,10 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please provide a password'],
+      required: function() {
+        // Password is not required for OAuth users
+        return this.emailVerified === null || this.emailVerified === undefined;
+      },
       minlength: [6, 'Password must be at least 6 characters long'],
       select: false,
     },
@@ -38,6 +41,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
+    },
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpire: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true }

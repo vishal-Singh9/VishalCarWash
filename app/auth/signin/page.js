@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Sparkles, CheckCircle2, Star, Award } from 'lucide-react';
 
@@ -109,11 +110,12 @@ export default function SignIn() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
-                      <img 
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg relative">
+                      <Image 
                         src="/images/nissan.jpeg" 
                         alt="Logo" 
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                     <div>
@@ -215,7 +217,7 @@ export default function SignIn() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="you@example.com"
                       disabled={isLoading}
                     />
@@ -245,7 +247,7 @@ export default function SignIn() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
@@ -369,11 +371,14 @@ export default function SignIn() {
                 className="mt-12 rounded-2xl overflow-hidden shadow-2xl relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                <img 
-                  src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&auto=format&fit=crop&q=80" 
-                  alt="Premium Car Wash Service" 
-                  className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <div className="relative w-full h-64">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&auto=format&fit=crop&q=80" 
+                    alt="Premium Car Wash Service" 
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

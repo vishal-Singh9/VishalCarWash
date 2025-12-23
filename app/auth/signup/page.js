@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, User as UserIcon, Sparkles, Shield, Clock, CheckCircle } from 'lucide-react';
@@ -166,11 +167,12 @@ export default function SignUp() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
-                      <img 
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg relative">
+                      <Image 
                         src="/images/nissan.jpeg" 
                         alt="Logo" 
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                     <div>
@@ -267,7 +269,7 @@ export default function SignUp() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="John Doe"
                       disabled={isLoading}
                     />
@@ -290,7 +292,7 @@ export default function SignUp() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="you@example.com"
                       disabled={isLoading}
                     />
@@ -320,7 +322,7 @@ export default function SignUp() {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
@@ -364,7 +366,7 @@ export default function SignUp() {
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
@@ -502,11 +504,14 @@ export default function SignUp() {
                 className="mt-12 rounded-2xl overflow-hidden shadow-2xl relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                <img 
-                  src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop&q=80" 
-                  alt="Professional Car Wash Service" 
-                  className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <div className="relative w-full h-64">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop&q=80" 
+                    alt="Professional Car Wash Service" 
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

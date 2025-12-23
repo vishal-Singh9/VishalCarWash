@@ -4,6 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import User from '@/models/User';
 import dbConnect from '@/lib/db';
 import { ObjectId } from 'mongodb';
@@ -14,8 +15,16 @@ export const authOptions = {
   }),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      },
+      redirect_uri: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/callback/google`,
       profile(profile) {
         return {
           id: profile.sub,
@@ -24,6 +33,7 @@ export const authOptions = {
           email: profile.email,
           image: profile.picture,
           role: 'user',
+          emailVerified: new Date(),
         };
       },
     }),
@@ -87,21 +97,61 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, account }) => {
       // Add user ID and role to the token when user signs in
       if (user) {
         token.id = user.id;
         token.role = user.role || 'user';
       }
+      
+      // Store provider info for OAuth users
+      if (account) {
+        token.provider = account.provider;
+      }
+      
       return token;
     },
     session: async ({ session, token }) => {
-      // Add user ID and role to the session
+      // Add user ID, role, and provider to the session
       if (session?.user) {
         session.user.id = token.id;
         session.user.role = token.role;
+        session.user.provider = token.provider;
       }
       return session;
+    },
+    async signIn({ user, account, profile }) {
+      // Allow OAuth sign-ins
+      if (account?.provider === 'google') {
+        try {
+          await dbConnect();
+          
+          // Check if user exists
+          const existingUser = await User.findOne({ 
+            email: { $regex: new RegExp(`^${user.email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+          });
+          
+          // If user doesn't exist, create one
+          if (!existingUser) {
+            await User.create({
+              name: user.name,
+              email: user.email.toLowerCase(),
+              image: user.image,
+              emailVerified: new Date(),
+              role: 'user',
+              // OAuth users don't have passwords
+              password: crypto.randomBytes(32).toString('hex'),
+            });
+          }
+          
+          return true;
+        } catch (error) {
+          console.error('Error during Google sign in:', error);
+          return false;
+        }
+      }
+      
+      return true;
     },
   },
   pages: {
