@@ -11,6 +11,12 @@ import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  verification: {
+    google: "puA3HxKKYhYcTzj_8kghztugog_JE21YC3OV4RfXt2o",
+  },
+};
+
 export default function RootLayout({ children }) {
   const [mounted, setMounted] = useState(false);
 
