@@ -11,12 +11,6 @@ import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  verification: {
-    google: "puA3HxKKYhYcTzj_8kghztugog_JE21YC3OV4RfXt2o",
-  },
-};
-
 export default function RootLayout({ children }) {
   const [mounted, setMounted] = useState(false);
 
@@ -34,6 +28,7 @@ export default function RootLayout({ children }) {
           content="Premium car wash and detailing services"
         />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="google-site-verification" content="puA3HxKKYhYcTzj_8kghztugog_JE21YC3OV4RfXt2o" />
       </head>
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-white text-gray-900 transition-colors duration-200`}
