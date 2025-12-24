@@ -10,9 +10,7 @@ const colors = {
   magenta: '\x1b[35m',
 };
 
-console.log('\n╔════════════════════════════════════════════════════════════╗');
-console.log('║          API Configuration Test                           ║');
-console.log('╚════════════════════════════════════════════════════════════╝\n');
+
 
 // Simulate the API config logic
 const getApiBaseUrl = () => {
@@ -35,20 +33,14 @@ const API_ENDPOINTS = {
   reviews: `${API_BASE_URL}/api/reviews`,
 };
 
-// Display current configuration
-console.log(`${colors.cyan}📊 Current Configuration:${colors.reset}`);
-console.log(`   NEXT_PUBLIC_API_URL: ${colors.green}${process.env.NEXT_PUBLIC_API_URL || '(not set - using default)'}${colors.reset}`);
-console.log(`   NEXTAUTH_URL: ${colors.green}${process.env.NEXTAUTH_URL || '(not set)'}${colors.reset}`);
-console.log(`   Resolved Base URL: ${colors.magenta}${API_BASE_URL}${colors.reset}\n`);
+
 
 // Display all endpoints
-console.log(`${colors.cyan}🔗 API Endpoints:${colors.reset}`);
 Object.entries(API_ENDPOINTS).forEach(([key, url]) => {
   console.log(`   ${colors.yellow}${key.padEnd(15)}${colors.reset} → ${colors.blue}${url}${colors.reset}`);
 });
 
 // Test buildApiUrl function
-console.log(`\n${colors.cyan}🧪 Test Query Parameters:${colors.reset}`);
 
 const buildApiUrl = (endpoint, params = {}) => {
   const url = new URL(endpoint);

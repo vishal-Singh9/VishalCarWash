@@ -1,11 +1,41 @@
 'use client';
 
-import { Award, Users, Target, Heart, CheckCircle, ChevronRight, Star, Shield, Leaf, Clock, Sparkles, MessageSquare, Truck, Headset } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Award, Users, Target, Heart, CheckCircle, ChevronRight, Star, Shield, Leaf, Clock, Sparkles, MessageSquare, Truck, Headset, MapPin, Phone, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'easeOut'
+    }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 export default function About() {
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const values = [
     {
       icon: Award,
@@ -35,31 +65,31 @@ export default function About() {
 
   const milestones = [
     { 
-      year: '2008', 
+      year: '2021', 
       event: 'Founded Vishal Car Wash',
       icon: '🚗',
       description: 'Started our journey with a single location and a vision for exceptional car care'
     },
     { 
-      year: '2012', 
+      year: '2022', 
       event: 'Expanded to 3 locations',
       icon: '📍',
       description: 'Grew our presence to serve more customers across the city'
     },
     { 
-      year: '2016', 
+      year: '2023', 
       event: 'Introduced eco-friendly products',
       icon: '🌱',
       description: 'Committed to sustainability with environmentally friendly cleaning solutions'
     },
     { 
-      year: '2020', 
+      year: '2024', 
       event: 'Served 10,000+ customers',
       icon: '👥',
       description: 'Reached a significant milestone in our journey of customer satisfaction'
     },
     { 
-      year: '2024', 
+      year: '2025', 
       event: 'Award for Best Car Wash Service',
       icon: '🏆',
       description: 'Recognized for excellence in service quality and customer experience'
@@ -93,12 +123,6 @@ export default function About() {
     }
   ];
 
-  const stats = [
-    { value: '15+', label: 'Years Experience', icon: <Award className="w-8 h-8" /> },
-    { value: '25K+', label: 'Cars Washed', icon: <Truck className="w-8 h-8" /> },
-    { value: '98%', label: 'Happy Customers', icon: <Star className="w-8 h-8" /> },
-    { value: '24/7', label: 'Support', icon: <Headset className="w-8 h-8" /> }
-  ];
 
   const testimonials = [
     {
@@ -188,13 +212,13 @@ export default function About() {
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
-              Our Journey Since 2008
+              Our Journey Since 2021
             </span>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
               About Us
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Your trusted partner in premium car care, delivering excellence in every detail since 2008
+              Your trusted partner in premium car care, delivering excellence in every detail since 2021
             </p>
             <motion.div 
               className="mt-10"
@@ -202,7 +226,7 @@ export default function About() {
               whileTap={{ scale: 0.95 }}
             >
               <a 
-                href="#contact" 
+                href="/contact" 
                 className="inline-flex items-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Get in Touch
@@ -232,14 +256,14 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-gray-600">
                 <p className="text-lg">
-                  Founded in 2008, Vishal Car Wash began with a simple mission: to provide the best car wash and detailing services in the region. What started as a small operation with just three team members has grown into a trusted name in automotive care.
+                  Founded in 2021, Vishal Car Wash began with a simple mission: to provide the best car wash and detailing services in the region. What started as a small operation with just three team members has grown into a trusted name in automotive care.
                 </p>
                 <p className="text-lg">
                   Over the years, we have served thousands of satisfied customers, always maintaining our commitment to quality, professionalism, and environmental responsibility. Our team of experienced professionals uses the latest equipment and eco-friendly products to ensure your vehicle gets the care it deserves.
                 </p>
                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
                   <p className="text-blue-800 font-medium">
-                     We believe in building relationships, not just cleaning cars. Every vehicle that comes through our doors is treated with the utmost care and attention to detail.
+                    We believe in building relationships, not just cleaning cars. Every vehicle that comes through our doors is treated with the utmost care and attention to detail.
                   </p>
                   <div className="mt-4 flex items-center">
                     <div className="h-10 w-10 rounded-full bg-blue-200 flex items-center justify-center text-blue-800 font-bold">
@@ -460,29 +484,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <motion.div 
-                key={index}
-                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                <div className="text-gray-600">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Why Choose Us */}
       <section className="py-20 bg-white">

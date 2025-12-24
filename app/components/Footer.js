@@ -49,14 +49,14 @@ export default function Footer() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-24 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl ${
+        className={`fixed bottom-28 right-7 z-50 p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl ${
           showScroll
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10 pointer-events-none"
         }`}
         aria-label="Back to top"
       >
-        <ChevronUp className="w-8 h-8" />
+        <ChevronUp className="w-9 h-9" />
       </button>
 
       <div className="container mx-auto px-4 py-16 relative">
@@ -130,7 +130,9 @@ export default function Footer() {
                 { text: "About Us", href: "/about" },
                 { text: "Services", href: "/services" },
                 { text: "Gallery", href: "/gallery" },
-                { text: "Pricing", href: "/pricing" },
+                { text: "Blog", href: "/blog" },
+                { text: "FAQ", href: "/faq" },
+                { text: "Feedback", href: "/feedback" },
                 { text: "Contact Us", href: "/contact" },
               ].map((item, index) => (
                 <li key={index} className="group">

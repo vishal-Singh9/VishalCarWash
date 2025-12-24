@@ -54,7 +54,6 @@ export const authOptions = {
           }
           
           const email = credentials.email.trim().toLowerCase();
-          console.log('Auth attempt for email:', email);
           
           // Case-insensitive email search with proper error handling
           const user = await User.findOne({ 
@@ -66,7 +65,6 @@ export const authOptions = {
             throw new Error('Invalid email or password');
           }
           
-          console.log('User found, verifying password...');
           const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
           
           if (!isPasswordValid) {
@@ -74,7 +72,6 @@ export const authOptions = {
             throw new Error('Invalid email or password');
           }
           
-          console.log('Authentication successful for user:', email);
           
           // Return user object with ID and required fields
           return {

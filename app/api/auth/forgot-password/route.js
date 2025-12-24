@@ -14,16 +14,7 @@ const sendResetEmail = async (email, resetToken) => {
   // In production, use a service like SendGrid, Nodemailer, or AWS SES
   const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3001'}/auth/reset-password?token=${resetToken}`;
   
-  console.log(`
-    ========================================
-    PASSWORD RESET EMAIL
-    ========================================
-    To: ${email}
-    Reset URL: ${resetUrl}
-    
-    This link will expire in 1 hour.
-    ========================================
-  `);
+
   
   // TODO: Replace with actual email sending service
   // For now, we'll just log it to console
