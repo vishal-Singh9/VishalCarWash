@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
-        <title>Vishal Car Wash - Professional Car Cleaning Services</title>
+        <title>Vishal Car Wash - Varanasi</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content="https://vishal-car-wash.vercel.app/" />
         <meta
           property="og:title"
-          content="Vishal Car Wash - Professional Car Cleaning Services"
+          content="Vishal Car Wash - Varanasi"
         />
         <meta
           property="og:description"
@@ -60,7 +60,7 @@ export default function RootLayout({ children }) {
         <meta property="twitter:url" content="https://vishal-car-wash.vercel.app/" />
         <meta
           property="twitter:title"
-          content="Vishal Car Wash - Professional Car Cleaning Services"
+          content="Vishal Car Wash - Varanasi"
         />
         <meta
           property="twitter:description"

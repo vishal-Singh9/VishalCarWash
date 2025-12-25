@@ -2,9 +2,18 @@
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
+# Disallow admin, API, and internal routes
 Disallow: /admin/
 Disallow: /api/
+Disallow: /_next/
+Disallow: /_error
+Disallow: /404
+Disallow: /500
 
-# Sitemap location (uncomment and update when you have a sitemap)
+# Crawl-delay: 10  # Uncomment and adjust if needed to limit crawl rate
+
+# Sitemap location
+Sitemap: https://vishal-car-wash.vercel.app/sitemap.xml
+
+# Additional sitemaps can be added here if needed
 Sitemap: https://vishal-car-wash.vercel.app/sitemap.xml

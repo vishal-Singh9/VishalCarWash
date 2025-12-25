@@ -18,6 +18,9 @@ import {
   Calendar,
   Settings,
   Shield,
+  BookOpen,
+  HelpCircle,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
@@ -27,6 +30,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -68,6 +72,7 @@ export function Navigation() {
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
+    setAboutDropdownOpen(false);
   }, [pathname]);
 
   const navItems = [
@@ -94,6 +99,11 @@ export function Navigation() {
       href: "/about",
       icon: Info,
       gradient: "from-amber-500 to-orange-400",
+      dropdown: [
+        { name: "About Us", href: "/about", icon: Users },
+        { name: "Blog", href: "/blog", icon: BookOpen },
+        { name: "FAQ", href: "/faq", icon: HelpCircle },
+      ],
     },
     {
       name: "Contact",
@@ -179,8 +189,62 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname === item.href || (item.dropdown && item.dropdown.some(dropItem => dropItem.href === pathname));
                 const Icon = item.icon;
+
+                if (item.dropdown) {
+                  return (
+                    <div key={item.name} className="relative group" ref={dropdownRef}>
+                      <button
+                        onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300",
+                          isActive
+                            ? "text-blue-600"
+                            : "text-gray-600 hover:text-gray-900"
+                        )}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${aboutDropdownOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      
+                      <AnimatePresence>
+                        {aboutDropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
+                          >
+                            {item.dropdown.map((dropItem) => {
+                              const isActive = pathname === dropItem.href;
+                              return (
+                                <Link
+                                  key={dropItem.name}
+                                  href={dropItem.href}
+                                  onClick={() => setAboutDropdownOpen(false)}
+                                  className={cn(
+                                    "flex items-center gap-3 px-4 py-3 text-sm hover:bg-gray-50 transition-colors group",
+                                    isActive ? "text-blue-600 bg-blue-50" : "text-gray-700"
+                                  )}
+                                >
+                                  <dropItem.icon 
+                                    className={cn(
+                                      "w-4 h-4 flex-shrink-0",
+                                      isActive ? "text-blue-500" : "text-gray-500 group-hover:text-gray-700"
+                                    )} 
+                                  />
+                                  <span>{dropItem.name}</span>
+                                </Link>
+                              );
+                            })}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
 
                 return (
                   <Link
@@ -491,8 +555,81 @@ export function Navigation() {
                 {/* Navigation Links */}
                 <div className="space-y-1 mb-4">
                   {navItems.map((item, index) => {
-                    const isActive = pathname === item.href;
+                    const isActive = pathname === item.href || (item.dropdown && item.dropdown.some(dropItem => dropItem.href === pathname));
                     const Icon = item.icon;
+
+                    if (item.dropdown) {
+                      return (
+                        <motion.div
+                          key={item.name}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + index * 0.05 }}
+                          className="space-y-1"
+                        >
+                          <button
+                            onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
+                            className={cn(
+                              "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 text-left",
+                              isActive
+                                ? "bg-blue-50 text-blue-600"
+                                : "text-gray-700 hover:bg-gray-50"
+                            )}
+                          >
+                            <div className="flex items-center gap-3">
+                              <Icon className="w-5 h-5" />
+                              <span>{item.name}</span>
+                            </div>
+                            <ChevronDown 
+                              className={`w-4 h-4 transition-transform duration-200 ${aboutDropdownOpen ? 'rotate-180' : ''}`} 
+                            />
+                          </button>
+                          
+                          <AnimatePresence>
+                            {aboutDropdownOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden pl-12 space-y-1"
+                              >
+                                {item.dropdown.map((dropItem) => {
+                                  const isDropActive = pathname === dropItem.href;
+                                  return (
+                                    <Link
+                                      key={dropItem.name}
+                                      href={dropItem.href}
+                                      onClick={() => {
+                                        setMobileMenuOpen(false);
+                                        setAboutDropdownOpen(false);
+                                      }}
+                                      className={cn(
+                                        "flex items-center gap-3 px-4 py-2.5 text-sm rounded-lg transition-colors group",
+                                        isDropActive 
+                                          ? "bg-blue-50 text-blue-600" 
+                                          : "text-gray-700 hover:bg-gray-50"
+                                      )}
+                                    >
+                                      <dropItem.icon 
+                                        className={cn(
+                                          "w-4 h-4 flex-shrink-0",
+                                          isDropActive ? "text-blue-500" : "text-gray-500 group-hover:text-gray-700"
+                                        )} 
+                                      />
+                                      <span>{dropItem.name}</span>
+                                      {isDropActive && (
+                                        <div className="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                                      )}
+                                    </Link>
+                                  );
+                                })}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      );
+                    }
 
                     return (
                       <motion.div
