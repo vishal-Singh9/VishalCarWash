@@ -4,8 +4,27 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, Clock, ArrowRight, Loader2, Sparkles, Filter, X, ChevronDown } from 'lucide-react';
+import { CheckCircle, Clock, ArrowRight, Loader2, Sparkles, Filter, X, ChevronDown, Phone } from 'lucide-react';
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+  hover: {
+    y: -5,
+    transition: { duration: 0.2 },
+  },
+  tap: {
+    scale: 0.98,
+  },
+};
 const additionalServices = [
   {
     title: 'Additional Services',
@@ -236,7 +255,7 @@ export default function Services() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight"
             >
-              Professional Car Care <span className="text-blue-300">Services</span>
+             Smart Car Care <span className="text-blue-300">Services</span>
             </motion.h1>
             <motion.p 
               initial={{ y: 20, opacity: 0 }}
@@ -646,71 +665,48 @@ export default function Services() {
             ))}
           </div>
           
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="mt-20 text-center"
-          >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Book Your Car Service <span className="text-blue-600">Today</span>
-            </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-              Join thousands of satisfied customers who trust us with their vehicles.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link 
-                href="/booking" 
-                className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-200"
-              >
-                Book Now
-              </Link>
-              <Link 
-                href="/contact" 
-                className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-full border-2 border-blue-100 hover:bg-blue-50 transition-all duration-300"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </motion.div>
+  
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Book Your Service?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
-            Choose the perfect package for your vehicle and schedule your appointment today
-          </p>
-          <Link
-            href="/booking"
-            className="inline-block bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105"
-          >
-            Book Your Appointment Now
-          </Link>
-        </div>
-      </section>
-      {/* Floating Action Button */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="fixed bottom-8 right-8 z-50"
-      >
-        <Link 
-          href="/booking"
-          className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          aria-label="Book a service"
-        >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-        </Link>
-      </motion.div>
+         <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+              <div className="absolute inset-0 bg-black/30"></div>
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+      
+              <div className="container mx-auto px-4 relative z-10">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeInUp}
+                  className="text-center max-w-3xl mx-auto"
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to give your car the care it deserves?
+                  </h2>
+                  <p className="text-xl text-blue-100 mb-8">
+                    Book an appointment today and experience the difference of a
+                    professional car wash service.
+                  </p>
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <a
+                      href="tel:+919876543210"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                    >
+                      <Phone className="w-5 h-5 mr-2" />
+                      Call Us Now
+                    </a>
+                    <a
+                      href="/booking"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
+                    >
+                      Book Online
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+            </section>
       
       {/* Custom scrollbar */}
       <style jsx global>{`

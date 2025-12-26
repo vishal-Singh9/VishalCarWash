@@ -12,19 +12,28 @@ import {
   TrendingUp,
   MessageCircle,
   Eye,
+  Phone,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: {
+  visible: (i = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
+      delay: i * 0.1,
       duration: 0.6,
       ease: [0.16, 1, 0.3, 1],
     },
+  }),
+  hover: {
+    y: -5,
+    transition: { duration: 0.2 },
+  },
+  tap: {
+    scale: 0.98,
   },
 };
 
@@ -412,37 +421,44 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="max-w-4xl mx-auto bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl shadow-2xl overflow-hidden p-10 md:p-16 text-center text-white"
-          >
-            <TrendingUp className="w-16 h-16 mx-auto mb-6 opacity-90" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Stay Updated with Our Latest Posts
-            </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Subscribe to our newsletter and get car care tips, guides, and
-              exclusive offers delivered to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-white focus:outline-none"
-              />
-              <button className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+     {/* CTA Section */}
+         <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+              <div className="absolute inset-0 bg-black/30"></div>
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+      
+              <div className="container mx-auto px-4 relative z-10">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeInUp}
+                  className="text-center max-w-3xl mx-auto"
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to give your car the care it deserves?
+                  </h2>
+                  <p className="text-xl text-blue-100 mb-8">
+                    Book an appointment today and experience the difference of a
+                    professional car wash service.
+                  </p>
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <a
+                      href="tel:+919876543210"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                    >
+                      <Phone className="w-5 h-5 mr-2" />
+                      Call Us Now
+                    </a>
+                    <a
+                      href="/booking"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
+                    >
+                      Book Online
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+            </section>
     </div>
   );
 }

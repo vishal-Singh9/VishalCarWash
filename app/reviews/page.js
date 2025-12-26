@@ -622,7 +622,7 @@ export default function StoriesPage() {
               Share Your Experience
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We value your feedback! Share your thoughts and help us improve
+              We value your review! Share your thoughts and help us improve
               our service.
             </p>
           </motion.div>
@@ -793,7 +793,7 @@ export default function StoriesPage() {
 
             <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 text-center">
               <p className="text-sm text-gray-500">
-                Your feedback helps us improve our services. Thank you for your
+                Your review helps us improve our services. Thank you for your
                 time!
               </p>
             </div>

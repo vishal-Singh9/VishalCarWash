@@ -22,8 +22,8 @@ export default function FeedbackModal() {
     name: '',
     email: '',
     rating: 0,
-    category: 'overall',
-    feedback: '',
+    // category: 'overall',
+    review: '',
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,7 +102,7 @@ export default function FeedbackModal() {
       newErrors.email = 'Email is invalid';
     }
     if (!formData.rating) newErrors.rating = 'Please select a rating';
-    if (!formData.feedback.trim()) newErrors.feedback = 'Feedback is required';
+    if (!formData.review.trim()) newErrors.review = 'Feedback is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -138,7 +138,7 @@ export default function FeedbackModal() {
     setSubmitStatus({ success: false, message: '' });
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('/api/review', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,12 +149,12 @@ export default function FeedbackModal() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit feedback');
+        throw new Error(result.error || 'Failed to submit review.');
       }
 
       setSubmitStatus({
         success: true,
-        message: 'Thank you for your feedback! We truly appreciate your time.',
+        message: 'Thank you for your review! We truly appreciate your time.',
       });
 
       // Reset form
@@ -163,10 +163,10 @@ export default function FeedbackModal() {
         email: '',
         rating: 0,
         category: 'overall',
-        feedback: '',
+        review: '',
       });
 
-      // Set session storage when feedback is successfully submitted
+      // Set session storage when review is successfully submitted
       sessionStorage.setItem('feedbackModalShown', 'true');
 
       // Close modal after 3 seconds
@@ -174,10 +174,10 @@ export default function FeedbackModal() {
         setIsOpen(false);
       }, 3000);
     } catch (error) {
-      console.error('Error submitting feedback:', error);
+      console.error('Error submitting review:', error);
       setSubmitStatus({
         success: false,
-        message: error.message || 'Failed to submit feedback. Please try again.',
+        message: error.message || 'Failed to submit review. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -217,7 +217,7 @@ export default function FeedbackModal() {
               <button
                 onClick={handleClose}
                 className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all duration-200 hover:rotate-90"
-                aria-label="Close feedback modal"
+                aria-label="Close review modal"
               >
                 <X className="w-5 h-5 text-gray-600" />
               </button>
@@ -232,7 +232,7 @@ export default function FeedbackModal() {
                     <Heart className="w-8 h-8 text-blue-600" />
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    We&apos;d Love Your Feedback!
+                    We&apos;d Love Your Review!
                   </h2>
                   <p className="text-gray-600 text-sm">
                     Help us improve by sharing your experience with our service.
@@ -362,7 +362,7 @@ export default function FeedbackModal() {
                     </div>
 
                     {/* Category */}
-                    <div>
+                    {/* <div>
                       <label
                         htmlFor="modal-category"
                         className="block text-sm font-medium text-gray-700 mb-1"
@@ -383,7 +383,7 @@ export default function FeedbackModal() {
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </div> */}
 
                     {/* Feedback */}
                     <div>
@@ -391,18 +391,18 @@ export default function FeedbackModal() {
                         htmlFor="modal-feedback"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Your Feedback <span className="text-red-500">*</span>
+                        Your Review <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <MessageSquare className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                         <textarea
                           id="modal-feedback"
-                          name="feedback"
+                          name="review"
                           rows="3"
-                          value={formData.feedback}
+                          value={formData.review}
                           onChange={handleChange}
                           className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
-                            errors.feedback
+                            errors.review
                               ? 'border-red-300 focus:ring-red-500'
                               : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
                           } focus:border-blue-500 transition-all duration-200 resize-none text-sm`}
@@ -410,8 +410,8 @@ export default function FeedbackModal() {
                           disabled={isSubmitting}
                         ></textarea>
                       </div>
-                      {errors.feedback && (
-                        <p className="text-xs text-red-600 mt-1">{errors.feedback}</p>
+                      {errors.review && (
+                        <p className="text-xs text-red-600 mt-1">{errors.review}</p>
                       )}
                     </div>
 

@@ -368,44 +368,44 @@ export default function FAQ() {
       </section>
 
       {/* Contact CTA Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={fadeInUp}
-            className="max-w-4xl mx-auto bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl shadow-2xl overflow-hidden"
-          >
-            <div className="p-10 md:p-16 text-center text-white">
-              <MessageCircle className="w-16 h-16 mx-auto mb-6 opacity-90" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Still have questions?
-              </h2>
-              <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Can&apos;t find the answer you&apos;re looking for? Our friendly
-                team is here to help you.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
-                >
-                  <Mail className="w-5 h-5 mr-2" />
-                  Contact Us
-                </Link>
-                <a
-                  href="tel:+919956414364"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
-                >
-                  <Phone className="w-5 h-5 mr-2" />
-                  Call Us Now
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    {/* CTA Section */}
+           <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+        
+                <div className="container mx-auto px-4 relative z-10">
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={fadeInUp}
+                    className="text-center max-w-3xl mx-auto"
+                  >
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                      Ready to give your car the care it deserves?
+                    </h2>
+                    <p className="text-xl text-blue-100 mb-8">
+                      Book an appointment today and experience the difference of a
+                      professional car wash service.
+                    </p>
+                    <div className="flex flex-col sm:flex-row justify-center gap-4">
+                      <a
+                        href="tel:+919876543210"
+                        className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                      >
+                        <Phone className="w-5 h-5 mr-2" />
+                        Call Us Now
+                      </a>
+                      <a
+                        href="/booking"
+                        className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
+                      >
+                        Book Online
+                      </a>
+                    </div>
+                  </motion.div>
+                </div>
+              </section>
     </div>
   );
 }

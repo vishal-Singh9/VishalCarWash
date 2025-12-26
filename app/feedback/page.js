@@ -33,8 +33,8 @@ export default function Feedback() {
     name: '',
     email: '',
     rating: 0,
-    category: 'overall',
-    feedback: '',
+    // category: 'overall',
+    review: '',
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +59,7 @@ export default function Feedback() {
       newErrors.email = 'Email is invalid';
     }
     if (!formData.rating) newErrors.rating = 'Please select a rating';
-    if (!formData.feedback.trim()) newErrors.feedback = 'Feedback is required';
+    if (!formData.review.trim()) newErrors.review = 'Review is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -95,7 +95,7 @@ export default function Feedback() {
     setSubmitStatus({ success: false, message: '' });
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,12 +106,12 @@ export default function Feedback() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit feedback');
+        throw new Error(result.error || 'Failed to submit review');
       }
 
       setSubmitStatus({
         success: true,
-        message: 'Thank you for your feedback! We truly appreciate your time.',
+        message: 'Thank you for your review! We truly appreciate your time.',
       });
 
       // Reset form
@@ -119,8 +119,8 @@ export default function Feedback() {
         name: '',
         email: '',
         rating: 0,
-        category: 'overall',
-        feedback: '',
+        // category: 'overall',
+        review: '',
       });
 
       // Clear success message after 5 seconds
@@ -128,10 +128,10 @@ export default function Feedback() {
         setSubmitStatus({ success: false, message: '' });
       }, 5000);
     } catch (error) {
-      console.error('Error submitting feedback:', error);
+      console.error('Error submitting review:', error);
       setSubmitStatus({
         success: false,
-        message: error.message || 'Failed to submit feedback. Please try again.',
+        message: error.message || 'Failed to submit review. Please try again.',
       });
 
       // Clear error message after 5 seconds
@@ -205,7 +205,7 @@ export default function Feedback() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Share Your Feedback
+              Share Your Review
             </motion.h1>
             <motion.p
               className="text-xl text-blue-100 max-w-2xl mx-auto"
@@ -213,7 +213,7 @@ export default function Feedback() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              Help us serve you better! Your feedback helps us improve our
+              Help us serve you better! Your review helps us improve our
               services and create a better experience for everyone.
             </motion.p>
           </motion.div>
@@ -367,7 +367,7 @@ export default function Feedback() {
                 </div>
 
                 {/* Category */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label
                     htmlFor="category"
                     className="block text-sm font-medium text-gray-700"
@@ -388,36 +388,36 @@ export default function Feedback() {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
 
                 {/* Feedback */}
                 <div className="space-y-1">
                   <label
-                    htmlFor="feedback"
+                    htmlFor="review"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Your Feedback <span className="text-red-500">*</span>
+                    Your Review <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <MessageSquare className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                     <textarea
-                      id="feedback"
-                      name="feedback"
+                      id="review"
+                      name="review"
                       rows="4"
-                      value={formData.feedback}
+                      value={formData.review}
                       onChange={handleChange}
                       className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                        errors.feedback
+                        errors.review
                           ? 'border-red-300 focus:ring-red-500'
                           : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
                       } focus:border-blue-500 transition-all duration-200 resize-none`}
-                      placeholder="Share your detailed feedback with us..."
+                      placeholder="Share your detailed review with us..."
                       required
                       disabled={isSubmitting}
                     ></textarea>
                   </div>
-                  {errors.feedback && (
-                    <p className="text-xs text-red-600">{errors.feedback}</p>
+                  {errors.review && (
+                    <p className="text-xs text-red-600">{errors.review}</p>
                   )}
                 </div>
 
@@ -433,7 +433,7 @@ export default function Feedback() {
                     }`}
                   >
                     <span className="relative z-10">
-                      {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+                      {isSubmitting ? 'Submitting...' : 'Submit Review'}
                     </span>
                     {!isSubmitting && (
                       <>
@@ -448,7 +448,7 @@ export default function Feedback() {
 
             <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 text-center">
               <p className="text-sm text-gray-500">
-                Your feedback helps us improve our services. Thank you for your
+                Your review helps us improve our services. Thank you for your
                 time!
               </p>
             </div>
@@ -467,10 +467,10 @@ export default function Feedback() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Your Feedback Matters
+              Why Your Review Matters
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Every piece of feedback helps us understand what we&apos;re doing
+              Every piece of review helps us understand what we&apos;re doing
               right and where we can improve.
             </p>
           </motion.div>
@@ -481,13 +481,13 @@ export default function Feedback() {
                 icon: ThumbsUp,
                 title: 'Improve Service Quality',
                 description:
-                  'Your feedback helps us identify areas of improvement and deliver better service.',
+                  'Your review helps us identify areas of improvement and deliver better service.',
               },
               {
                 icon: Heart,
                 title: 'Build Trust',
                 description:
-                  'Honest feedback helps other customers make informed decisions about our services.',
+                  'Honest review helps other customers make informed decisions about our services.',
               },
               {
                 icon: Sparkles,

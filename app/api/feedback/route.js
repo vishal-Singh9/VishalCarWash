@@ -103,16 +103,16 @@ export async function GET(request) {
   }
 }
 
-// Handle POST request - Create new feedback
+// Handle POST request - Create new review
 export async function POST(request) {
   try {
     // Parse request body
     const data = await request.json();
-    const { name, email, rating, category, feedback } = data;
+    const { name, email, rating, category, review } = data;
 
     // Basic validation
-    if (!name || !email || !rating || !feedback) {
-      return errorResponse('Name, email, rating, and feedback are required', 400);
+    if (!name || !email || !rating || !review) {
+      return errorResponse('Name, email, rating, and review are required', 400);
     }
 
     // Validate rating
@@ -123,29 +123,29 @@ export async function POST(request) {
     // Connect to database
     await dbConnect();
 
-    // Create and save feedback using the model
+    // Create and save review using the model
     const newFeedback = await Feedback.create({
       name,
       email,
       rating: parseInt(rating),
-      category: category || 'overall',
-      feedback
+      // category: category || 'overall',
+      review
     });
 
     return successResponse({
-      message: 'Thank you for your feedback!',
+      message: 'Thank you for your review!',
       data: {
         id: newFeedback._id,
         name: newFeedback.name,
         rating: newFeedback.rating,
-        category: newFeedback.category,
+        // category: newFeedback.category,
         status: newFeedback.status,
         createdAt: newFeedback.createdAt
       }
     }, 201);
 
   } catch (error) {
-    console.error('Error processing feedback:', error);
+    console.error('Error processing review:', error);
     
     // Handle validation errors
     if (error.name === 'ValidationError') {
@@ -155,7 +155,7 @@ export async function POST(request) {
     
     // Handle other errors
     return errorResponse(
-      error.message || 'Failed to process your feedback. Please try again later.',
+      error.message || 'Failed to process your review. Please try again later.',
       error.statusCode || 500
     );
   }
