@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Head from 'next/head';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Play, X } from "lucide-react";
@@ -129,12 +130,12 @@ const YouTubeModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Video Info */}
-          <div className="p-4 md:p-6 bg-gradient-to-r from-gray-900 to-black">
-            <h3 className="text-xl font-bold text-white mb-1">
+          <div className="p-4 sm:p-5 md:p-6 bg-gradient-to-r from-gray-900 to-black">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
               {" "}
               Vishal Car Wash Center
             </h3>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-300 text-xs sm:text-sm">
               {" "}
               Professional car wash and detailing services for a spotless shine
               and lasting protection
@@ -149,28 +150,48 @@ const YouTubeModal = ({ isOpen, onClose }) => {
 /* ------------------ Hero ------------------ */
 export default function Hero() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  
+  // SEO Metadata
+  const seoTitle = "Premium Car Wash & Detailing Services in Varanasi | Vishal Car Wash";
+  const seoDescription = "Professional car wash, detailing, and maintenance services in Varanasi. Book online for premium car care with expert technicians. 2K+ happy customers served!";
+  const canonicalUrl = "https://vishal-car-wash.vercel.app/";
 
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center">
+    <>
+      <Head>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
+      </Head>
+    <section className="relative min-h-screen overflow-hidden flex items-center" aria-label="Hero section">
       {/* Background */}
       <motion.div
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         transition={{ duration: 2 }}
         className="absolute inset-0"
+        aria-hidden="true"
       >
         <Image
           src="/images/premium.webp"
-          alt="Car Wash"
+          alt="Professional car wash service in Varanasi"
           fill
           priority
+          sizes="100vw"
           className="object-cover"
+          loading="eager"
+          quality={85}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-900/70 to-black/90" />
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -191,7 +212,7 @@ export default function Hero() {
           {/* Heading */}
           <motion.h1
             variants={fadeUp}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-4 sm:mb-6"
           >
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent animate-gradient">
               Premium <span className="text-blue-400">Car Care</span>
@@ -203,7 +224,7 @@ export default function Hero() {
           {/* Subtitle */}
           <motion.p
             variants={fadeUp}
-            className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto mb-10"
+            className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl mx-auto mb-8 sm:mb-10 px-2"
           >
             Experience the ultimate care for your vehicle with our professional
             cleaning and detailing services. We bring back that showroom shine
@@ -213,11 +234,13 @@ export default function Hero() {
           {/* CTA */}
           <motion.div
             variants={fadeUp}
-            className="flex flex-col sm:flex-row gap-5 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center mb-8 sm:mb-12 md:mb-16 px-2"
+            role="group"
+            aria-label="Call to action buttons"
           >
             <Link href="/booking" className="w-full sm:w-auto">
               {" "}
-              <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 {" "}
                 Book Appointment Now{" "}
                 <svg
@@ -238,7 +261,7 @@ export default function Hero() {
             <Button
               onClick={() => setIsVideoOpen(true)}
               variant="outline"
-              className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 cursor-pointer"
             >
               {" "}
               <Play className="w-5 h-5 mr-2" /> Watch Video{" "}
@@ -248,18 +271,25 @@ export default function Hero() {
           {/* Stats */}
           <motion.div
             variants={stagger}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-0"
+            role="region"
+            aria-label="Our Statistics"
           >
             {stats.map((s, i) => (
               <motion.div
                 key={i}
                 variants={statItem}
                 whileHover={{ y: -8, scale: 1.03 }}
-                className="rounded-2xl p-6 bg-white/10 backdrop-blur-xl border border-white/20 hover:border-blue-400/40 transition"
+                className="rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 bg-white/10 backdrop-blur-xl border border-white/20 hover:border-blue-400/40 transition"
+                role="article"
+                aria-label={`${s.value} ${s.label}`}
               >
-                <div className="text-4xl mb-2">{s.icon}</div>
-                <div className="text-3xl font-bold text-white">{s.value}</div>
-                <div className="text-blue-200 text-sm mt-1">{s.label}</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2" aria-hidden="true">{s.icon}</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                  <span aria-hidden="true">{s.value}</span>
+                  <span className="sr-only">{s.value === "2K+" ? "Over 2000" : s.value} {s.label}</span>
+                </div>
+                <div className="text-blue-200 text-xs sm:text-sm mt-0.5 sm:mt-1">{s.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -271,5 +301,6 @@ export default function Hero() {
         onClose={() => setIsVideoOpen(false)}
       />
     </section>
+    </>
   );
 }

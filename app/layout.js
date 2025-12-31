@@ -27,16 +27,16 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Experience premium car wash, detailing, and maintenance services. Professional care for your vehicle with eco-friendly products and expert technicians."
+          content="Vishal Car Wash in Varanasi offers professional car cleaning, detailing, and maintenance services. Experience premium care for your vehicle with our expert team."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#2563eb" />
         <meta
           name="keywords"
-          content="car wash, car detailing, auto detailing, car cleaning, professional car wash, mobile car wash, car care, auto spa, car waxing, car polishing, paint protection"
+          content="Vishal Car Wash, car wash, car detailing, auto detailing, car cleaning, professional car wash, mobile car wash, car care, auto spa, car waxing, car polishing, paint protection, best car wash in Varanasi"
         />
         <meta name="author" content="Vishal Car Wash" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta
           name="google-site-verification"
           content="puA3HxKKYhYcTzj_8kghztugog_JE21YC3OV4RfXt2o"
@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
           property="og:description"
           content="Premium car wash, detailing, and maintenance services for your vehicle. Book online today!"
         />
-        <meta property="og:image" content="/images/og-image.jpg" />
+        <meta property="og:image" content="/images/vcw.webp" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
           property="twitter:description"
           content="Premium car wash, detailing, and maintenance services for your vehicle. Book online today!"
         />
-        <meta property="twitter:image" content="/images/og-image.jpg" />
+        <meta property="twitter:image" content="/images/vcw.webp" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" sizes="any" />

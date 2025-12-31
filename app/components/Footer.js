@@ -39,7 +39,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white relative overflow-hidden">
+    <footer className="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white relative overflow-hidden w-full">
       {/* Decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute -top-20 -right-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -49,18 +49,18 @@ export default function Footer() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-28 right-7 z-50 p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl ${
+        className={`fixed bottom-28 right-7 z-50 p-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl ${
           showScroll
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10 pointer-events-none"
         }`}
         aria-label="Back to top"
       >
-        <ChevronUp className="w-9 h-9" />
+        <ChevronUp className="w-10 h-10" />
       </button>
 
-      <div className="container mx-auto px-4 py-16 relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="container mx-auto px-4 text-center sm:text-left sm:px-6 py-12 md:py-16 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8">
           {/* About */}
           <div className="space-y-5 transition-all duration-300 hover:scale-[1.02]">
             <div className="flex items-center space-x-3">
@@ -78,7 +78,7 @@ export default function Footer() {
                 href="/"
                 className="inline-block transform hover:scale-105 transition-transform duration-300"
               >
-                <span className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500">
+                <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500">
                   Vishal Car Wash
                 </span>
               </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
               services with a focus on quality, care, and customer satisfaction.
               🚗✨
             </p>
-            <div className="flex space-x-4 pt-2">
+            <div className="flex space-x-4 pt-2 flex-wrap gap-2 sm:gap-4">
               {[
                 {
                   icon: <Facebook className="w-5 h-5" />,
@@ -110,7 +110,7 @@ export default function Footer() {
                 <a
                   key={index}
                   href="#"
-                  className={`text-gray-400 ${social.color} transition-all duration-300 transform hover:-translate-y-1 hover:scale-110`}
+                  className={`text-gray-400 ${social.color} transition-all duration-300 transform hover:-translate-y-1 hover:scale-110 p-1.5 sm:p-0`}
                   aria-label={`Social media link ${index + 1}`}
                 >
                   {social.icon}
@@ -260,10 +260,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-16 pt-8 text-center">
+        <div className="border-t border-gray-800 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()}{" "}
+              {new Date().getFullYear()}{" "}
               <span className="font-medium text-gray-300">Vishal Car Wash</span>
               . All rights reserved.
             </p>

@@ -1,22 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   Calendar,
   Clock,
-  User,
   ArrowRight,
   Search,
-  Tag,
-  TrendingUp,
   MessageCircle,
   Eye,
   Phone,
 } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
 
+/* =======================
+   Animations
+======================= */
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i = 0) => ({
@@ -28,127 +27,132 @@ const fadeInUp = {
       ease: [0.16, 1, 0.3, 1],
     },
   }),
-  hover: {
-    y: -5,
-    transition: { duration: 0.2 },
-  },
-  tap: {
-    scale: 0.98,
-  },
+  hover: { y: -5, transition: { duration: 0.2 } },
+  tap: { scale: 0.98 },
 };
 
+/* =======================
+   Static Data
+======================= */
+const categories = [
+  { id: 'all', name: 'All Posts' },
+  { id: 'tips', name: 'Car Care Tips' },
+  { id: 'guides', name: 'Guides' },
+  { id: 'news', name: 'News & Updates' },
+  { id: 'maintenance', name: 'Maintenance' },
+];
+
+const blogPosts = [
+  {
+    id: 1,
+    title: 'Top 10 Car Washing Tips for a Spotless Shine',
+    excerpt:
+      'Discover professional car washing techniques that will keep your vehicle looking brand new. From proper soap selection to drying methods, we cover it all.',
+    image: '/images/carwashnews.webp',
+    category: 'tips',
+    author: 'Vishal Singh',
+    date: '2024-01-15',
+    readTime: '5 min read',
+    views: '2.3k',
+    comments: 24,
+    tags: ['Car Wash', 'Tips', 'Maintenance'],
+  },
+  {
+    id: 2,
+    title: 'The Ultimate Guide to Interior Car Detailing',
+    excerpt:
+      "Learn how to maintain your car's interior like a pro. From dashboard care to upholstery cleaning, this comprehensive guide has everything you need.",
+    image: '/images/InteriorDetailing.webp',
+    category: 'guides',
+    author: 'Vishal Singh',
+    date: '2024-01-10',
+    readTime: '8 min read',
+    views: '1.8k',
+    comments: 18,
+    tags: ['Interior', 'Detailing', 'Guide'],
+  },
+  {
+    id: 3,
+    title: 'Why Ceramic Coating is Worth the Investment',
+    excerpt:
+      'Understand the benefits of ceramic coating for your vehicle. Learn about protection, durability, and how it can save you money in the long run.',
+    image: '/images/premium.webp',
+    category: 'guides',
+    author: 'Vishal Singh',
+    date: '2024-01-05',
+    readTime: '6 min read',
+    views: '3.1k',
+    comments: 32,
+    tags: ['Ceramic Coating', 'Protection', 'Investment'],
+  },
+  {
+    id: 4,
+    title: 'Monsoon Car Care: Essential Tips for the Rainy Season',
+    excerpt:
+      'Prepare your car for the monsoon season with these essential maintenance tips. Protect your vehicle from rust, mold, and water damage.',
+    image: '/images/Fullcarwash.webp',
+    category: 'maintenance',
+    author: 'Vishal Singh',
+    date: '2023-12-28',
+    readTime: '7 min read',
+    views: '2.7k',
+    comments: 21,
+    tags: ['Monsoon', 'Maintenance', 'Weather'],
+  },
+  {
+    id: 5,
+    title: 'How Often Should You Wash Your Car?',
+    excerpt:
+      'Find out the ideal car washing frequency based on your driving habits, climate, and vehicle type. Keep your car protected without overwashing.',
+    image: '/images/Basic.webp',
+    category: 'tips',
+    author: 'Vishal Singh',
+    date: '2023-12-20',
+    readTime: '4 min read',
+    views: '1.5k',
+    comments: 15,
+    tags: ['Frequency', 'Tips', 'Care'],
+  },
+  {
+    id: 6,
+    title: 'New Premium Packages Now Available!',
+    excerpt:
+      "We're excited to announce our new premium car care packages with enhanced services and competitive pricing. Check out what's new!",
+    image: '/images/premiumwaxing.webp',
+    category: 'news',
+    author: 'Vishal Singh',
+    date: '2023-12-15',
+    readTime: '3 min read',
+    views: '4.2k',
+    comments: 45,
+    tags: ['News', 'Packages', 'Updates'],
+  },
+];
+
+/* =======================
+   Component
+======================= */
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const categories = [
-    { id: 'all', name: 'All Posts' },
-    { id: 'tips', name: 'Car Care Tips' },
-    { id: 'guides', name: 'Guides' },
-    { id: 'news', name: 'News & Updates' },
-    { id: 'maintenance', name: 'Maintenance' },
-  ];
+  const featuredPost = useMemo(() => blogPosts[0], []);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Top 10 Car Washing Tips for a Spotless Shine',
-      excerpt:
-        'Discover professional car washing techniques that will keep your vehicle looking brand new. From proper soap selection to drying methods, we cover it all.',
-      image: '/images/carwashnews.webp',
-      category: 'tips',
-      author: 'Vishal Singh',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      views: '2.3k',
-      comments: 24,
-      tags: ['Car Wash', 'Tips', 'Maintenance'],
-    },
-    {
-      id: 2,
-      title: 'The Ultimate Guide to Interior Car Detailing',
-      excerpt:
-        'Learn how to maintain your car\'s interior like a pro. From dashboard care to upholstery cleaning, this comprehensive guide has everything you need.',
-      image: '/images/InteriorDetailing.webp',
-      category: 'guides',
-      author: 'Vishal Singh',
-      date: '2024-01-10',
-      readTime: '8 min read',
-      views: '1.8k',
-      comments: 18,
-      tags: ['Interior', 'Detailing', 'Guide'],
-    },
-    {
-      id: 3,
-      title: 'Why Ceramic Coating is Worth the Investment',
-      excerpt:
-        'Understand the benefits of ceramic coating for your vehicle. Learn about protection, durability, and how it can save you money in the long run.',
-      image: '/images/premium.webp',
-      category: 'guides',
-      author: 'Vishal Singh',
-      date: '2024-01-05',
-      readTime: '6 min read',
-      views: '3.1k',
-      comments: 32,
-      tags: ['Ceramic Coating', 'Protection', 'Investment'],
-    },
-    {
-      id: 4,
-      title: 'Monsoon Car Care: Essential Tips for the Rainy Season',
-      excerpt:
-        'Prepare your car for the monsoon season with these essential maintenance tips. Protect your vehicle from rust, mold, and water damage.',
-      image: '/images/Fullcarwash.webp',
-      category: 'maintenance',
-      author: 'Vishal Singh',
-      date: '2023-12-28',
-      readTime: '7 min read',
-      views: '2.7k',
-      comments: 21,
-      tags: ['Monsoon', 'Maintenance', 'Weather'],
-    },
-    {
-      id: 5,
-      title: 'How Often Should You Wash Your Car?',
-      excerpt:
-        'Find out the ideal car washing frequency based on your driving habits, climate, and vehicle type. Keep your car protected without overwashing.',
-      image: '/images/Basic.webp',
-      category: 'tips',
-      author: 'Vishal Singh',
-      date: '2023-12-20',
-      readTime: '4 min read',
-      views: '1.5k',
-      comments: 15,
-      tags: ['Frequency', 'Tips', 'Care'],
-    },
-    {
-      id: 6,
-      title: 'New Premium Packages Now Available!',
-      excerpt:
-        'We\'re excited to announce our new premium car care packages with enhanced services and competitive pricing. Check out what\'s new!',
-      image: '/images/premiumwaxing.webp',
-      category: 'news',
-      author: 'Vishal Singh',
-      date: '2023-12-15',
-      readTime: '3 min read',
-      views: '4.2k',
-      comments: 45,
-      tags: ['News', 'Packages', 'Updates'],
-    },
-  ];
+  const filteredPosts = useMemo(() => {
+    const query = searchQuery.toLowerCase();
 
-  const featuredPost = blogPosts[0];
+    return blogPosts.filter((post) => {
+      const matchesCategory =
+        activeCategory === 'all' || post.category === activeCategory;
 
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory =
-      activeCategory === 'all' || post.category === activeCategory;
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    return matchesCategory && matchesSearch;
-  });
+      const matchesSearch =
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(query));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchQuery, activeCategory]);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -284,8 +288,8 @@ export default function Blog() {
                   <div className="grid md:grid-cols-2 gap-0">
                     <div className="relative h-64 md:h-full overflow-hidden">
                       <Image
-                        src={featuredPost.image}
-                        alt={featuredPost.title}
+                        src={featuredPost?.image}
+                        alt={featuredPost?.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -311,10 +315,10 @@ export default function Blog() {
                         </span>
                       </div>
                       <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                        {featuredPost.title}
+                        {featuredPost?.title}
                       </h2>
                       <p className="text-gray-600 mb-6 leading-relaxed">
-                        {featuredPost.excerpt}
+                        {featuredPost?.excerpt}
                       </p>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -351,8 +355,8 @@ export default function Blog() {
                   >
                     <div className="relative h-48 overflow-hidden">
                       <Image
-                        src={post.image}
-                        alt={post.title}
+                        src={post?.image}
+                        alt={post?.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -378,10 +382,10 @@ export default function Blog() {
                         </span>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                        {post.title}
+                        {post?.title}
                       </h3>
                       <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
-                        {post.excerpt}
+                        {post?.excerpt}
                       </p>
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                         <div className="flex items-center gap-3 text-xs text-gray-500">
@@ -443,7 +447,7 @@ export default function Blog() {
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <a
-                      href="tel:+919876543210"
+                      href="tel:+919956414364"
                       className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
                     >
                       <Phone className="w-5 h-5 mr-2" />

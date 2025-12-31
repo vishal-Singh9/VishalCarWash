@@ -171,13 +171,12 @@ export default function FAQ() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          className="absolute -right-20 -top-20 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -right-20 -top-20 w-64 h-64 md:w-96 md:h-96 bg-blue-500/10 rounded-full mix-blend-overlay filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, 20, 0],
-            y: [0, -20, 0],
           }}
           transition={{
             duration: 15,
@@ -186,7 +185,7 @@ export default function FAQ() {
           }}
         />
         <motion.div
-          className="absolute -left-20 -bottom-20 w-96 h-96 bg-purple-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -left-20 -bottom-20 w-64 h-64 md:w-96 md:h-96 bg-purple-500/10 rounded-full mix-blend-overlay filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, -20, 0],
@@ -202,7 +201,7 @@ export default function FAQ() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+      <section className="relative py-16 md:py-24 lg:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
@@ -225,7 +224,7 @@ export default function FAQ() {
               Need Help?
             </motion.span>
             <motion.h1
-              className="text-4xl md:text-6xl font-bold mb-5 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-5 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200 px-4 sm:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -233,7 +232,7 @@ export default function FAQ() {
               Frequently Asked Questions
             </motion.h1>
             <motion.p
-              className="text-xl text-blue-100 max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl mx-auto px-4 sm:px-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -246,24 +245,24 @@ export default function FAQ() {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-12 relative z-10">
-        <div className="container mx-auto px-4">
+      <section className="py-8 md:py-12 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             {/* Search Bar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mb-8"
+              className="mb-6 md:mb-8 px-2 sm:px-0"
             >
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   type="text"
                   placeholder="Search for answers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200"
                 />
               </div>
             </motion.div>
@@ -273,7 +272,7 @@ export default function FAQ() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-3 mb-8"
+              className="flex flex-wrap gap-2 sm:gap-3 mb-6 md:mb-8 px-2 sm:px-0 overflow-x-auto pb-2 -mx-2 sm:mx-0"
             >
               {categories.map((category) => {
                 const Icon = category.icon;
@@ -281,13 +280,13 @@ export default function FAQ() {
                   <button
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all duration-200 ${
+                    className={`flex-shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base rounded-md sm:rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                       activeCategory === category.id
                         ? 'bg-blue-600 text-white shadow-md'
                         : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     {category.name}
                   </button>
                 );
@@ -299,66 +298,62 @@ export default function FAQ() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="space-y-4"
+              className="space-y-3 sm:space-y-4 px-2 sm:px-0"
             >
               {filteredFaqs.length > 0 ? (
-                filteredFaqs.map((faq, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200"
-                  >
-                    <button
-                      onClick={() => toggleAccordion(index)}
-                      className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors duration-200"
+                <AnimatePresence>
+                  {filteredFaqs.map((faq, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-white rounded-lg sm:rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200"
                     >
-                      <div className="flex items-start gap-4 flex-1">
-                        <div className="p-2 bg-blue-50 rounded-lg flex-shrink-0">
-                          <HelpCircle className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <span className="font-semibold text-gray-900 text-lg">
-                          {faq.question}
-                        </span>
-                      </div>
-                      <motion.div
-                        animate={{ rotate: activeIndex === index ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="flex-shrink-0 ml-4"
+                      <button
+                        className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-start sm:items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg sm:rounded-xl"
+                        onClick={() => toggleAccordion(index)}
+                        aria-expanded={activeIndex === index}
+                        aria-controls={`faq-${index}`}
                       >
-                        <ChevronDown className="w-5 h-5 text-gray-500" />
-                      </motion.div>
-                    </button>
-
-                    <AnimatePresence>
-                      {activeIndex === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-6 pb-6 pl-20">
-                            <p className="text-gray-600 leading-relaxed">
+                        <h3 className="text-base sm:text-lg font-medium text-gray-900 pr-3 sm:pr-4 text-left">
+                          {faq.question}
+                        </h3>
+                        <ChevronDown
+                          className={`flex-shrink-0 w-5 h-5 text-gray-400 transition-transform duration-200 mt-1 sm:mt-0 ${
+                            activeIndex === index ? 'transform rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {activeIndex === index && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                            id={`faq-${index}`}
+                          >
+                            <div className="px-4 sm:px-6 pb-5 pt-0 text-sm sm:text-base text-gray-600">
                               {faq.answer}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               ) : (
-                <div className="text-center py-12">
-                  <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <div className="text-center py-8 sm:py-12 px-4">
+                  <HelpCircle className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-300 mb-3 sm:mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900">
                     No results found
                   </h3>
-                  <p className="text-gray-600">
-                    Try adjusting your search or filter to find what you&apos;re
-                    looking for.
+                  <p className="mt-1 text-sm sm:text-base text-gray-500">
+                    We could not find any questions matching your search. Try a
+                    different search term or category.
                   </p>
                 </div>
               )}

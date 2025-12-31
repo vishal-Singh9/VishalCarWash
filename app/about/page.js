@@ -111,7 +111,7 @@ export default function About() {
     },
     {
       year: "2024",
-      event: "Served 10,000+ customers",
+      event: "Served 2000+ customers",
       icon: "👥",
       description:
         "Reached a significant milestone in our journey of customer satisfaction",
@@ -253,8 +253,7 @@ export default function About() {
               About Us
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Your trusted partner in premium car care, delivering excellence in
-              every detail since 2021
+              Your trusted partner in vishal car wash, delivering excellence in every detail since 2021
             </p>
             <motion.div
               className="mt-10"

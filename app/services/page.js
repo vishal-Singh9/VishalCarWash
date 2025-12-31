@@ -285,16 +285,16 @@ export default function Services() {
 
       {/* Services Grid */}
       <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6">
           {/* Search and Filter */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-12 bg-white rounded-xl shadow-md p-6 sticky top-4 z-10"
+            className="mb-12 bg-white rounded-xl shadow-md p-6  top-4 z-10"
           >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="relative flex-1">
+            <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="relative w-full sm:flex-1">
                 <input
                   type="text"
                   placeholder="Search services..."
@@ -451,10 +451,10 @@ export default function Services() {
                     <motion.div
                       key={service.id}
                       variants={fadeIn}
-                      className="service-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 border border-gray-100"
+                      className="service-card group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-md sm:shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border sm:hover:-translate-y-1.5 border-gray-100"
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 h-full">
-                        <div className="relative h-64 md:h-full overflow-hidden">
+                      <div className="flex flex-col md:grid md:grid-cols-2 h-full">
+                        <div className="relative h-48 sm:h-56 md:h-full overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
                           <div className="relative w-full h-full">
                             <Image
@@ -480,7 +480,7 @@ export default function Services() {
                         
                         <div className="p-6 flex flex-col justify-between">
                           <div>
-                            <p className="text-gray-600 mb-6 line-clamp-3">{service.description}</p>
+                            <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base line-clamp-3">{service.description}</p>
 
                             <div className="space-y-3 mb-6">
                               {service.features && Array.isArray(service.features) && service.features.slice(0, 3).map((feature, idx) => (
@@ -623,7 +623,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="relative py-20 bg-white overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 bg-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
         </div>
@@ -646,7 +646,7 @@ export default function Services() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {processSteps.map((step, index) => (
               <motion.div 
                 key={index}
@@ -660,7 +660,7 @@ export default function Services() {
                   {step.step}
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
               </motion.div>
             ))}
           </div>

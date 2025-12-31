@@ -110,7 +110,7 @@ export default function Services() {
             Our Services
           </span>
           <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -120,7 +120,7 @@ export default function Services() {
           </motion.h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto mb-6 rounded-full"></div>
           <motion.p
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -152,7 +152,7 @@ export default function Services() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
               {services?.map((service, index) => (
                 <motion.div
                   key={service.id}
@@ -160,13 +160,13 @@ export default function Services() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 cursor-pointer"
+                  className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-2 border border-gray-100 cursor-pointer"
                   whileHover={{
                     scale: 1.02,
                     transition: { duration: 0.2 },
                   }}
                 >
-                  <div className="relative h-48 overflow-hidden bg-gray-100">
+                  <div className="relative h-40 sm:h-48 overflow-hidden bg-gray-100">
                     <Image
                       src={service.image || "/images/placeholder-service.jpg"}
                       alt={service.name}
@@ -197,7 +197,7 @@ export default function Services() {
                       </span>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-4 sm:p-5 md:p-6">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                         {service.name}
@@ -269,14 +269,14 @@ export default function Services() {
             >
               <Link
                 href="/services"
-                className=" inline-flex items-center justify-center w-96 px-8 py-4 border border-transparent text-base font-semibold rounded-full text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center w-full sm:w-96 px-6 sm:px-8 py-3 sm:py-4 border border-transparent text-sm sm:text-base font-semibold rounded-full text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Explore All Services
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
 
-            <div className="relative overflow-hidden py-20 bg-gradient-to-b from-cyan-100/90 to-blue-50/90 mt-16">
+            <div className="relative overflow-hidden py-12 sm:py-16 md:py-20 bg-gradient-to-b from-cyan-100/90 to-blue-50/90 mt-12 sm:mt-16">
               {/* Decorative elements */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-64 h-64 bg-blue-800 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -296,7 +296,7 @@ export default function Services() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 px-4 sm:px-0"
                   >
                     Experience the{" "}
                     <span className="bg-gradient-to-r from-blue-800 to-cyan-500 bg-clip-text text-transparent">
@@ -315,7 +315,7 @@ export default function Services() {
                   </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
                   {[
                     {
                       icon: <Clock className="w-7 h-7 text-blue-600" />,

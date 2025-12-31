@@ -343,8 +343,8 @@ export default function SignIn() {
 
               <div className="space-y-6 mt-12">
                 {[
-                  { icon: Star, text: '10,000+ Happy Customers' },
-                  { icon: Award, text: '15+ Years of Excellence' },
+                  { icon: Star, text: '2000+ Happy Customers' },
+                  { icon: Award, text: '5+ Years of Excellence' },
                   { icon: Sparkles, text: '100% Satisfaction Guarantee' }
                 ].map((item, index) => (
                   <motion.div

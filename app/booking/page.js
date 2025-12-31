@@ -515,99 +515,84 @@ export default function BookingPage() {
       )}
 
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
+    <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+  {/* Background Layers */}
+  <div className="absolute inset-0 z-0">
+    <div className="absolute inset-0 bg-black/30" />
+    <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20" />
+  </div>
+
+  <div className="container mx-auto px-4 sm:px-6 relative z-10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="max-w-4xl mx-auto text-center"
+    >
+      {/* Badge */}
+      <span className="inline-flex items-center justify-center px-4 py-2 mb-6 text-xs sm:text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
+        Our Journey Since 2008
+      </span>
+
+      {/* Heading */}
+      <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-5 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+        Book Your Service
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
+        Shine Bright with Our Premium Car Wash Services
+      </p>
+
+      {/* Feature Chips */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+        className="mt-8 sm:mt-10 flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4"
+      >
+        {[
+          { icon: <Droplets className="w-4 h-4 sm:w-5 sm:h-5 text-blue-300" />, text: 'Eco-Friendly' },
+          { icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-300" />, text: '100% Satisfaction' },
+          { icon: <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300" />, text: 'Quick Service' },
+          { icon: <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />, text: 'Streak-Free Finish' },
+        ].map((item, index) => (
           <motion.div
-            className="max-w-4xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            key={index}
+            whileHover={{ y: -3 }}
+            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/10 hover:border-white/20 transition-all"
           >
-            <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
-              Our Journey Since 2008
+            {item.icon}
+            <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">
+              {item.text}
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-              Book Your Service
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Shine Bright with Our Premium Car Wash Services{" "}
-            </p>
-               <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-4xl mx-auto"
-            >
-              {[
-                {
-                  icon: <Droplets className="w-5 h-5 text-blue-300" />,
-                  text: "Eco-Friendly",
-                  delay: 0.5,
-                },
-                {
-                  icon: <Shield className="w-5 h-5 text-green-300" />,
-                  text: "100% Satisfaction",
-                  delay: 0.6,
-                },
-                {
-                  icon: <Clock className="w-5 h-5 text-amber-300" />,
-                  text: "Quick Service",
-                  delay: 0.7,
-                },
-                {
-                  icon: <Sun className="w-5 h-5 text-yellow-300" />,
-                  text: "Streak-Free Finish",
-                  delay: 0.8,
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    delay: item.delay,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 10,
-                  }}
-                  whileHover={{
-                    y: -3,
-                    boxShadow:
-                      "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-                  }}
-                  className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300"
-                >
-                  <span className="text-blue-200">{item.icon}</span>
-                  <span className="text-sm font-medium text-white">
-                    {item.text}
-                  </span>
-                </motion.div>
-              ))}
-            </motion.div>
-            <motion.div
-              className="mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-            >
-              <a
-                href="/booking"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 transform"
-              >
-                <Calendar className="w-5 h-5 mr-2" />
-                Book Your Wash Now
-              </a>
-              <p className="mt-4 text-sm text-blue-200/80">
-                Easy online booking • Instant confirmation • Flexible scheduling
-              </p>
-            </motion.div>
           </motion.div>
-        </div>
-      </section>
+        ))}
+      </motion.div>
+
+      {/* CTA */}
+      <motion.div
+        className="mt-10 sm:mt-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
+        <a
+          href="/booking"
+          className="inline-flex w-full sm:w-auto items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+        >
+          <Calendar className="w-5 h-5 mr-2" />
+          Book Your Wash Now
+        </a>
+
+        <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-blue-200/80">
+          Easy online booking • Instant confirmation • Flexible scheduling
+        </p>
+      </motion.div>
+    </motion.div>
+  </div>
+</section>
+
 
       {/* Booking Form Section */}
       <section
