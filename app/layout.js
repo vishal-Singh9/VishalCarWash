@@ -39,9 +39,8 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta
           name="google-site-verification"
-          content="puA3HxKKYhYcTzj_8kghztugog_JE21YC3OV4RfXt2o"
+          content="An2nDYwmOh-UXZ_47rB8oN2opHvOPmImCY4d75v_Uvw"
         />
-
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://vishal-car-wash.vercel.app/" />

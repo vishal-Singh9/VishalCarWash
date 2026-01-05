@@ -33,11 +33,12 @@ export default function Home() {
       <Features />
       <Testimonials />
     
-      <ShowGallery />
       {/* <Pricing /> */}
       {/* <Newsletter /> */}
       {/* <Contact /> */}
+      <ShowGallery />
       <CTA />
+
       <Footer />
    
     </div>
