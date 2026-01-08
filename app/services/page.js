@@ -232,7 +232,7 @@ export default function Services() {
       >
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
+          <div className="absolute inset-0 bg-[url(/images/backsection.webp)] bg-cover bg-center opacity-20"></div>
         </div>
         
         {/* Decorative blobs */}

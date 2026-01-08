@@ -23,27 +23,96 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
-        <title>Vishal Car Wash - Varanasi</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Vishal Car Wash in Varanasi offers professional car cleaning, detailing, and maintenance services. Experience premium care for your vehicle with our expert team."
+  <title>Vishal Car Wash - Varanasi</title>
+        <link rel="icon" href="/favicon.ico" />        
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        
+        {/* Primary Meta Tags */}
+        <meta name="title" content="Vishal Car Wash in Varanasi" />
+        <meta 
+          name="description" 
+          content="Vishal Car Wash in Babatpur Varanasi offers professional car cleaning, detailing, and maintenance services. Experience premium care for your vehicle with our expert team."
+        />
+        <meta name="keywords" content="car wash varanasi, best car wash in varanasi, car wash near babatpur airport, car cleaning varanasi, car detailing varanasi, professional car wash, car wash service, mobile car wash, car wash near me, luxury car wash, car wash and detailing, express car wash, car interior cleaning, car wash center, car wash shop near me" />
+        <meta name="author" content="Vishal Car Wash" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://vishalcarwash.com/" />
+        <meta property="og:title" content="Vishal Car Wash in Varanasi" />
+        <meta property="og:description" content="Professional Car Wash & Detailing Services in Varanasi. Expert cleaning for your vehicle. Book now for the best car wash experience near Babatpur Airport." />
+        <meta property="og:image" content="https://vishalcarwash.com/images/og-image.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://vishalcarwash.com/" />
+        <meta property="twitter:title" content="Vishal Car Wash in Varanasi" />
+        <meta property="twitter:description" content="Experience the best car wash services in Varanasi. Professional cleaning, detailing & maintenance near Babatpur Airport." />
+        <meta property="twitter:image" content="https://vishalcarwash.com/images/og-image.jpg" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://vishalcarwash.com/" />
+        
+        {/* Local Business Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "AutoWash",
+              "name": "Vishal Car Wash",
+              "image": "https://vishalcarwash.com/images/logo.jpg",
+              "@id": "https://vishalcarwash.com/",
+              "url": "https://vishalcarwash.com/",
+              "telephone": "+91-XXXXXXXXXX",
+              "priceRange": "$$",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Near Babatpur Airport",
+                "addressLocality": "Varanasi",
+                "postalCode": "221006",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 25.4484,
+                "longitude": 82.8605
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "08:00",
+                "closes": "20:00"
+              },
+              "sameAs": [
+                "https://www.facebook.com/YourPage/",
+                "https://www.instagram.com/YourProfile/"
+              ]
+            })
+          }}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#2563eb" />
         <meta
-          name="keywords"
-          content="Vishal Car Wash, car wash, car detailing, auto detailing, car cleaning, professional car wash, mobile car wash, car care, auto spa, car waxing, car polishing, paint protection, best car wash in Varanasi"
-        />
-        <meta name="author" content="Vishal Car Wash" />
-        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-        <meta
           name="google-site-verification"
           content="An2nDYwmOh-UXZ_47rB8oN2opHvOPmImCY4d75v_Uvw"
         />
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://vishal-car-wash.vercel.app/" />
         <meta
           property="og:title"
           content="Vishal Car Wash - Varanasi"

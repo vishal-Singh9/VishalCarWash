@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, lazy, Suspense } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Play, X } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Play } from 'lucide-react';
+
+// Lazy load the YouTubeModal component
+const YouTubeModal = lazy(() => import('./YouTubeModal'));
 
 /* ------------------ Stats ------------------ */
 const stats = [
@@ -40,112 +43,12 @@ const statItem = {
   },
 };
 
-/* ------------------ Video Modal ------------------ */
-const YouTubeModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-        animate={{
-          opacity: 1,
-          backdropFilter: "blur(8px)",
-          transition: { duration: 0.3 },
-        }}
-        exit={{
-          opacity: 0,
-          backdropFilter: "blur(0px)",
-          transition: { duration: 0.2 },
-        }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-md"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.95, y: 20, opacity: 0 }}
-          animate={{
-            scale: 1,
-            y: 0,
-            opacity: 1,
-            transition: {
-              type: "spring",
-              damping: 25,
-              stiffness: 500,
-              delay: 0.1,
-            },
-          }}
-          exit={{
-            scale: 0.95,
-            y: 20,
-            opacity: 0,
-            transition: { duration: 0.2 },
-          }}
-          className="relative w-full max-w-5xl bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Close Button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onClose}
-            className="absolute -top-12 right-0 md:-right-12 z-10 p-2 text-white hover:text-gray-300 transition-colors"
-            aria-label="Close video"
-          >
-            <X className="w-8 h-8" />
-          </motion.button>
-
-          {/* Video Container */}
-          <div className="relative aspect-video w-full">
-            {/* Loading Skeleton */}
-            <motion.div
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 0 }}
-              transition={{ delay: 0.5, duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-            >
-              <div className="animate-pulse flex space-x-4 items-center">
-                <div className="w-16 h-16 rounded-full bg-gray-700"></div>
-              </div>
-            </motion.div>
-
-            {/* Video Iframe */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="w-full h-full"
-            >
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/F9BLIcccTKA?autoplay=1&mute=0&controls=1&showinfo=0&rel=0&modestbranding=1"
-                title="Premium Car Wash Service"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-                loading="eager"
-              ></iframe>
-            </motion.div>
-          </div>
-
-          {/* Video Info */}
-          <div className="p-4 sm:p-5 md:p-6 bg-gradient-to-r from-gray-900 to-black">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
-              {" "}
-              Vishal Car Wash Center
-            </h3>
-            <p className="text-gray-300 text-xs sm:text-sm">
-              {" "}
-              Professional car wash and detailing services for a spotless shine
-              and lasting protection
-            </p>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-};
+// Loading component for Suspense fallback
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-[400px]">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 /* ------------------ Hero ------------------ */
 export default function Hero() {
@@ -182,10 +85,11 @@ export default function Hero() {
           alt="Professional car wash service in Varanasi"
           fill
           priority
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           className="object-cover"
-          loading="eager"
-          quality={85}
+          quality={75}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-blue-900/70 to-black/90" />
       </motion.div>
@@ -296,10 +200,9 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <YouTubeModal
-        isOpen={isVideoOpen}
-        onClose={() => setIsVideoOpen(false)}
-      />
+      <Suspense fallback={null}>
+        <YouTubeModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
+      </Suspense>
     </section>
     </>
   );

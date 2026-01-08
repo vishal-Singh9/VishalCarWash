@@ -354,7 +354,7 @@ const ContactForm = () => {
       <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20"></div>
+          <div className="absolute inset-0 bg-[url('/images/backsection.webp')] bg-cover bg-center opacity-20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -406,7 +406,7 @@ const ContactForm = () => {
             variants={{
               visible: { transition: { staggerChildren: 0.1 } },
             }}
-            className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-16 px-2 sm:px-4"
+            className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 xs:gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-10 lg:mb-14 px-3 sm:px-4"
           >
             {contactInfo.map((info, index) => (
               <motion.div key={index} variants={fadeInUp} className="h-full">
@@ -432,7 +432,7 @@ const ContactForm = () => {
         grid
         grid-cols-1
         lg:grid-cols-2
-        gap-8 sm:gap-12
+        gap-6 sm:gap-8 md:gap-10 lg:gap-12
       "
           >
             {/* ================= CONTACT FORM ================= */}
@@ -536,8 +536,8 @@ const ContactForm = () => {
               <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-600" />
 
               {/* Form Body */}
-              <div className="p-6 sm:p-8 md:p-10">
-                <div className="flex items-start sm:items-center mb-6 sm:mb-8">
+              <div className="p-5 sm:p-7 md:p-9">
+                <div className="flex items-start sm:items-center mb-5 sm:mb-7">
                   <div className="p-3 bg-blue-50 rounded-xl mr-4">
                     <Send className="w-6 h-6 text-blue-600" />
                   </div>
@@ -718,12 +718,13 @@ const ContactForm = () => {
                     className="
                 w-full
                 bg-gradient-to-r from-blue-600 to-indigo-600
-                text-white
-                py-3 sm:py-3.5
+                text-white text-sm sm:text-base
+                py-2.5 sm:py-3 md:py-3.5
                 rounded-lg
                 flex items-center justify-center gap-2
                 hover:opacity-90
                 transition
+                focus:ring-2 focus:ring-blue-300 focus:outline-none
               "
                   >
                     {isSubmitting ? "Sending..." : "Send Message"}
@@ -740,15 +741,16 @@ const ContactForm = () => {
             </motion.div>
 
             {/* ================= MAP ================= */}
-            <div className="bg-white p-5 sm:p-6 rounded-2xl shadow-lg">
-              <h4 className="text-lg font-semibold text-white">
+            <div className="bg-white p-4 sm:p-5 md:p-6 rounded-2xl shadow-lg h-full flex flex-col">
+              <h4 className="text-lg font-semibold text-gray-800 mb-3 sm:mb-4">
                 Visit Our Location
               </h4>
-              <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden border border-white/10 bg-gray-800/50">
+              <div className="flex-1 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d900.7464658799081!2d82.85498726243807!3d25.438736146794263!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398fd5caa6faea49%3A0xd91afc197461fbff!2sVishal%20Washing%20Centre!5e0!3m2!1sen!2sin!4v1766149530273!5m2!1sen!2sin"
                   width="100%"
-                  height="650"
+                  height="100%"
+                  className="min-h-[300px] sm:min-h-[400px] md:min-h-[500px]"
                   style={{ border: 0 }}
                   allowFullScreen={true}
                   loading="lazy"
@@ -763,7 +765,7 @@ const ContactForm = () => {
       {/* CTA Section */}
       <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url(/images/carspa.webp)] bg-cover bg-center opacity-20"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div

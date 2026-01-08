@@ -519,7 +519,7 @@ export default function BookingPage() {
   {/* Background Layers */}
   <div className="absolute inset-0 z-0">
     <div className="absolute inset-0 bg-black/30" />
-    <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/380768/pexels-photo-380768.jpeg')] bg-cover bg-center opacity-20" />
+    <div className="absolute inset-0 bg-[url(/images/backsection.webp)] bg-cover bg-center opacity-20" />
   </div>
 
   <div className="container mx-auto px-4 sm:px-6 relative z-10">

@@ -108,11 +108,14 @@ export async function POST(request) {
   try {
     // Parse request body
     const data = await request.json();
-    const { name, email, rating, category, review } = data;
+    const { name, email, rating, category, review, feedback } = data;
+    
+    // Use review if feedback is not provided (backward compatibility)
+    const feedbackText = feedback || review;
 
     // Basic validation
-    if (!name || !email || !rating || !review) {
-      return errorResponse('Name, email, rating, and review are required', 400);
+    if (!name || !email || !rating || !feedbackText) {
+      return errorResponse('Name, email, rating, and feedback are required', 400);
     }
 
     // Validate rating
@@ -123,13 +126,13 @@ export async function POST(request) {
     // Connect to database
     await dbConnect();
 
-    // Create and save review using the model
+    // Create and save feedback using the model
     const newFeedback = await Feedback.create({
       name,
       email,
       rating: parseInt(rating),
-      // category: category || 'overall',
-      review
+      category: category || 'overall',
+      feedback: feedbackText
     });
 
     return successResponse({

@@ -39,21 +39,6 @@ export default function FeedbackModal() {
     { value: 'other', label: 'Other' },
   ];
 
-  useEffect(() => {
-    // Check if modal has been shown in this session
-    const modalShown = sessionStorage.getItem('feedbackModalShown');
-    
-    if (!modalShown && !hasShown) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        setHasShown(true);
-        sessionStorage.setItem('feedbackModalShown', 'true');
-      }, 3000); // 3 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [hasShown]);
-
   // Handle auth state changes (login/logout)
   useEffect(() => {
     const handleAuthChange = (e) => {
@@ -138,7 +123,7 @@ export default function FeedbackModal() {
     setSubmitStatus({ success: false, message: '' });
 
     try {
-      const response = await fetch('/api/review', {
+      const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
