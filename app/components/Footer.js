@@ -49,14 +49,18 @@ export default function Footer() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-28 right-7 z-50 p-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl ${
+        className={`fixed z-50 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl active:scale-95
+          w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16
+          bottom-24 right-4 sm:bottom-28 sm:right-6 md:bottom-28 md:right-7
+          flex items-center justify-center
+          ${
           showScroll
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-10 pointer-events-none"
         }`}
         aria-label="Back to top"
       >
-        <ChevronUp className="w-10 h-10" />
+        <ChevronUp className="w-6 h-6 " />
       </button>
 
       <div className="container mx-auto px-4 text-center sm:text-left sm:px-6 py-12 md:py-16 relative">

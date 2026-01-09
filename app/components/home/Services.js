@@ -276,113 +276,365 @@ export default function Services() {
               </Link>
             </motion.div>
 
-            <div className="relative overflow-hidden py-12 sm:py-16 md:py-20 bg-gradient-to-b from-cyan-100/90 to-blue-50/90 mt-12 sm:mt-16">
-              {/* Decorative elements */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-blue-800 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-                <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-800 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-8 left-1/2 w-64 h-64 bg-indigo-800 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+            <div className="relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-28 mt-12 sm:mt-16 bg-gradient-to-br from-slate-50 via-blue-50/50 to-cyan-50/30">
+              {/* Enhanced animated background blobs */}
+              <div className="absolute inset-0 overflow-hidden">
+                <motion.div
+                  animate={{
+                    x: [0, 100, 0],
+                    y: [0, 50, 0],
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-40"
+                />
+                <motion.div
+                  animate={{
+                    x: [0, -80, 0],
+                    y: [0, 60, 0],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 25,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.5,
+                  }}
+                  className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-cyan-400/30 to-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-40"
+                />
+                <motion.div
+                  animate={{
+                    x: [0, 50, 0],
+                    y: [0, -40, 0],
+                    scale: [1, 1.15, 1],
+                  }}
+                  transition={{
+                    duration: 18,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1,
+                  }}
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[450px] h-[450px] bg-gradient-to-tr from-indigo-400/30 to-purple-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-40"
+                />
+                {/* Additional floating particles effect */}
+                <div className="absolute inset-0">
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-2 h-2 bg-blue-400/20 rounded-full"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        y: [0, -30, 0],
+                        opacity: [0.2, 0.5, 0.2],
+                        scale: [1, 1.5, 1],
+                      }}
+                      transition={{
+                        duration: 3 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: Math.random() * 2,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
 
+              {/* Grid pattern overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"></div>
+
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10"
               >
-                <div className="text-center mb-16">
+                {/* Header Section */}
+                <div className="text-center mb-20">
+             
+
                   <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 px-4 sm:px-0"
+                    transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 px-4 sm:px-0 leading-tight"
                   >
                     Experience the{" "}
-                    <span className="bg-gradient-to-r from-blue-800 to-cyan-500 bg-clip-text text-transparent">
-                      Spotless Difference
+                    <span className="relative inline-block">
+                      <motion.span
+                        className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-transparent bg-[length:200%_auto]"
+                        animate={{
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        }}
+                        transition={{
+                          duration: 5,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                      >
+                        Spotless Difference
+                      </motion.span>
+                      <motion.span
+                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 rounded-full"
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                      />
                     </span>
                   </motion.h2>
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                    className="text-xl text-gray-600 max-w-3xl mx-auto"
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                    className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
                   >
-                    More than a car wash, we deliver exceptional care for your
-                    vehicle. Discover what makes us different:{" "}
+                    More than a car wash, we deliver{" "}
+                    <span className="font-semibold text-gray-700">exceptional care</span> for your
+                    vehicle. Discover what makes us different:
                   </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
+                {/* Feature Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 px-4 sm:px-0">
                   {[
                     {
-                      icon: <Clock className="w-7 h-7 text-blue-600" />,
+                      icon: Clock,
                       title: "Express Service",
                       description:
                         "In and out in under 30 minutes with our express detailing options",
+                      gradient: "from-blue-500 to-cyan-400",
+                      bgGradient: "from-blue-50 to-cyan-50",
                     },
                     {
-                      icon: <Shield className="w-7 h-7 text-blue-600" />,
+                      icon: Shield,
                       title: "Eco-Friendly",
                       description:
                         "Biodegradable products that protect your car and the environment",
+                      gradient: "from-green-500 to-emerald-400",
+                      bgGradient: "from-green-50 to-emerald-50",
                     },
                     {
-                      icon: <Award className="w-7 h-7 text-blue-600" />,
+                      icon: Award,
                       title: "Certified Experts",
                       description:
                         "Trained professionals using the latest techniques and equipment",
+                      gradient: "from-purple-500 to-pink-400",
+                      bgGradient: "from-purple-50 to-pink-50",
                     },
                     {
-                      icon: <CheckCircle className="w-7 h-7 text-blue-600" />,
+                      icon: CheckCircle,
                       title: "Flexible Plans",
                       description:
                         "Customizable memberships and one-time services to fit your needs",
+                      gradient: "from-orange-500 to-amber-400",
+                      bgGradient: "from-orange-50 to-amber-50",
                     },
-                  ].map((item, index) => (
-                    <motion.div
-                      key={item.title}
-                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                      whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        transition: {
-                          duration: 0.6,
-                          ease: [0.16, 1, 0.3, 1],
-                          delay: 0.1 * index,
-                        },
-                      }}
-                      whileHover={{
-                        y: -5,
-                        boxShadow:
-                          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                        transition: {
-                          y: { duration: 0.2, ease: "easeOut" },
-                          boxShadow: { duration: 0.3, ease: "easeOut" },
-                        },
-                      }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      className="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                      <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-50 transition-colors duration-300">
-                        {item.icon}
-                      </div>
-                      <h4 className="font-bold text-xl text-gray-900 mb-3 text-center">
-                        {item.title}
-                      </h4>
-                      <p className="text-gray-600 text-center">
-                        {item.description}
-                      </p>
-                    </motion.div>
-                  ))}
+                  ].map((item, index) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <motion.div
+                        key={item.title}
+                        initial={{ opacity: 0, y: 50, rotateX: -15 }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          rotateX: 0,
+                          transition: {
+                            duration: 0.7,
+                            ease: [0.16, 1, 0.3, 1],
+                            delay: 0.15 * index,
+                          },
+                        }}
+                        whileHover={{
+                          y: -12,
+                          rotateY: 2,
+                          scale: 1.03,
+                          transition: {
+                            duration: 0.3,
+                            ease: "easeOut",
+                          },
+                        }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        className="group relative"
+                      >
+                        {/* Card Glow Effect */}
+                        <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.gradient} rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`}></div>
+                        
+                        {/* Main Card */}
+                        <div className="relative h-full bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-lg border border-gray-100/50 group-hover:border-gray-200/50 transition-all duration-500 transform-gpu">
+                          {/* Animated background gradient */}
+                          <div className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}></div>
+                          
+                          {/* Icon Container with enhanced animation */}
+                          <motion.div
+                            className={`relative w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${item.gradient} p-0.5 shadow-lg group-hover:shadow-2xl transition-all duration-500 overflow-visible`}
+                            whileHover={{
+                              rotate: [0, -10, 10, -10, 0],
+                              scale: 1.15,
+                            }}
+                            transition={{
+                              rotate: { duration: 0.6, ease: "easeInOut" },
+                              scale: { duration: 0.3, ease: "easeOut" },
+                            }}
+                          >
+                            {/* Glow effect on hover */}
+                            <motion.div
+                              className={`absolute -inset-2 bg-gradient-to-br ${item.gradient} rounded-2xl opacity-0 blur-xl group-hover:opacity-60 transition-opacity duration-500`}
+                              animate={{
+                                scale: [1, 1.2, 1],
+                              }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                              }}
+                            />
+                            
+                            <div className="relative w-full h-full bg-white rounded-2xl flex items-center justify-center group-hover:bg-transparent transition-all duration-300 z-10">
+                              {/* Icon with visible gradient - always visible */}
+                              <motion.div
+                                whileHover={{
+                                  scale: 1.2,
+                                  rotate: [0, -5, 5, 0],
+                                }}
+                                transition={{
+                                  scale: { duration: 0.2 },
+                                  rotate: { duration: 0.5 },
+                                }}
+                              >
+                                <IconComponent 
+                                  className={`w-10 h-10 transition-all duration-300 ${
+                                    item.gradient.includes('blue') ? 'text-blue-600' :
+                                    item.gradient.includes('green') ? 'text-green-600' :
+                                    item.gradient.includes('purple') ? 'text-purple-600' :
+                                    'text-orange-600'
+                                  } group-hover:text-white`}
+                                  style={{
+                                    filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.15))',
+                                  }}
+                                />
+                              </motion.div>
+                              
+                              {/* Glow effect behind icon on hover */}
+                              <motion.div
+                                className={`absolute inset-0 bg-gradient-to-br ${item.gradient} rounded-2xl opacity-0 group-hover:opacity-30 blur-md`}
+                                animate={{
+                                  scale: [1, 1.1, 1],
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                              />
+                            </div>
+                            
+                            {/* Sparkle effects on hover */}
+                            {[...Array(8)].map((_, i) => {
+                              const angle = (i * 360) / 8;
+                              const radius = 50;
+                              const x = Math.cos((angle * Math.PI) / 180) * radius;
+                              const y = Math.sin((angle * Math.PI) / 180) * radius;
+                              return (
+                                <motion.div
+                                  key={i}
+                                  className={`absolute w-2 h-2 bg-gradient-to-br ${item.gradient} rounded-full opacity-0 group-hover:opacity-100 shadow-lg`}
+                                  style={{
+                                    left: '50%',
+                                    top: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                  }}
+                                  animate={{
+                                    scale: [0, 1.5, 0],
+                                    opacity: [0, 1, 0],
+                                    x: [0, x, x * 1.2],
+                                    y: [0, y, y * 1.2],
+                                  }}
+                                  transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    delay: i * 0.15,
+                                    ease: "easeOut",
+                                  }}
+                                />
+                              );
+                            })}
+                            
+                            {/* Pulsing ring effect */}
+                            <motion.div
+                              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-40`}
+                              animate={{
+                                scale: [1, 1.3, 1],
+                                opacity: [0, 0.4, 0],
+                              }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                              }}
+                            />
+                            
+                            {/* Rotating gradient border effect */}
+                            <motion.div
+                              className={`absolute -inset-1 rounded-2xl bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 blur-sm`}
+                              animate={{
+                                rotate: 360,
+                              }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "linear",
+                              }}
+                              style={{
+                                zIndex: -1,
+                              }}
+                            />
+                          </motion.div>
+
+                          {/* Content */}
+                          <motion.h4
+                            className="font-bold text-xl sm:text-2xl text-gray-900 mb-4 text-center group-hover:text-gray-800 transition-colors duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {item.title}
+                          </motion.h4>
+                          
+                          <motion.p
+                            className="text-gray-600 text-center leading-relaxed group-hover:text-gray-700 transition-colors duration-300"
+                            initial={{ opacity: 0.8 }}
+                            whileHover={{ opacity: 1 }}
+                          >
+                            {item.description}
+                          </motion.p>
+
+                          {/* Decorative bottom accent */}
+                          <motion.div
+                            className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r ${item.gradient} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                            initial={{ scaleX: 0 }}
+                            whileHover={{ scaleX: 1 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </motion.div>
 
-              {/* Animated wave divider */}
+              {/* Bottom wave divider */}
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
             </div>
           </>
         )}

@@ -5,8 +5,8 @@ import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiUser, FiMail, FiPhone, FiLock, FiCalendar, FiClock, FiCheckCircle, FiUpload, FiX, FiSun, FiMoon, FiEye, FiEyeOff } from 'react-icons/fi';
+import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
+import { FiUser, FiMail, FiPhone, FiLock, FiCalendar, FiClock, FiCheckCircle, FiUpload, FiX, FiSun, FiMoon, FiEye, FiEyeOff, FiEdit2 } from 'react-icons/fi';
 
 const tabs = [
   { id: 'profile', label: 'Profile' },
@@ -207,18 +207,26 @@ export default function ProfilePage() {
 
   if (status === 'loading' || !session) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-500">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
           className="text-center"
         >
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 dark:border-blue-400 mx-auto"></div>
+          <motion.div 
+            className="relative mx-auto w-20 h-20"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-900/30"></div>
+            <div className="absolute inset-0 rounded-full border-t-4 border-r-4 border-blue-600 dark:border-blue-400"></div>
+          </motion.div>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-4 text-gray-600 dark:text-gray-300 font-medium"
+            className="mt-6 text-gray-600 dark:text-gray-300 font-medium text-lg"
           >
             Loading your profile...
           </motion.p>
@@ -228,70 +236,95 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-500">
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl mx-auto"
       >
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/20 dark:border-gray-700/50 hover:shadow-3xl transition-all duration-500"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-indigo-900 dark:to-purple-900 px-6 py-8 text-center relative overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 dark:from-indigo-900 dark:via-purple-900 dark:to-blue-900 px-6 py-10 sm:py-12 text-center relative overflow-hidden">
+            {/* Animated Background Elements */}
             <motion.div 
-              className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"
-              animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
-              transition={{ duration: 5, repeat: Infinity }}
+              className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+              animate={{ 
+                scale: [1, 1.3, 1],
+                x: [0, 30, 0],
+                y: [0, 20, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div 
-              className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-400/20 dark:bg-purple-400/20 rounded-full blur-3xl"
-              animate={{ scale: [1.2, 1, 1.2], y: [0, -20, 0] }}
-              transition={{ duration: 6, repeat: Infinity }}
+              className="absolute bottom-0 left-0 w-72 h-72 bg-indigo-400/20 dark:bg-purple-400/20 rounded-full blur-3xl"
+              animate={{ 
+                scale: [1.2, 1, 1.2],
+                y: [0, -30, 0],
+                x: [0, -20, 0]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div 
+              className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-300/10 dark:bg-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+              animate={{ 
+                scale: [1, 1.4, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
             />
             
             <div className="relative z-10">
               <motion.div 
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                className="mx-auto h-32 w-32 rounded-full bg-white/20 dark:bg-gray-700/30 p-1 mb-4 relative group"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
+                className="mx-auto h-36 w-36 sm:h-40 sm:w-40 rounded-full bg-gradient-to-br from-white/30 to-white/10 dark:from-gray-700/40 dark:to-gray-800/30 p-1.5 mb-6 relative group backdrop-blur-sm"
               >
-                <div className="relative h-full w-full rounded-full overflow-hidden">
+                <motion.div 
+                  className="relative h-full w-full rounded-full overflow-hidden ring-4 ring-white/20 dark:ring-gray-700/30"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
                   {previewImage || session.user.image ? (
                     <>
                       <Image
                         src={previewImage || session.user.image || '/images/default-avatar.png'}
                         alt="Profile"
                         fill
-                        className="object-cover"
-                        sizes="(max-width: 128px) 100vw, 128px"
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        sizes="(max-width: 160px) 100vw, 160px"
                       />
-                      <button 
+                      <motion.button 
                         onClick={removeImage}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-2 right-2 bg-red-500/90 backdrop-blur-sm text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-red-600"
                         aria-label="Remove image"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                       >
-                        <FiX size={16} />
-                      </button>
+                        <FiX size={18} />
+                      </motion.button>
                     </>
                   ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-indigo-600 dark:from-indigo-600 dark:to-purple-700 flex items-center justify-center text-4xl font-bold text-white">
+                    <div className="h-full w-full bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 dark:from-indigo-600 dark:via-purple-600 dark:to-blue-700 flex items-center justify-center text-5xl font-bold text-white shadow-inner">
                       {session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
                     </div>
                   )}
-                </div>
+                </motion.div>
                 
-                <label 
+                <motion.label 
                   htmlFor="profile-picture" 
-                  className="absolute -bottom-2 right-0 bg-white dark:bg-gray-700 p-2 rounded-full shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                  className="absolute -bottom-1 right-2 bg-white dark:bg-gray-700 p-3 rounded-full shadow-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 border-2 border-blue-500/50 dark:border-blue-400/50 group/upload"
                   title="Change profile picture"
+                  whileHover={{ scale: 1.1, rotate: 15 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <FiUpload className="text-blue-600 dark:text-blue-400" />
+                  <FiUpload className="text-blue-600 dark:text-blue-400 transition-transform duration-300 group-hover/upload:scale-110" size={20} />
                   <input
                     id="profile-picture"
                     type="file"
@@ -300,103 +333,124 @@ export default function ProfilePage() {
                     className="hidden"
                     onChange={handleImageUpload}
                   />
-                </label>
+                </motion.label>
               </motion.div>
               
               <motion.h1 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-2xl font-bold text-white"
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="text-3xl sm:text-4xl font-bold text-white mb-2 drop-shadow-lg"
               >
                 {session.user.name || 'User'}
               </motion.h1>
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-blue-100 dark:text-blue-200 mt-1"
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="text-blue-100 dark:text-blue-200 text-lg mb-6"
               >
                 {session.user.email}
               </motion.p>
               
               {/* Stats */}
-              <div className="flex justify-center mt-4 space-x-6">
-                <div className="text-center">
-                  <div className="text-xl font-bold text-white">{stats.totalBookings}</div>
-                  <div className="text-xs text-blue-100 dark:text-blue-200">Bookings</div>
-                </div>
-                <div className="h-10 w-px bg-white/30"></div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-white">{stats.completedBookings}</div>
-                  <div className="text-xs text-blue-100 dark:text-blue-200">Completed</div>
-                </div>
-                <div className="h-10 w-px bg-white/30"></div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-white">
-                    {new Date(stats.memberSince).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                  </div>
-                  <div className="text-xs text-blue-100 dark:text-blue-200">Member Since</div>
-                </div>
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="flex justify-center mt-6 space-x-8 sm:space-x-12"
+              >
+                {[
+                  { value: stats.totalBookings, label: 'Bookings' },
+                  { value: stats.completedBookings, label: 'Completed' },
+                  { value: new Date(stats.memberSince).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }), label: 'Member Since' }
+                ].map((stat, index) => (
+                  <motion.div 
+                    key={index}
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.7 + index * 0.1 }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <div className="text-2xl sm:text-3xl font-bold text-white drop-shadow-md">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-blue-100 dark:text-blue-200 mt-1 font-medium">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
           </div>
           
           {/* Tabs */}
-          <div className="border-b border-gray-200 dark:border-gray-700">
-            <nav className="flex -mb-px">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-6 text-center border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+          <div className="border-b border-gray-200/50 dark:border-gray-700/50 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+            <nav className="flex -mb-px relative">
+              {tabs.map((tab, index) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <motion.button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`relative py-4 px-6 sm:px-8 text-center font-semibold text-sm sm:text-base transition-all duration-300 ${
+                      isActive
+                        ? 'text-blue-600 dark:text-blue-400'
+                        : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                    }`}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="relative z-10">{tab.label}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-t-full"
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
             </nav>
           </div>
           
           {/* Tab Content */}
-          <div className="p-6 sm:p-8">
+          <div className="p-6 sm:p-8 lg:p-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
                 {activeTab === 'profile' ? (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.1, duration: 0.4 }}
                   className="col-span-2 sm:col-span-1"
                 >
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                    <FiUser className="text-blue-500" size={16} />
                     Full Name
                     <span className="text-red-500">*</span>
                   </label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <FiUser className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
+                    </motion.div>
                     <input
                       type="text"
                       name="name"
                       id="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-blue-300"
+                      className="block w-full pl-12 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-gray-700/50 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-gray-600"
                       placeholder="John Doe"
                       required
                     />
@@ -406,32 +460,34 @@ export default function ProfilePage() {
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.15, duration: 0.4 }}
                   className="col-span-2 sm:col-span-1"
                 >
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                    <FiMail className="text-blue-500" size={16} />
                     Email Address
                     <span className="text-red-500">*</span>
                   </label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <FiMail className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
+                    </motion.div>
                     <input
                       id="email"
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50"
+                      className="block w-full pl-12 pr-24 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300 bg-gray-50 dark:bg-gray-700/50 dark:text-gray-300"
                       placeholder="you@example.com"
                       required
                       disabled
                     />
-                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <span className="text-xs text-gray-500">Cannot change</span>
+                    <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Read-only</span>
                     </div>
                   </div>
                 </motion.div>
@@ -439,94 +495,126 @@ export default function ProfilePage() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
                   className="col-span-2"
                 >
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="phone" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                    <FiPhone className="text-blue-500" size={16} />
                     Phone Number
                   </label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    </div>
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <FiPhone className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
+                    </motion.div>
                     <input
                       id="phone"
                       name="phone"
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-blue-300"
+                      className="block w-full pl-12 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-gray-700/50 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-gray-600"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
                 </motion.div>
               </div>
 
-                  <div className="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-4 sm:mb-0">
-                      Last updated: {new Date().toLocaleDateString()}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t-2 border-gray-100 dark:border-gray-700/50"
+                  >
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-4 sm:mb-0 flex items-center gap-2">
+                      <FiClock className="text-gray-400" size={14} />
+                      <span>Last updated: {new Date().toLocaleDateString()}</span>
                     </div>
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-3 w-full sm:w-auto">
                       <motion.button
                         type="button"
                         onClick={() => router.back()}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                        whileHover={{ scale: 1.05, x: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-300 shadow-sm hover:shadow-md"
                       >
                         Cancel
                       </motion.button>
                       <motion.button
                         type="submit"
                         disabled={isLoading}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 hover:shadow-lg ${
+                        whileHover={isLoading ? {} : { scale: 1.05, y: -2 }}
+                        whileTap={isLoading ? {} : { scale: 0.95 }}
+                        className={`inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:shadow-xl ${
                           isLoading ? 'opacity-70 cursor-not-allowed' : ''
                         }`}
                       >
                         {isLoading ? (
                           <>
-                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <motion.svg 
+                              className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            >
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
+                            </motion.svg>
                             Saving...
                           </>
                         ) : (
-                          'Save Changes'
+                          <>
+                            <FiCheckCircle className="mr-2" size={18} />
+                            Save Changes
+                          </>
                         )}
                       </motion.button>
                     </div>
-                  </div>
+                  </motion.div>
                   </form>
                 ) : activeTab === 'security' ? (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 p-4 rounded-r-md mb-6">
-                      <div className="flex">
-                        <div className="flex-shrink-0">
-                          <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                    <motion.div 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 border-l-4 border-yellow-400 dark:border-yellow-500 p-5 rounded-r-xl mb-8 shadow-sm"
+                    >
+                      <div className="flex items-start">
+                        <motion.div 
+                          className="flex-shrink-0"
+                          animate={{ rotate: [0, 10, -10, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                        >
+                          <svg className="h-6 w-6 text-yellow-500 dark:text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                           </svg>
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                        </motion.div>
+                        <div className="ml-4">
+                          <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
                             For security reasons, please enter your current password to make changes.
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="space-y-4">
-                      <div>
-                        <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <div className="space-y-6">
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <label htmlFor="currentPassword" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                          <FiLock className="text-blue-500" size={16} />
                           Current Password
                         </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FiLock className="h-5 w-5 text-gray-400" />
+                        <div className="relative group">
+                          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <FiLock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
                           </div>
                           <input
                             id="currentPassword"
@@ -534,29 +622,36 @@ export default function ProfilePage() {
                             type={showCurrentPassword ? "text" : "password"}
                             value={formData.currentPassword}
                             onChange={handleChange}
-                            className="block w-full pl-10 pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
+                            className="block w-full pl-12 pr-12 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-gray-700/50 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-gray-600"
                             placeholder="••••••••"
                             required
                           />
-                          <button
+                          <motion.button
                             type="button"
                             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                            className="absolute inset-y-0 right-0 flex items-center justify-center w-10 h-full text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200 z-10 cursor-pointer"
+                            className="absolute inset-y-0 right-0 flex items-center justify-center w-12 h-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 z-10 cursor-pointer transition-colors duration-300"
                             aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
                           >
-                            {showCurrentPassword ? <FiEye className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
-                          </button>
+                            {showCurrentPassword ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
+                          </motion.button>
                         </div>
-                      </div>
+                      </motion.div>
 
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        <div>
-                          <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.15 }}
+                        >
+                          <label htmlFor="newPassword" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                            <FiLock className="text-blue-500" size={16} />
                             New Password
                           </label>
-                          <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                              <FiLock className="h-5 w-5 text-gray-400" />
+                          <div className="relative group">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <FiLock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
                             </div>
                             <input
                               id="newPassword"
@@ -564,27 +659,34 @@ export default function ProfilePage() {
                               type={showNewPassword ? "text" : "password"}
                               value={formData.newPassword}
                               onChange={handleChange}
-                              className="block w-full pl-10 pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
+                              className="block w-full pl-12 pr-12 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-gray-700/50 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-gray-600"
                               placeholder="••••••••"
                             />
-                            <button
+                            <motion.button
                               type="button"
                               onClick={() => setShowNewPassword(!showNewPassword)}
-                              className="absolute inset-y-0 right-0 flex items-center justify-center w-10 h-full text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200 z-10"
+                              className="absolute inset-y-0 right-0 flex items-center justify-center w-12 h-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 z-10 transition-colors duration-300"
                               aria-label={showNewPassword ? "Hide password" : "Show password"}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
                             >
                               {showNewPassword ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
-                            </button>
+                            </motion.button>
                           </div>
-                        </div>
+                        </motion.div>
 
-                        <div>
-                          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
+                            <FiCheckCircle className="text-blue-500" size={16} />
                             Confirm New Password
                           </label>
-                          <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                              <FiCheckCircle className="h-5 w-5 text-gray-400" />
+                          <div className="relative group">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                              <FiCheckCircle className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" />
                             </div>
                             <input
                               id="confirmPassword"
@@ -592,144 +694,206 @@ export default function ProfilePage() {
                               type={showConfirmPassword ? "text" : "password"}
                               value={formData.confirmPassword}
                               onChange={handleChange}
-                              className="block w-full pl-10 pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
+                              className="block w-full pl-12 pr-12 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-gray-700/50 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-gray-600"
                               placeholder="••••••••"
                             />
-                            <button
+                            <motion.button
                               type="button"
                               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                              className="absolute inset-y-0 right-0 flex items-center justify-center w-10 h-full text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200 z-10"
+                              className="absolute inset-y-0 right-0 flex items-center justify-center w-12 h-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 z-10 transition-colors duration-300"
                               aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
                             >
                               {showConfirmPassword ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
-                            </button>
+                            </motion.button>
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
 
-                    <div className="pt-4 flex justify-end">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="pt-6 flex justify-end border-t-2 border-gray-100 dark:border-gray-700/50"
+                    >
                       <motion.button
                         type="submit"
                         disabled={isLoading}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${
+                        whileHover={isLoading ? {} : { scale: 1.05, y: -2 }}
+                        whileTap={isLoading ? {} : { scale: 0.95 }}
+                        className={`inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:shadow-xl ${
                           isLoading ? 'opacity-70 cursor-not-allowed' : ''
                         }`}
                       >
-                        {isLoading ? 'Updating...' : 'Update Password'}
+                        {isLoading ? (
+                          <>
+                            <motion.svg 
+                              className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            >
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </motion.svg>
+                            Updating...
+                          </>
+                        ) : (
+                          <>
+                            <FiLock className="mr-2" size={18} />
+                            Update Password
+                          </>
+                        )}
                       </motion.button>
-                    </div>
+                    </motion.div>
                   </form>
                 ) : (
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white">Appearance</h3>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="space-y-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <FiSun className="text-blue-500" />
+                        Appearance
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         Customize how the app looks and feels.
                       </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="mt-6">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.4 }}
+                      className="bg-gray-50 dark:bg-gray-700/30 rounded-2xl p-6 border-2 border-gray-100 dark:border-gray-700/50"
+                    >
                       <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="text-sm font-medium text-gray-900 dark:text-white">Theme</h4>
+                        <div className="flex-1">
+                          <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-1">Theme</h4>
                           <p className="text-sm text-gray-500 dark:text-gray-400">
                             {isDarkMode ? 'Dark mode is enabled' : 'Light mode is enabled'}
                           </p>
                         </div>
-                        <button
+                        <motion.button
                           type="button"
                           onClick={toggleDarkMode}
-                          className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                            isDarkMode ? 'bg-blue-600' : 'bg-gray-200'
+                          className={`relative inline-flex h-7 w-14 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg ${
+                            isDarkMode ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-gray-300'
                           }`}
                           role="switch"
                           aria-checked={isDarkMode}
+                          whileTap={{ scale: 0.95 }}
                         >
                           <span className="sr-only">Toggle dark mode</span>
-                          <span
-                            className={`pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                              isDarkMode ? 'translate-x-5' : 'translate-x-0'
-                            }`}
+                          <motion.span
+                            className="pointer-events-none relative inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0"
+                            animate={{
+                              x: isDarkMode ? 28 : 2,
+                            }}
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
                           >
                             <span
-                              className={`absolute inset-0 flex h-full w-full items-center justify-center transition-opacity ${
-                                isDarkMode ? 'opacity-0 duration-100 ease-out' : 'opacity-100 duration-200 ease-in'
+                              className={`absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-300 ${
+                                isDarkMode ? 'opacity-0' : 'opacity-100'
                               }`}
                               aria-hidden="true"
                             >
-                              <FiSun className="h-3 w-3 text-gray-400" />
+                              <FiSun className="h-3.5 w-3.5 text-yellow-500" />
                             </span>
                             <span
-                              className={`absolute inset-0 flex h-full w-full items-center justify-center transition-opacity ${
-                                isDarkMode ? 'opacity-100 duration-200 ease-in' : 'opacity-0 duration-100 ease-out'
+                              className={`absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-300 ${
+                                isDarkMode ? 'opacity-100' : 'opacity-0'
                               }`}
                               aria-hidden="true"
                             >
-                              <FiMoon className="h-3 w-3 text-blue-600" />
+                              <FiMoon className="h-3.5 w-3.5 text-blue-600" />
                             </span>
-                          </span>
-                        </button>
+                          </motion.span>
+                        </motion.button>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white">Notifications</h3>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.4 }}
+                      className="pt-8 border-t-2 border-gray-100 dark:border-gray-700/50"
+                    >
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <FiMail className="text-blue-500" />
+                        Notifications
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                         Manage how you receive notifications.
                       </p>
                       
-                      <div className="space-y-4">
-                        <div className="flex items-start">
-                          <div className="flex items-center h-5">
+                      <div className="space-y-5">
+                        <motion.div 
+                          className="flex items-start p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl border-2 border-gray-100 dark:border-gray-700/50 hover:border-blue-200 dark:hover:border-blue-700/50 transition-all duration-300"
+                          whileHover={{ scale: 1.02, x: 4 }}
+                        >
+                          <div className="flex items-center h-5 pt-0.5">
                             <input
                               id="email-notifications"
                               name="email-notifications"
                               type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                              className="h-5 w-5 rounded border-2 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer transition-all duration-300"
                               defaultChecked
                             />
                           </div>
-                          <div className="ml-3 text-sm">
-                            <label htmlFor="email-notifications" className="font-medium text-gray-700 dark:text-gray-300">
+                          <div className="ml-4 flex-1">
+                            <label htmlFor="email-notifications" className="font-semibold text-gray-700 dark:text-gray-300 cursor-pointer">
                               Email notifications
                             </label>
-                            <p className="text-gray-500 dark:text-gray-400">Get notified about your account activity.</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Get notified about your account activity.</p>
                           </div>
-                        </div>
+                        </motion.div>
 
-                        <div className="flex items-start">
-                          <div className="flex items-center h-5">
+                        <motion.div 
+                          className="flex items-start p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl border-2 border-gray-100 dark:border-gray-700/50 hover:border-blue-200 dark:hover:border-blue-700/50 transition-all duration-300"
+                          whileHover={{ scale: 1.02, x: 4 }}
+                        >
+                          <div className="flex items-center h-5 pt-0.5">
                             <input
                               id="sms-notifications"
                               name="sms-notifications"
                               type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                              className="h-5 w-5 rounded border-2 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer transition-all duration-300"
                               defaultChecked
                             />
                           </div>
-                          <div className="ml-3 text-sm">
-                            <label htmlFor="sms-notifications" className="font-medium text-gray-700 dark:text-gray-300">
+                          <div className="ml-4 flex-1">
+                            <label htmlFor="sms-notifications" className="font-semibold text-gray-700 dark:text-gray-300 cursor-pointer">
                               SMS notifications
                             </label>
-                            <p className="text-gray-500 dark:text-gray-400">Get text messages about important updates.</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Get text messages about important updates.</p>
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="pt-6 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="pt-8 border-t-2 border-gray-100 dark:border-gray-700/50 flex justify-end"
+                    >
                       <motion.button
                         type="button"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:shadow-xl"
                       >
+                        <FiCheckCircle className="mr-2" size={18} />
                         Save Preferences
                       </motion.button>
-                    </div>
+                    </motion.div>
                   </div>
                 )}
               </motion.div>
@@ -740,18 +904,36 @@ export default function ProfilePage() {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 px-6 py-4 border-t border-gray-200 dark:border-gray-700"
+            transition={{ delay: 0.4 }}
+            className="bg-gradient-to-r from-gray-50/80 via-blue-50/80 to-purple-50/80 dark:from-gray-800/80 dark:via-gray-800/80 dark:to-gray-900/80 backdrop-blur-sm px-6 py-5 border-t-2 border-gray-200/50 dark:border-gray-700/50"
           >
             <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-              <div className="mb-2 sm:mb-0">
+              <motion.div 
+                className="mb-2 sm:mb-0 font-medium"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+              >
                 &copy; {new Date().getFullYear()} CarWash Pro. All rights reserved.
-              </div>
-              <div className="flex space-x-4">
-                <a href="/privacy" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">Privacy</a>
-                <a href="/terms" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">Terms</a>
-                <a href="/help" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">Help</a>
-              </div>
+              </motion.div>
+              <motion.div 
+                className="flex space-x-6"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                {['Privacy', 'Terms', 'Help'].map((link, index) => (
+                  <motion.a
+                    key={link}
+                    href={`/${link.toLowerCase()}`}
+                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-300 font-medium hover:underline"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {link}
+                  </motion.a>
+                ))}
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>

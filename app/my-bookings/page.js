@@ -751,7 +751,6 @@ function MyBookingsPage() {
                                   <span>Cancel Booking</span>
                                 </>
                               )}
-                              Cancel Booking
                             </Button>
                           )}
 

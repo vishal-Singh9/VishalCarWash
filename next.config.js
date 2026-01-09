@@ -6,6 +6,20 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  webpack: (config, { isServer }) => {
+    // This allows us to use WebSockets in the API routes
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        net: false,
+        tls: false,
+        dns: false,
+        child_process: false,
+        fs: false,
+      };
+    }
+    return config;
+  },
   // Ensure cookies are properly forwarded to API routes
   async headers() {
     return [
@@ -21,11 +35,12 @@ const nextConfig = {
       },
     ];
   },
-  // Enable server components to access cookies
+  // Enable server components to access cookies and WebSockets
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    serverComponentsExternalPackages: ['ws'],
   },
 };
 

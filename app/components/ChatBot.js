@@ -391,7 +391,7 @@ class ErrorBoundary extends Component {
   }
 }
 
-function ChatBot() {
+function ChatBot({ externalOpen, onExternalOpenChange }) {
   const [showChat, setShowChat] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showQuestions, setShowQuestions] = useState(true);
@@ -404,21 +404,49 @@ function ChatBot() {
   const scrollAreaRef = useRef(null);
   const chatContainerRef = useRef(null);
 
+  // Sync with external control
+  useEffect(() => {
+    if (externalOpen !== undefined) {
+      setShowChat(externalOpen);
+    }
+  }, [externalOpen]);
+
+  // Notify parent when chat state changes
+  useEffect(() => {
+    if (onExternalOpenChange) {
+      onExternalOpenChange(showChat);
+    }
+  }, [showChat, onExternalOpenChange]);
+
   // Prevent body scroll when chatbot is open
   useEffect(() => {
     if (showChat) {
       const scrollbarWidth =
         window.innerWidth - document.documentElement.clientWidth;
+      const scrollY = window.scrollY;
       document.body.classList.add("chat-open");
       document.body.style.paddingRight = `${scrollbarWidth}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
     } else {
+      const scrollY = document.body.style.top;
       document.body.classList.remove("chat-open");
       document.body.style.paddingRight = "0px";
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
 
     return () => {
       document.body.classList.remove("chat-open");
       document.body.style.paddingRight = "0px";
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [showChat]);
 
@@ -632,7 +660,7 @@ function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-4 right-5 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[99]">
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
@@ -696,8 +724,8 @@ function ChatBot() {
         }
       `}</style>
 
-      {/* Floating Action Button */}
-      {!showChat && (
+      {/* Floating Action Button - Only show if not externally controlled */}
+      {/* {!showChat && externalOpen === undefined && (
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -709,7 +737,7 @@ function ChatBot() {
           <Car className="w-6 h-6 sm:w-7 sm:h-7" />
           <span className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
         </motion.button>
-      )}
+      )} */}
 
       {/* Chat Interface */}
       {showChat && (
@@ -719,10 +747,10 @@ function ChatBot() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: "spring", duration: 0.5 }}
-          className="fixed bottom-2 right-2 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-[99] w-[calc(100vw-16px)] sm:w-[400px] md:w-[440px] shadow-2xl rounded-2xl sm:rounded-3xl overflow-hidden"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-[99] w-[calc(100vw-32px)] sm:w-[400px] md:w-[440px] shadow-2xl rounded-2xl sm:rounded-3xl overflow-hidden"
           style={{
-            maxHeight: "calc(100vh - 16px)",
-            height: "calc(100vh - 16px)",
+            maxHeight: "calc(100vh - 120px)",
+            height: "calc(100vh - 120px)",
             maxWidth: "440px",
           }}
         >
@@ -905,10 +933,10 @@ function ChatBot() {
   );
 }
 
-export default function ChatBotWithErrorBoundary() {
+export default function ChatBotWithErrorBoundary({ externalOpen, onExternalOpenChange }) {
   return (
     <ErrorBoundary>
-      <ChatBot />
+      <ChatBot externalOpen={externalOpen} onExternalOpenChange={onExternalOpenChange} />
     </ErrorBoundary>
   );
 }

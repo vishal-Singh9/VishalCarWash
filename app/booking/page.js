@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback,useRef } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import {
@@ -16,7 +16,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { API_ENDPOINTS } from "@/lib/api-config";
 import { toast } from "react-toastify";
 
@@ -110,6 +110,33 @@ export default function BookingPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [activeStep, setActiveStep] = useState(1);
+  const [isVehicleTypeOpen, setIsVehicleTypeOpen] = useState(false);
+  const [isTimeSlotOpen, setIsTimeSlotOpen] = useState(false);
+  const vehicleTypeRef = useRef(null);
+  const timeSlotRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const timeSlotDropdownRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Handle vehicle type dropdown
+      if (vehicleTypeRef.current && !vehicleTypeRef.current.contains(event.target) &&
+          dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsVehicleTypeOpen(false);
+      }
+      // Handle time slot dropdown
+      if (timeSlotRef.current && !timeSlotRef.current.contains(event.target) &&
+          timeSlotDropdownRef.current && !timeSlotDropdownRef.current.contains(event.target)) {
+        setIsTimeSlotOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   const [selectedService, setSelectedService] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -336,6 +363,23 @@ export default function BookingPage() {
 
       toast.success("Booking confirmed! Check your email for details.");
       setShowSuccess(true);
+
+      // Refresh notifications after successful booking
+      // Dispatch event to trigger notification refresh
+      if (typeof window !== 'undefined') {
+        // Trigger custom event for NotificationContext to listen
+        window.dispatchEvent(new CustomEvent('bookingCreated', { 
+          detail: { 
+            bookingId: data.booking?.id || data.data?.id,
+            booking: data.booking || data.data
+          } 
+        }));
+        
+        // Also try to refresh notifications directly if context is available
+        setTimeout(() => {
+          window.dispatchEvent(new Event('refreshNotifications'));
+        }, 1500); // Wait 1.5 seconds for notification to be created in DB
+      }
 
       setFormData((prev) => ({
         ...prev,
@@ -993,26 +1037,63 @@ export default function BookingPage() {
                           />
                         </div>
 
-                        {/* Vehicle Type */}
+                        {/* Vehicle Type - Custom Dropdown */}
                         <div className="space-y-1.5">
                           <Label className="text-sm font-medium text-gray-700">
                             Vehicle Type <span className="text-red-500">*</span>
                           </Label>
-                          <select
-                            name="vehicle_type"
-                            value={formData.vehicle_type}
-                            onChange={handleInputChange}
-                            required
-                            className="h-11 w-full rounded-lg bg-gray-50 border border-gray-300 px-3 text-gray-800 placeholder-gray-400
-                         focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                          >
-                            <option value="">Select vehicle type</option>
-                            {VEHICLE_TYPES.map((type) => (
-                              <option key={type} value={type}>
-                                {type}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="relative" ref={vehicleTypeRef}>
+                            <button
+                              type="button"
+                              onClick={() => setIsVehicleTypeOpen(!isVehicleTypeOpen)}
+                              className={`w-full h-11 rounded-lg bg-gray-50 border ${
+                                formData.vehicle_type ? 'text-gray-800' : 'text-gray-400'
+                              } px-3 pr-10 text-left flex items-center justify-between ${
+                                isVehicleTypeOpen 
+                                  ? 'border-blue-500 ring-2 ring-blue-500/20 bg-white' 
+                                  : 'border-gray-300 hover:border-gray-400'
+                              } transition`}
+                            >
+                              {formData.vehicle_type || 'Select vehicle type'}
+                              <svg 
+                                className={`fill-current h-4 w-4 text-gray-500 transition-transform ${
+                                  isVehicleTypeOpen ? 'transform rotate-180' : ''
+                                }`} 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                              </svg>
+                            </button>
+                            
+                            <AnimatePresence>
+                              {isVehicleTypeOpen && (
+                                <motion.div
+                                  ref={dropdownRef}
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto"
+                                >
+                                  {VEHICLE_TYPES.map((type) => (
+                                    <div
+                                      key={type}
+                                      onClick={() => {
+                                        handleInputChange({ target: { name: 'vehicle_type', value: type } });
+                                        setIsVehicleTypeOpen(false);
+                                      }}
+                                      className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
+                                        formData.vehicle_type === type ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                                      }`}
+                                    >
+                                      {type}
+                                    </div>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
                         </div>
 
                         {/* Vehicle Number */}
@@ -1049,27 +1130,63 @@ export default function BookingPage() {
                           />
                         </div>
 
-                        {/* Time */}
+                        {/* Preferred Time - Custom Dropdown */}
                         <div className="space-y-1.5">
                           <Label className="text-sm font-medium text-gray-700">
-                            Preferred Time{" "}
-                            <span className="text-red-500">*</span>
+                            Preferred Time <span className="text-red-500">*</span>
                           </Label>
-                          <select
-                            name="booking_time"
-                            value={formData.booking_time}
-                            onChange={handleInputChange}
-                            required
-                            className="h-11 w-full rounded-lg bg-gray-50 border border-gray-300 px-3 text-gray-800 placeholder-gray-400
-                         focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                          >
-                            <option value="">Select time slot</option>
-                            {TIME_SLOTS.map((time) => (
-                              <option key={time} value={time}>
-                                {time}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="relative" ref={timeSlotRef}>
+                            <button
+                              type="button"
+                              onClick={() => setIsTimeSlotOpen(!isTimeSlotOpen)}
+                              className={`w-full h-11 rounded-lg bg-gray-50 border ${
+                                formData.booking_time ? 'text-gray-800' : 'text-gray-400'
+                              } px-3 pr-10 text-left flex items-center justify-between ${
+                                isTimeSlotOpen 
+                                  ? 'border-blue-500 ring-2 ring-blue-500/20 bg-white' 
+                                  : 'border-gray-300 hover:border-gray-400'
+                              } transition`}
+                            >
+                              {formData.booking_time || 'Select time slot'}
+                              <svg 
+                                className={`fill-current h-4 w-4 text-gray-500 transition-transform ${
+                                  isTimeSlotOpen ? 'transform rotate-180' : ''
+                                }`} 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                              </svg>
+                            </button>
+                            
+                            <AnimatePresence>
+                              {isTimeSlotOpen && (
+                                <motion.div
+                                  ref={timeSlotDropdownRef}
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto"
+                                >
+                                  {TIME_SLOTS.map((time) => (
+                                    <div
+                                      key={time}
+                                      onClick={() => {
+                                        handleInputChange({ target: { name: 'booking_time', value: time } });
+                                        setIsTimeSlotOpen(false);
+                                      }}
+                                      className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
+                                        formData.booking_time === time ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                                      }`}
+                                    >
+                                      {time}
+                                    </div>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
                         </div>
 
                         {/* Notes */}

@@ -193,6 +193,81 @@ export async function PATCH(request) {
   }
 }
 
+// Function to create and send booking notification
+async function sendBookingNotification(userId, booking) {
+  try {
+    await dbConnect();
+    
+    // Import Notification model
+    const Notification = (await import('@/models/Notification')).default;
+    
+    // Format date for display
+    const bookingDate = new Date(booking.date || booking.booking_date);
+    const formattedDate = bookingDate.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+    
+    const serviceName = booking.service || booking.service_name || 'car wash service';
+    const bookingTime = booking.time || booking.booking_time || '';
+    
+    // Create notification in database
+    const notification = await Notification.create({
+      user: userId,
+      title: 'Car Wash Booked Successfully! 🎉',
+      message: `Your ${serviceName} booking for ${formattedDate}${bookingTime ? ` at ${bookingTime}` : ''} has been confirmed successfully.`,
+      type: 'success',
+      link: '/my-bookings',
+      bookingId: booking._id,
+      metadata: {
+        bookingStatus: booking.status || 'pending',
+        serviceName: serviceName,
+        bookingDate: booking.date || booking.booking_date,
+        bookingTime: bookingTime,
+      }
+    });
+    
+    console.log('Notification created successfully:', {
+      id: notification._id,
+      userId: userId,
+      title: notification.title,
+      message: notification.message
+    });
+
+    // Try to send WebSocket notification if available
+    try {
+      const { sendNotification } = await import('@/utils/websocket');
+      sendNotification(userId, {
+        type: 'notification',
+        data: {
+          id: notification._id.toString(),
+          title: notification.title,
+          message: notification.message,
+          type: notification.type,
+          link: notification.link,
+          bookingId: notification.bookingId?.toString(),
+          timestamp: notification.createdAt.toISOString(),
+        }
+      });
+    } catch (wsError) {
+      // WebSocket not available, but notification is saved in DB
+      console.log('WebSocket not available, notification saved to database');
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Notification created:', notification);
+    }
+    
+    return notification;
+  } catch (error) {
+    console.error('Error creating notification:', error);
+    // Don't throw error - notification failure shouldn't break booking
+    return null;
+  }
+}
+
 export async function POST(request) {
   try {
     // Check if user is authenticated and get session
@@ -330,11 +405,33 @@ export async function POST(request) {
 
     await booking.save();
 
+    // Create and send notification
+    if (session?.user?.id) {
+      try {
+        await sendBookingNotification(session.user.id, booking);
+      } catch (notifError) {
+        // Log error but don't fail the booking
+        console.error('Error creating notification:', notifError);
+      }
+    }
+
     return NextResponse.json(
       {
         message: "Booking created successfully",
+        data: {
+          _id: booking._id,
+          id: booking._id.toString(),
+          service: booking.service,
+          service_name: booking.service,
+          date: booking.date,
+          booking_date: booking.date,
+          time: booking.time,
+          booking_time: booking.time,
+          status: booking.status,
+        },
         booking: {
-          id: booking._id,
+          id: booking._id.toString(),
+          _id: booking._id.toString(),
           service: booking.service,
           date: booking.date,
           time: booking.time,

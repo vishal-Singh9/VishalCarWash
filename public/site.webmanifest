@@ -1,0 +1,28 @@
+{
+  "name": "Vishal Car Wash - Varanasi",
+  "short_name": "Vishal Car Wash",
+  "description": "Best Car Wash in Babatpur Varanasi, Car Wash Near Babatpur Airport, Car Cleaning Varanasi, Car Wash Babatpur, Car Wash Airport, Varanasi Car Wash, Car Detailing Varanasi, Professional Car Wash, Car Wash Service, Mobile Car Wash, Car Wash Near Me, Luxury Car Wash, Car Wash and Detailing, Express Car Wash, Car Interior Cleaning, Car Wash Center, Car Wash Shop Near Me",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
+

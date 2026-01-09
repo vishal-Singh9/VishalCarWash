@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession } from 'next-auth/react';
 import {
   X,
   Star,
@@ -13,18 +14,40 @@ import {
   XCircle,
   Heart,
   Sparkles,
+  Lock,
 } from 'lucide-react';
 
-export default function FeedbackModal() {
+export default function FeedbackModal({ externalOpenTrigger }) {
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const prevTriggerRef = useRef(0);
+
+  // Handle external open trigger - open when trigger value changes
+  useEffect(() => {
+    if (externalOpenTrigger && externalOpenTrigger !== prevTriggerRef.current) {
+      setIsOpen(true);
+      prevTriggerRef.current = externalOpenTrigger;
+    }
+  }, [externalOpenTrigger]);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     rating: 0,
-    // category: 'overall',
     review: '',
   });
+
+  // Set user data when session is available
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user) {
+      setFormData(prev => ({
+        ...prev,
+        name: session.user.name || '',
+        email: session.user.email || ''
+      }));
+    }
+  }, [status, session]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
@@ -260,20 +283,29 @@ export default function FeedbackModal() {
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          id="modal-name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className={`w-full pl-10 pr-4 py-2 text-sm rounded-lg border ${
-                            errors.name
-                              ? 'border-red-300 focus:ring-red-500'
-                              : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
-                          } focus:border-blue-500 transition-all duration-200`}
-                          placeholder="John Doe"
-                          disabled={isSubmitting}
-                        />
+                        <div className="relative">
+                          <input
+                            type="text"
+                            id="modal-name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className={`w-full pl-10 pr-10 py-2 text-sm rounded-lg border ${
+                              errors.name
+                                ? 'border-red-300 focus:ring-red-500'
+                                : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
+                            } focus:border-blue-500 transition-all duration-200 ${
+                              session?.user ? 'bg-gray-50' : ''
+                            }`}
+                            placeholder="John Doe"
+                            disabled={isSubmitting || !!session?.user}
+                          />
+                          {session?.user && (
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                              <Lock className="h-4 w-4 text-gray-500" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                       {errors.name && (
                         <p className="text-xs text-red-600 mt-1">{errors.name}</p>
@@ -290,20 +322,29 @@ export default function FeedbackModal() {
                       </label>
                       <div className="relative">
                         <MailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="email"
-                          id="modal-email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className={`w-full pl-10 pr-4 py-2 text-sm rounded-lg border ${
-                            errors.email
-                              ? 'border-red-300 focus:ring-red-500'
-                              : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
-                          } focus:border-blue-500 transition-all duration-200`}
-                          placeholder="your.email@example.com"
-                          disabled={isSubmitting}
-                        />
+                        <div className="relative">
+                          <input
+                            type="email"
+                            id="modal-email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className={`w-full pl-10 pr-10 py-2 text-sm rounded-lg border ${
+                              errors.email
+                                ? 'border-red-300 focus:ring-red-500'
+                                : 'border-gray-200 focus:ring-2 focus:ring-blue-500'
+                            } focus:border-blue-500 transition-all duration-200 ${
+                              session?.user ? 'bg-gray-50' : ''
+                            }`}
+                            placeholder="your.email@example.com"
+                            disabled={isSubmitting || !!session?.user}
+                          />
+                          {session?.user && (
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                              <Lock className="h-4 w-4 text-gray-500" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                       {errors.email && (
                         <p className="text-xs text-red-600 mt-1">{errors.email}</p>

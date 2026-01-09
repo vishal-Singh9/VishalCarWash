@@ -21,10 +21,12 @@ import {
   BookOpen,
   HelpCircle,
   Users,
+  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NotificationDropdown } from "./NotificationDropdown";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -315,15 +317,18 @@ export function Navigation() {
             </nav>
 
             {/* Auth Section */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-4">
               {status === "authenticated" ? (
-                <div className="relative" ref={dropdownRef}>
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-200 transition-all duration-300 shadow-sm hover:shadow-md"
-                  >
+                <div className="flex items-center gap-2">
+                  {/* Notification Dropdown - Desktop */}
+                  <NotificationDropdown />
+                  <div className="relative" ref={dropdownRef}>
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-200 transition-all duration-300 shadow-sm hover:shadow-md"
+                    >
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-sm">
                       <User className="w-4 h-4 text-white" />
                     </div>
@@ -337,6 +342,7 @@ export function Navigation() {
                       <ChevronDown className="w-4 h-4 text-gray-500" />
                     </motion.div>
                   </motion.button>
+             
 
                   <AnimatePresence>
                     {userDropdownOpen && (
@@ -445,6 +451,7 @@ export function Navigation() {
                     )}
                   </AnimatePresence>
                 </div>
+                </div>
               ) : (
                 <div className="flex items-center gap-3">
                   <motion.div
@@ -477,12 +484,10 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 lg:hidden">
               {status === "authenticated" && (
-                <Link
-                  href="/profile"
-                  className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  <User className="w-5 h-5 text-gray-700" />
-                </Link>
+                <>
+                  {/* Notification Dropdown - Mobile */}
+                  <NotificationDropdown isMobile={true} />
+                </>
               )}
               <motion.button
                 whileTap={{ scale: 0.9 }}
@@ -530,26 +535,29 @@ export function Navigation() {
               <div className="max-w-7xl mx-auto px-4 py-4 bg-white/98 backdrop-blur-xl">
                 {/* User Info (if authenticated) */}
                 {status === "authenticated" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="mb-4 p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg">
-                        <User className="w-6 h-6 text-white" />
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="mb-4 p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg">
+                          <User className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-gray-900 truncate">
+                            {session.user.name}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {session.user.email}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 truncate">
-                          {session.user.name}
-                        </p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {session.user.email}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+
+                  </>
                 )}
 
                 {/* Navigation Links */}
@@ -682,25 +690,44 @@ export function Navigation() {
                     className="pt-4 border-t border-gray-100 space-y-1"
                   >
                     <Link
-                      href="/my-bookings"
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                      href="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors group"
                     >
-                      <Calendar className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                        <User className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <span className="font-medium">Profile</span>
+                    </Link>
+                    <Link
+                      href="/my-bookings"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors group"
+                    >
+                      <div className="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+                        <Calendar className="w-5 h-5 text-emerald-600" />
+                      </div>
                       <span className="font-medium">My Bookings</span>
                     </Link>
                     <Link
                       href="/settings"
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors group"
                     >
-                      <Settings className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                        <Settings className="w-5 h-5 text-amber-600" />
+                      </div>
                       <span className="font-medium">Settings</span>
                     </Link>
                     {session.user.role === "admin" && (
                       <Link
                         href="/admin"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors group"
                       >
-                        <Shield className="w-5 h-5" />
+                        <div className="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center group-hover:bg-violet-200 transition-colors">
+                          <Shield className="w-5 h-5 text-violet-600" />
+                        </div>
                         <span className="font-medium">Admin Dashboard</span>
                       </Link>
                     )}
@@ -708,10 +735,13 @@ export function Navigation() {
                       onClick={async () => {
                         await signOut({ redirect: false });
                         router.push("/auth/signin");
+                        setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-colors group"
                     >
-                      <LogOut className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                        <LogOut className="w-5 h-5 text-red-600" />
+                      </div>
                       <span className="font-medium">Sign Out</span>
                     </button>
                   </motion.div>
