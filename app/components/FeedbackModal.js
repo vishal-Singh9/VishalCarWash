@@ -146,18 +146,23 @@ export default function FeedbackModal({ externalOpenTrigger }) {
     setSubmitStatus({ success: false, message: '' });
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          rating: formData.rating,
+          review: formData.review,
+        }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit review.');
+        throw new Error(result.message || result.error || 'Failed to submit review.');
       }
 
       setSubmitStatus({

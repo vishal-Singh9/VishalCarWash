@@ -2,11 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Car, X, Plus } from 'lucide-react';
+import { MessageSquare, Car, X, Plus, Calendar } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, isChatOpen = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -49,6 +51,11 @@ export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, is
     }
   };
 
+  const handleBookingClick = () => {
+    setIsOpen(false);
+    router.push('/booking');
+  };
+
   return (
     <>
       <style>{`
@@ -78,13 +85,45 @@ export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, is
           {/* Menu Items */}
           {isOpen && (
             <>
+              {/* Booking Option */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ delay: 0.15, type: 'spring', stiffness: 300, damping: 25 }}
+                className="absolute bottom-full right-0 mb-3 flex items-center gap-2 z-[101]"
+                style={{ pointerEvents: 'auto' }}
+              >
+                {/* Label Text */}
+                <motion.span
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-gray-900 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg"
+                >
+                  Book Now
+                </motion.span>
+                {/* Button */}
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBookingClick();
+                  }}
+                  className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-700 hover:to-teal-600 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-emerald-500/50 transition-all duration-300 group"
+                  aria-label="Book Appointment"
+                  style={{ transformOrigin: 'center bottom' }}
+                >
+                  <Calendar className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:scale-110 group-active:scale-95" />
+                </motion.button>
+              </motion.div>
+
               {/* Chatbot Option */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ delay: 0.1, type: 'spring', stiffness: 300, damping: 25 }}
-                className="absolute bottom-full right-0 mb-3 flex items-center gap-2 z-[101]"
+                className="absolute bottom-full right-0 mb-20 sm:mb-24 md:mb-28 flex items-center gap-2 z-[101]"
                 style={{ pointerEvents: 'auto' }}
               >
                 {/* Label Text */}
@@ -117,7 +156,7 @@ export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, is
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ delay: 0.05, type: 'spring', stiffness: 300, damping: 25 }}
-                className="absolute bottom-full right-0 mb-20 sm:mb-24 md:mb-28 flex items-center gap-2 z-[101]"
+                className="absolute bottom-full right-0 mb-36 sm:mb-44 md:mb-52 flex items-center gap-2 z-[101]"
                 style={{ pointerEvents: 'auto' }}
               >
                 {/* Label Text */}
@@ -127,7 +166,7 @@ export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, is
                   transition={{ delay: 0.1 }}
                   className="bg-gray-900 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg"
                 >
-                  Add Feedback
+                  Add Review
                 </motion.span>
                 {/* Button */}
                 <motion.button
@@ -136,7 +175,7 @@ export default function FloatingActionMenu({ onChatbotClick, onFeedbackClick, is
                     handleFeedbackClick();
                   }}
                   className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500 hover:from-purple-700 hover:to-pink-600 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-purple-500/50 transition-all duration-300 group"
-                  aria-label="Add Feedback"
+                  aria-label="Add Review"
                   style={{ transformOrigin: 'center bottom' }}
                 >
                   <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:scale-110 group-active:scale-95" />

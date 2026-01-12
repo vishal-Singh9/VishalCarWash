@@ -8,6 +8,7 @@ import { ShowGallery } from './components/home/ShowGallery';
 import { Pricing } from './components/home/Pricing';
 import { Contact } from './components/home/Contact';
 import { Newsletter } from './components/home/Newsletter';
+import { BookingAvailability } from './components/home/BookingAvailability';
 import { useServices } from './hooks/useServices';
 import Hero from './components/home/Hero';
 import Footer from './components/Footer';
@@ -29,6 +30,7 @@ export default function Home() {
       
       <Hero />
       {/* <Stats stats={stats} /> */}
+      <BookingAvailability />
       <Services services={services} loading={loading} error={error} />
       <Features />
       <Testimonials />
