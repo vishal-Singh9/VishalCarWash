@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/db';
 import Contact from '@/models/Contact';
+import { sendContactEmail } from '@/lib/email';
 
 // CORS headers configuration
 const corsHeaders = {
@@ -66,6 +67,23 @@ export async function POST(request) {
       subject,
       message
     });
+
+    // Send email notification (non-blocking - don't fail if email fails)
+    try {
+      const emailResult = await sendContactEmail({
+        name,
+        email,
+        subject,
+        message
+      });
+      
+      if (!emailResult.success) {
+        console.warn('Contact saved to database but email sending failed:', emailResult.error);
+      }
+    } catch (emailError) {
+      // Log error but don't fail the request since data is already saved
+      console.error('Error sending contact email notification:', emailError);
+    }
 
     return successResponse({
       message: 'Message sent successfully!',

@@ -57,6 +57,51 @@ export function BookingAvailability() {
     fetchAvailability(selectedDate);
   }, [selectedDate]);
 
+  // Helper function to check if a time slot is in the past
+  const isTimeSlotPast = (timeStr, selectedDate) => {
+    // Get current date and time in local timezone
+    const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Parse selected date
+    const selectedDateOnly = new Date(selectedDate + 'T00:00:00');
+    selectedDateOnly.setHours(0, 0, 0, 0);
+    
+    // Check if selected date is today
+    const isToday = selectedDateOnly.getTime() === today.getTime();
+    
+    // If not today, slot is not past
+    if (!isToday) return false;
+    
+    // Convert time string to minutes from start of day
+    const timeToMinutes = (timeStr) => {
+      const [time, period] = timeStr.split(' ');
+      let [hours, minutes] = time.split(':').map(Number);
+      
+      if (period === 'PM' && hours !== 12) {
+        hours += 12;
+      } else if (period === 'AM' && hours === 12) {
+        hours = 0; // 12 AM is 0 hours
+      }
+      
+      return hours * 60 + minutes;
+    };
+    
+    // Get current time in minutes
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeInMinutes = currentHour * 60 + currentMinute;
+    
+    // Calculate minimum booking time (current time + 1 hour buffer)
+    const nextHour = currentHour + 1;
+    const minimumBookingTime = nextHour * 60; // Next hour in minutes (e.g., 6 PM = 18 * 60 = 1080)
+    
+    // Slot is past if it's before the minimum booking time
+    const slotTimeInMinutes = timeToMinutes(timeStr);
+    return slotTimeInMinutes < minimumBookingTime;
+  };
+
   const fetchAvailability = async (date) => {
     if (!date) return;
 
@@ -65,8 +110,24 @@ export function BookingAvailability() {
       const response = await fetch(`/api/bookings/availability?date=${date}`);
       if (response.ok) {
         const data = await response.json();
-        setAvailability(data.availability || []);
-        setStatistics(data.statistics || null);
+        // Filter out past slots on client side as well for safety
+        const filteredSlots = (data.availability || []).filter(slot => {
+          // If slot is already marked as not available (booked), keep it
+          if (!slot.available) return true;
+          // Filter out past slots
+          return !isTimeSlotPast(slot.time, date);
+        });
+        
+        setAvailability(filteredSlots);
+        
+        // Recalculate statistics based on filtered slots
+        const availableCount = filteredSlots.filter(s => s.available).length;
+        const bookedCount = filteredSlots.filter(s => !s.available).length;
+        setStatistics({
+          available: availableCount,
+          booked: bookedCount,
+          total: filteredSlots.length
+        });
       } else {
         setAvailability([]);
         setStatistics(null);
@@ -332,14 +393,15 @@ export function BookingAvailability() {
                       <Link
                         key={slot.time}
                         href={
-                          slot.available
+                          slot.available && !isTimeSlotPast(slot.time, selectedDate)
                             ? `/booking?date=${selectedDate}&time=${encodeURIComponent(
                                 slot.time
                               )}`
                             : "#"
                         }
                         onClick={(e) => {
-                          if (!slot.available) {
+                          // Prevent navigation if slot is not available or is past
+                          if (!slot.available || isTimeSlotPast(slot.time, selectedDate)) {
                             e.preventDefault();
                           }
                         }}
@@ -347,10 +409,10 @@ export function BookingAvailability() {
                         <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          whileHover={{ scale: slot.available ? 1.05 : 1 }}
-                          whileTap={{ scale: slot.available ? 0.95 : 1 }}
+                          whileHover={{ scale: slot.available && !isTimeSlotPast(slot.time, selectedDate) ? 1.05 : 1 }}
+                          whileTap={{ scale: slot.available && !isTimeSlotPast(slot.time, selectedDate) ? 0.95 : 1 }}
                           className={`p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200 ${
-                            slot.available
+                            slot.available && !isTimeSlotPast(slot.time, selectedDate)
                               ? "border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 hover:border-green-500 hover:bg-gradient-to-br hover:from-green-100 hover:to-emerald-100 cursor-pointer group shadow-sm hover:shadow-lg active:scale-95"
                               : "border-red-200 bg-gradient-to-br from-red-50 to-rose-50 opacity-70 cursor-not-allowed"
                           }`}
@@ -359,14 +421,14 @@ export function BookingAvailability() {
                             <div className="flex items-center justify-center w-full gap-1.5">
                               <span
                                 className={`text-xs sm:text-sm md:text-base font-bold ${
-                                  slot.available
+                                  slot.available && !isTimeSlotPast(slot.time, selectedDate)
                                     ? "text-green-800 group-hover:text-green-900"
                                     : "text-red-600"
                                 }`}
                               >
                                 {slot.time}
                               </span>
-                              {slot.available ? (
+                              {slot.available && !isTimeSlotPast(slot.time, selectedDate) ? (
                                 <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0" />
                               ) : (
                                 <XCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-red-500 flex-shrink-0" />

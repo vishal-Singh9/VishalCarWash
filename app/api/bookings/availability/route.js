@@ -50,12 +50,21 @@ export async function GET(request) {
       "06:00 PM",
     ];
 
-    // Check if selected date is today
+    // Check if selected date is today (using UTC to avoid timezone issues)
+    // Parse date string as local date to avoid timezone conversion issues
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDateOnly = new Date(selectedDate);
+    const todayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+    todayUTC.setUTCHours(0, 0, 0, 0);
+    
+    // Parse selected date string (format: YYYY-MM-DD) as local date
+    const [year, month, day] = date.split('-').map(Number);
+    const selectedDateOnly = new Date(year, month - 1, day);
     selectedDateOnly.setHours(0, 0, 0, 0);
-    const isToday = selectedDateOnly.getTime() === today.getTime();
+    
+    const todayLocal = new Date();
+    todayLocal.setHours(0, 0, 0, 0);
+    
+    const isToday = selectedDateOnly.getTime() === todayLocal.getTime();
     
     // Helper function to convert time slot to minutes from start of day
     const timeToMinutes = (timeStr) => {

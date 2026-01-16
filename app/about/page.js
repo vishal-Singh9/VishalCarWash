@@ -689,44 +689,43 @@ export default function About() {
 
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            className="max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Experience the Difference?
-            </h2>
-            <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-              Book your car wash today and see why thousands of customers trust
-              us with their vehicles
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <motion.a
-                href="/booking"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Book Now
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </motion.a>
-              <motion.a
-                href="tel:+1234567890"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Call Us Now
-              </motion.a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+              <div className="absolute inset-0 bg-black/30"></div>
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+      
+              <div className="container mx-auto px-4 relative z-10">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeInUp}
+                  className="text-center max-w-3xl mx-auto"
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to give your car the care it deserves?
+                  </h2>
+                  <p className="text-xl text-blue-100 mb-8">
+                    Book an appointment today and experience the difference of a
+                    professional car wash service.
+                  </p>
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <a
+                      href="tel:+919956414364"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                    >
+                      <Phone className="w-5 h-5 mr-2" />
+                      Call Us Now
+                    </a>
+                    <a
+                      href="/booking"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
+                    >
+                      Book Online
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+            </section>
     </motion.div>
   );
 }

@@ -1191,7 +1191,7 @@ export default function BookingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  {/* Modern Category Tabs */}
+                  {/* Modern Category Tabs with Mobile Optimization */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -1203,21 +1203,49 @@ export default function BookingPage() {
                       onValueChange={setActiveCategory}
                       className="w-full"
                     >
-                      <TabsList className="flex w-full overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-3 p-1.5 bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl border border-gray-200/50 shadow-inner">
-                        {SERVICE_CATEGORIES.map((category) => (
-                          <TabsTrigger
-                            key={category.id}
-                            value={category.id}
-                            className={`px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
-                              activeCategory === category.id
-                                ? "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 transform scale-105"
-                                : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-md"
-                            }`}
-                          >
-                            {category.name}
-                          </TabsTrigger>
-                        ))}
-                      </TabsList>
+                      <div className="relative">
+                        {/* Scrollable container for mobile */}
+                        <div className="overflow-x-auto scrollbar-hide -mx-2 px-2 pb-2 sm:pb-0 sm:mx-0 sm:px-0">
+                          <TabsList className="inline-flex w-full sm:w-auto min-w-full sm:min-w-0 sm:justify-center gap-2 sm:gap-3 p-1.5 sm:p-2 bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 rounded-2xl border border-gray-200/50 shadow-inner">
+                            {SERVICE_CATEGORIES.map((category, index) => (
+                              <motion.div
+                                key={category.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 + index * 0.05 }}
+                              >
+                                <TabsTrigger
+                                  value={category.id}
+                                  className={`px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-300 flex-shrink-0 ${
+                                    activeCategory === category.id
+                                      ? "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/30"
+                                      : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-md bg-white/50"
+                                  }`}
+                                >
+                                  <motion.span
+                                    whileHover={activeCategory === category.id ? { scale: 1.05 } : {}}
+                                    className="flex items-center gap-1.5 sm:gap-2"
+                                  >
+                                    {category.name}
+                                    {activeCategory === category.id && (
+                                      <motion.div
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                        className="w-1.5 h-1.5 bg-white rounded-full"
+                                      />
+                                    )}
+                                  </motion.span>
+                                </TabsTrigger>
+                              </motion.div>
+                            ))}
+                          </TabsList>
+                        </div>
+                        {/* Scroll indicator for mobile */}
+                        <div className="sm:hidden absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none flex items-center justify-end pr-2">
+                          <ChevronRight className="w-4 h-4 text-gray-400 animate-pulse" />
+                        </div>
+                      </div>
                     </Tabs>
                   </motion.div>
 
@@ -1897,32 +1925,50 @@ export default function BookingPage() {
         </div>
       </section>
 
-      {/* Info Section with animations */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
+      {/* Modern Info Section with Enhanced UI */}
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100/20 rounded-full blur-3xl -ml-48 -mb-48"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="max-w-6xl mx-auto">
             <motion.div
-              className="text-center mb-12"
+              className="text-center mb-8 sm:mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block px-3 py-1 text-sm font-medium bg-blue-100 text-blue-700 rounded-full mb-4">
+              <motion.span
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 rounded-full mb-4 sm:mb-6 shadow-sm"
+              >
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                 What to Expect
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              </motion.span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
                 Your Car Deserves the Best Care
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full"></div>
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "80px" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 mx-auto rounded-full"
+              />
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {INFO_CARDS.map((info, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{
                     delay: index * 0.1,
@@ -1932,36 +1978,43 @@ export default function BookingPage() {
                     damping: 10,
                   }}
                   whileHover={{
-                    y: -5,
+                    y: -8,
+                    scale: 1.02,
                     boxShadow:
-                      "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
+                      "0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 10px 20px -5px rgba(0, 0, 0, 0.05)",
                   }}
-                  className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100"
+                  className="group relative bg-white/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-200 overflow-hidden"
                 >
-                  <div className="flex items-start gap-5">
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 via-indigo-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:via-indigo-50/50 group-hover:to-purple-50/50 transition-all duration-500"></div>
+                  
+                  {/* Top accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  <div className="relative z-10 flex items-start gap-4 sm:gap-5">
                     <motion.div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-lg"
                       style={{
                         background:
                           "linear-gradient(135deg, #3B82F6 0%, #6366F1 100%)",
                         boxShadow: "0 4px 15px -3px rgba(99, 102, 241, 0.3)",
                       }}
                       whileHover={{
-                        scale: 1.1,
-                        rotate: [0, -5, 5, 0],
-                        transition: { duration: 0.5 },
+                        scale: 1.15,
+                        rotate: [0, -10, 10, 0],
+                        transition: { duration: 0.6 },
                       }}
                     >
                       {index === 0 ? (
                         <CheckCircle
-                          className="w-6 h-6 text-white"
-                          strokeWidth={2}
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                          strokeWidth={2.5}
                         />
                       ) : index === 1 ? (
-                        <Clock className="w-6 h-6 text-white" strokeWidth={2} />
+                        <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2.5} />
                       ) : index === 2 ? (
                         <svg
-                          className="w-6 h-6 text-white"
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -1969,13 +2022,13 @@ export default function BookingPage() {
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth="2"
+                            strokeWidth="2.5"
                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                           />
                         </svg>
                       ) : index === 3 ? (
                         <svg
-                          className="w-6 h-6 text-white"
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -1983,18 +2036,18 @@ export default function BookingPage() {
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth="2"
+                            strokeWidth="2.5"
                             d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                           />
                         </svg>
                       ) : index === 4 ? (
                         <Shield
-                          className="w-6 h-6 text-white"
-                          strokeWidth={2}
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                          strokeWidth={2.5}
                         />
                       ) : (
                         <svg
-                          className="w-6 h-6 text-white"
+                          className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -2002,17 +2055,17 @@ export default function BookingPage() {
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth="2"
+                            strokeWidth="2.5"
                             d="M13 10V3L4 14h7v7l9-11h-7z"
                           />
                         </svg>
                       )}
                     </motion.div>
-                    <div>
-                      <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-base sm:text-lg md:text-xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                         {info.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                         {info.description}
                       </p>
                     </div>
@@ -2021,42 +2074,54 @@ export default function BookingPage() {
               ))}
             </div>
 
-            {/* CTA at the bottom */}
+            {/* Enhanced CTA at the bottom */}
             <motion.div
-              className="mt-16 text-center"
+              className="mt-12 sm:mt-16 md:mt-20 text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Ready to Get Started?
-              </h3>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Book your car wash service today and experience the difference
-                of professional car care.
-              </p>
-              <Button
-                asChild
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 px-8 py-6 text-base"
+              <motion.div
+                className="inline-block p-6 sm:p-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl border-2 border-blue-100 shadow-xl"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <Link href="#booking-form">
-                  Book Your Wash Now
-                  <svg
-                    className="w-4 h-4 ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </Link>
-              </Button>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  Ready to Get Started?
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                  Book your car wash service today and experience the difference
+                  of professional car care.
+                </p>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-bold rounded-xl"
+                >
+                  <Link href="#booking-form" className="flex items-center justify-center gap-2 sm:gap-3">
+                    <span>Book Your Wash Now</span>
+                    <motion.svg
+                      className="w-4 h-4 sm:w-5 sm:h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </motion.svg>
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
           </div>
         </div>
