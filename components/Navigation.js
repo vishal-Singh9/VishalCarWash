@@ -142,15 +142,15 @@ export function Navigation() {
         className={cn(
           "fixed w-full z-50 transition-all duration-500 ease-in-out",
           isScrolled
-            ? "bg-gray-100 backdrop-blur-xl shadow-lg border-b border-gray-200"
-            : "bg-gray-100 backdrop-blur-md shadow-md border-b border-gray-100"
+            ? "bg-[#030712]/90 backdrop-blur-xl shadow-lg border-b border-white/10"
+            : "bg-transparent backdrop-blur-sm border-b border-white/5"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo Section */}
             <Link href="/" className="group relative z-10 inline-flex">
-              <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/40 bg-white/80 backdrop-blur-md shadow-sm transition-all duration-300 group-hover:shadow-md">
+              <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/40 bg-white/5 backdrop-blur-md shadow-sm transition-all duration-300 group-hover:shadow-md">
                 <motion.div
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
@@ -181,7 +181,7 @@ export function Navigation() {
                     Vishal Car Wash
                   </motion.span>
 
-                  <span className="text-[9px] sm:text-[10px] lg:text-sm font-medium text-gray-600 tracking-wide">
+                  <span className="text-[9px] sm:text-[10px] lg:text-sm font-medium text-gray-400 tracking-wide">
                     Premium Car Care
                   </span>
                 </div>
@@ -200,10 +200,10 @@ export function Navigation() {
                       <button
                         onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
                         className={cn(
-                          "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300",
+                          "relative flex items-center gap-2 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 border",
                           isActive
-                            ? "text-blue-600"
-                            : "text-gray-600 hover:text-gray-900"
+                            ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                            : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
                         )}
                       >
                         <span>{item.name}</span>
@@ -217,24 +217,24 @@ export function Navigation() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
+                            className="absolute left-0 mt-2 w-48 bg-[#030712]/95 backdrop-blur-xl rounded-xl shadow-2xl border border-white/10 overflow-hidden z-50"
                           >
                             {item.dropdown.map((dropItem) => {
-                              const isActive = pathname === dropItem.href;
+                              const isDropActive = pathname === dropItem.href;
                               return (
                                 <Link
                                   key={dropItem.name}
                                   href={dropItem.href}
                                   onClick={() => setAboutDropdownOpen(false)}
                                   className={cn(
-                                    "flex items-center gap-3 px-4 py-3 text-sm hover:bg-gray-50 transition-colors group",
-                                    isActive ? "text-blue-600 bg-blue-50" : "text-gray-700"
+                                    "flex items-center gap-3 px-4 py-3 text-sm transition-colors group border-l-2",
+                                    isDropActive ? "text-cyan-400 bg-white/5 border-cyan-400" : "text-gray-300 border-transparent hover:bg-white/5 hover:text-white hover:border-white/20"
                                   )}
                                 >
                                   <dropItem.icon 
                                     className={cn(
-                                      "w-4 h-4 flex-shrink-0",
-                                      isActive ? "text-blue-500" : "text-gray-500 group-hover:text-gray-700"
+                                      "w-4 h-4 flex-shrink-0 transition-colors",
+                                      isDropActive ? "text-cyan-400" : "text-gray-500 group-hover:text-gray-300"
                                     )} 
                                   />
                                   <span>{dropItem.name}</span>
@@ -258,42 +258,19 @@ export function Navigation() {
                       whileHover={{ y: -2 }}
                       whileTap={{ scale: 0.98 }}
                       className={cn(
-                        "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300",
+                        "relative flex items-center gap-2 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 border",
                         isActive
-                          ? "text-blue-600"
-                          : "text-gray-600 hover:text-gray-900"
+                          ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                          : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
                       )}
                     >
                       <Icon
                         className={cn(
                           "w-4 h-4 transition-all duration-300",
-                          isActive ? "scale-110" : "group-hover:scale-110"
+                          isActive ? "scale-110 text-cyan-400" : "text-gray-400 group-hover:scale-110 group-hover:text-white"
                         )}
                       />
                       <span>{item.name}</span>
-
-                      {/* Active indicator */}
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute inset-0 bg-blue-50 rounded-xl -z-10"
-                          transition={{
-                            type: "spring",
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-
-                      {/* Hover gradient underline */}
-                      <motion.div
-                        className={cn(
-                          "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-gradient-to-r",
-                          item.gradient,
-                          isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
-                        )}
-                        transition={{ duration: 0.3 }}
-                      />
                     </motion.div>
                   </Link>
                 );
@@ -492,7 +469,7 @@ export function Navigation() {
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
               >
                 <AnimatePresence mode="wait">
                   {mobileMenuOpen ? (
@@ -503,7 +480,7 @@ export function Navigation() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <X className="w-6 h-6 text-gray-700" />
+                      <X className="w-6 h-6 text-white" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -513,7 +490,7 @@ export function Navigation() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Menu className="w-6 h-6 text-gray-700" />
+                      <Menu className="w-6 h-6 text-white" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -530,9 +507,9 @@ export function Navigation() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="lg:hidden border-t border-gray-100 max-h-[calc(100vh-4rem)] overflow-y-auto"
+              className="lg:hidden border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto"
             >
-              <div className="max-w-7xl mx-auto px-4 py-4 bg-white/98 backdrop-blur-xl">
+              <div className="max-w-7xl mx-auto px-4 py-4 bg-[#030712]/98 backdrop-blur-xl">
                 {/* User Info (if authenticated) */}
                 {status === "authenticated" && (
                   <>
@@ -578,10 +555,10 @@ export function Navigation() {
                           <button
                             onClick={() => setAboutDropdownOpen(!aboutDropdownOpen)}
                             className={cn(
-                              "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 text-left",
+                              "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 text-left border",
                               isActive
-                                ? "bg-blue-50 text-blue-600"
-                                : "text-gray-700 hover:bg-gray-50"
+                                ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/30"
+                                : "text-gray-300 border-transparent hover:bg-white/5"
                             )}
                           >
                             <div className="flex items-center gap-3">
@@ -613,22 +590,19 @@ export function Navigation() {
                                         setAboutDropdownOpen(false);
                                       }}
                                       className={cn(
-                                        "flex items-center gap-3 px-4 py-2.5 text-sm rounded-lg transition-colors group",
+                                        "flex items-center gap-3 px-4 py-2.5 text-sm rounded-lg transition-colors group border-l-2",
                                         isDropActive 
-                                          ? "bg-blue-50 text-blue-600" 
-                                          : "text-gray-700 hover:bg-gray-50"
+                                          ? "bg-white/10 text-cyan-400 border-cyan-400" 
+                                          : "text-gray-400 border-transparent hover:bg-white/5"
                                       )}
                                     >
                                       <dropItem.icon 
                                         className={cn(
-                                          "w-4 h-4 flex-shrink-0",
-                                          isDropActive ? "text-blue-500" : "text-gray-500 group-hover:text-gray-700"
+                                          "w-4 h-4 flex-shrink-0 transition-colors",
+                                          isDropActive ? "text-cyan-400" : "text-gray-500 group-hover:text-gray-300"
                                         )} 
                                       />
                                       <span>{dropItem.name}</span>
-                                      {isDropActive && (
-                                        <div className="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                                      )}
                                     </Link>
                                   );
                                 })}
@@ -649,17 +623,14 @@ export function Navigation() {
                         <Link
                           href={item.href}
                           className={cn(
-                            "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300",
+                            "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 border",
                             isActive
-                              ? "bg-blue-50 text-blue-600"
-                              : "text-gray-700 hover:bg-gray-50"
+                              ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/30"
+                              : "text-gray-300 border-transparent hover:bg-white/5"
                           )}
                         >
-                          <Icon className="w-5 h-5" />
+                          <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-cyan-400" : "text-gray-400")} />
                           <span>{item.name}</span>
-                          {isActive && (
-                            <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full" />
-                          )}
                         </Link>
                       </motion.div>
                     );
@@ -754,13 +725,13 @@ export function Navigation() {
                   >
                     <Link
                       href="/auth/signin"
-                      className="block w-full px-4 py-3 text-center rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                      className="block w-full px-4 py-3 text-center rounded-xl font-medium text-gray-300 hover:bg-white/5 transition-colors"
                     >
                       Sign In
                     </Link>
                     <Link
                       href="/auth/signup"
-                      className="block w-full px-4 py-3 text-center rounded-xl font-medium bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/25"
+                      className="block w-full px-4 py-3 text-center rounded-xl font-medium bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25"
                     >
                       Create Account
                     </Link>

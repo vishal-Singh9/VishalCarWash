@@ -116,15 +116,15 @@ export default function SignUp() {
   const passwordStrength = getPasswordStrength(formData.password);
   const passwordStrengthText = ['Very Weak', 'Weak', 'Good', 'Strong', 'Very Strong'][passwordStrength];
   const passwordStrengthColor = [
-    'bg-red-500',
+    'bg-red-500/100',
     'bg-orange-500',
     'bg-yellow-500',
     'bg-blue-500',
-    'bg-green-500'
+    'bg-green-500/100'
   ][passwordStrength];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex relative overflow-hidden">
+    <div className="min-h-screen bg-[#030712] flex relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div 
         className="absolute top-20 right-20 w-72 h-72 bg-indigo-400/20 rounded-full blur-3xl"
@@ -144,7 +144,7 @@ export default function SignUp() {
       />
 
       <div className="w-full max-w-7xl mx-auto flex items-center justify-center p-4 relative z-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-3xl shadow-2xl overflow-hidden max-w-6xl">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white/5 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10 overflow-hidden max-w-6xl">
           
           {/* Left Side - Sign Up Form */}
           <motion.div 
@@ -176,14 +176,14 @@ export default function SignUp() {
                       />
                     </div>
                     <div>
-                      <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                         Vishal Car Wash
                       </h1>
                     </div>
                   </motion.div>
                 </Link>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-                <p className="text-gray-600">Join us and experience premium car care</p>
+                <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+                <p className="text-gray-400">Join us and experience premium car care</p>
               </motion.div>
 
               {/* Error Message */}
@@ -193,9 +193,9 @@ export default function SignUp() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4"
+                    className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4"
                   >
-                    <p className="text-sm text-red-800">{error}</p>
+                    <p className="text-sm text-red-400">{error}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -207,7 +207,7 @@ export default function SignUp() {
                   whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={() => signIn('google', { callbackUrl: '/' })}
-                  className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-xl py-3 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+                  className="flex items-center justify-center gap-2 bg-white/5 border-2 border-white/10 rounded-xl py-3 px-4 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/10 transition-all duration-200"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path
@@ -244,10 +244,10 @@ export default function SignUp() {
 
               <div className="relative my-8">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
+                  <div className="w-full border-t border-white/10"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500 font-medium">Or sign up with email</span>
+                  <span className="px-4 bg-white/5 text-gray-400 font-medium">Or sign up with email</span>
                 </div>
               </div>
 
@@ -258,7 +258,7 @@ export default function SignUp() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
                     Full Name
                   </label>
                   <div className="relative">
@@ -269,7 +269,7 @@ export default function SignUp() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="John Doe"
                       disabled={isLoading}
                     />
@@ -281,7 +281,7 @@ export default function SignUp() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
                     Email Address
                   </label>
                   <div className="relative">
@@ -292,7 +292,7 @@ export default function SignUp() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="you@example.com"
                       disabled={isLoading}
                     />
@@ -305,11 +305,11 @@ export default function SignUp() {
                   transition={{ delay: 0.5 }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+                    <label htmlFor="password" className="block text-sm font-semibold text-gray-300">
                       Password
                     </label>
                     {formData.password && (
-                      <span className="text-xs font-medium text-gray-500">
+                      <span className="text-xs font-medium text-gray-400">
                         {passwordStrengthText}
                       </span>
                     )}
@@ -322,14 +322,14 @@ export default function SignUp() {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={togglePasswordVisibility}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-400 transition-colors"
                     >
                       {isPasswordVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -355,7 +355,7 @@ export default function SignUp() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
                 >
-                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-300 mb-2">
                     Confirm Password
                   </label>
                   <div className="relative">
@@ -366,14 +366,14 @@ export default function SignUp() {
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={toggleConfirmPasswordVisibility}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-400 transition-colors"
                     >
                       {isConfirmPasswordVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -391,18 +391,18 @@ export default function SignUp() {
                       id="terms"
                       name="terms"
                       type="checkbox"
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-white/10 rounded"
                       required
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label htmlFor="terms" className="font-medium text-gray-700">
+                    <label htmlFor="terms" className="font-medium text-gray-300">
                       I agree to the{' '}
-                      <Link href="/terms" className="text-blue-600 hover:text-blue-700 font-semibold">
+                      <Link href="/terms" className="text-cyan-400 hover:text-cyan-300 font-semibold">
                         Terms
                       </Link>{' '}
                       and{' '}
-                      <Link href="/privacy" className="text-blue-600 hover:text-blue-700 font-semibold">
+                      <Link href="/privacy" className="text-cyan-400 hover:text-cyan-300 font-semibold">
                         Privacy Policy
                       </Link>
                     </label>
@@ -417,7 +417,7 @@ export default function SignUp() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   {isLoading ? (
                     <>
@@ -439,9 +439,9 @@ export default function SignUp() {
                 transition={{ delay: 0.9 }}
                 className="mt-6 text-center"
               >
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-400">
                   Already have an account?{' '}
-                  <Link href="/auth/signin" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                  <Link href="/auth/signin" className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
                     Sign in
                   </Link>
                 </p>

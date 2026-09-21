@@ -57,24 +57,18 @@ export function BookingAvailability() {
     fetchAvailability(selectedDate);
   }, [selectedDate]);
 
-  // Helper function to check if a time slot is in the past
   const isTimeSlotPast = (timeStr, selectedDate) => {
-    // Get current date and time in local timezone
     const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Parse selected date
     const selectedDateOnly = new Date(selectedDate + 'T00:00:00');
     selectedDateOnly.setHours(0, 0, 0, 0);
     
-    // Check if selected date is today
     const isToday = selectedDateOnly.getTime() === today.getTime();
     
-    // If not today, slot is not past
     if (!isToday) return false;
     
-    // Convert time string to minutes from start of day
     const timeToMinutes = (timeStr) => {
       const [time, period] = timeStr.split(' ');
       let [hours, minutes] = time.split(':').map(Number);
@@ -82,22 +76,19 @@ export function BookingAvailability() {
       if (period === 'PM' && hours !== 12) {
         hours += 12;
       } else if (period === 'AM' && hours === 12) {
-        hours = 0; // 12 AM is 0 hours
+        hours = 0;
       }
       
       return hours * 60 + minutes;
     };
     
-    // Get current time in minutes
     const currentHour = now.getHours();
     const currentMinute = now.getMinutes();
     const currentTimeInMinutes = currentHour * 60 + currentMinute;
     
-    // Calculate minimum booking time (current time + 1 hour buffer)
     const nextHour = currentHour + 1;
-    const minimumBookingTime = nextHour * 60; // Next hour in minutes (e.g., 6 PM = 18 * 60 = 1080)
+    const minimumBookingTime = nextHour * 60; 
     
-    // Slot is past if it's before the minimum booking time
     const slotTimeInMinutes = timeToMinutes(timeStr);
     return slotTimeInMinutes < minimumBookingTime;
   };
@@ -110,17 +101,13 @@ export function BookingAvailability() {
       const response = await fetch(`/api/bookings/availability?date=${date}`);
       if (response.ok) {
         const data = await response.json();
-        // Filter out past slots on client side as well for safety
         const filteredSlots = (data.availability || []).filter(slot => {
-          // If slot is already marked as not available (booked), keep it
           if (!slot.available) return true;
-          // Filter out past slots
           return !isTimeSlotPast(slot.time, date);
         });
         
         setAvailability(filteredSlots);
         
-        // Recalculate statistics based on filtered slots
         const availableCount = filteredSlots.filter(s => s.available).length;
         const bookedCount = filteredSlots.filter(s => !s.available).length;
         setStatistics({
@@ -146,17 +133,14 @@ export function BookingAvailability() {
   };
 
   const handleDateContainerClick = (e) => {
-    // Trigger the date input when clicking anywhere on the container
     e.preventDefault();
     e.stopPropagation();
     if (dateInputRef.current) {
-      // Try showPicker() first (modern browsers), fallback to click()
       try {
         if (typeof dateInputRef.current.showPicker === "function") {
           const pickerPromise = dateInputRef.current.showPicker();
           if (pickerPromise && typeof pickerPromise.catch === "function") {
             pickerPromise.catch(() => {
-              // If showPicker fails, use click
               dateInputRef.current?.click();
             });
           }
@@ -164,7 +148,6 @@ export function BookingAvailability() {
           dateInputRef.current.click();
         }
       } catch (error) {
-        // Fallback to click if showPicker is not supported or fails
         dateInputRef.current.click();
       }
     }
@@ -175,9 +158,7 @@ export function BookingAvailability() {
 
   return (
     <>
-      {/* Custom Date Picker Styles */}
       <style jsx global>{`
-        /* Improve native date picker calendar */
         input[type="date"]::-webkit-calendar-picker-indicator {
           cursor: pointer;
           opacity: 0;
@@ -219,19 +200,16 @@ export function BookingAvailability() {
           outline: none;
         }
 
-        /* Firefox date picker */
         input[type="date"] {
           color-scheme: dark;
         }
       `}</style>
 
-      <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -ml-48 -mb-48"></div>
+      <section className="py-12 md:py-16 lg:py-20 bg-[#030712] relative overflow-hidden border-t border-white/5">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-600/10 rounded-full blur-[100px] -ml-48 -mb-48"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -239,90 +217,73 @@ export function BookingAvailability() {
             transition={{ duration: 0.6 }}
             className="text-center mb-8 md:mb-12"
           >
-            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-4 shadow-lg">
-              <Calendar className="w-7 h-7 md:w-8 md:h-8 text-white" />
+            <div className="inline-flex items-center justify-center p-3 bg-white/5 border border-white/10 rounded-2xl mb-4 shadow-lg backdrop-blur-md">
+              <Calendar className="w-7 h-7 md:w-8 md:h-8 text-cyan-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent !leading-normal">
-              Check Booking Availability
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 bg-clip-text !leading-normal">
+              Check Booking <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Availability</span>
             </h2>
-            <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base lg:text-lg text-gray-400 max-w-2xl mx-auto">
               See real-time availability and book your preferred time slot
               instantly
             </p>
           </motion.div>
 
-          {/* Unified Booking Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
+            className="bg-white/5 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden"
           >
-            {/* Top Section - Date Selection & Quick Stats */}
-            <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-4 sm:p-6 md:p-8 text-white relative overflow-hidden">
-              {/* Decorative Elements */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-2xl -ml-24 -mb-24"></div>
-
+            <div className="bg-white/5 border-b border-white/10 p-4 sm:p-6 md:p-8 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 md:gap-6">
-                  {/* Date Selection - Clickable Container */}
                   <motion.div
                     className="flex-1"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                   >
                     <div className="flex flex-col sm:flex-row gap-3">
-                      {/* Main Date Picker Card - Fully Clickable */}
                       <div
                         className="relative flex-1 group cursor-pointer"
                         onClick={handleDateContainerClick}
                       >
-                        {/* Calendar Icon */}
                         <div className="absolute inset-y-0 left-3 sm:left-4 flex items-center pointer-events-none z-20">
-                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white/90 group-hover:text-white transition-colors" />
+                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                         </div>
 
-                        {/* Date Input */}
                         <input
                           ref={dateInputRef}
                           type="date"
                           value={selectedDate}
                           onChange={handleDateChange}
                           min={getMinBookingDate()}
-                          className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl border-2 border-white/30 bg-white/20 backdrop-blur-sm text-white text-sm sm:text-base md:text-lg font-semibold placeholder-white/60 focus:ring-4 focus:ring-white/40 focus:border-white/60 focus:bg-white/30 transition-all duration-200 cursor-pointer hover:border-white/40 hover:bg-white/25 relative z-10"
+                          className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl border border-white/20 bg-white/5 backdrop-blur-md text-white text-sm sm:text-base md:text-lg font-semibold placeholder-white/60 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 focus:bg-white/10 transition-all duration-200 cursor-pointer hover:border-white/30 hover:bg-white/10 relative z-10"
                           style={{ colorScheme: "dark" }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            // Ensure calendar opens - native click will handle it
                           }}
                         />
 
-                        {/* Dropdown Arrow */}
                         <div className="absolute inset-y-0 right-3 sm:right-4 flex items-center pointer-events-none z-20">
-                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white/70 group-hover:text-white transition-colors" />
+                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors" />
                         </div>
 
-                        {/* Hover Effect Overlay */}
-                        <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0"></div>
-
-                        {/* Click Indicator */}
-                        <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-white/50 transition-all duration-200 pointer-events-none z-0"></div>
+                        <div className="absolute inset-0 rounded-xl bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-0"></div>
                       </div>
 
-                      {/* Selected Date Display */}
                       {selectedDate && (
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className="flex items-center gap-2 px-3 sm:px-4 md:px-5 py-3 sm:py-4 bg-white/25 backdrop-blur-sm rounded-xl border-2 border-white/40 shadow-lg min-w-fit"
+                          className="flex items-center gap-2 px-3 sm:px-4 md:px-5 py-3 sm:py-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg min-w-fit"
                         >
-                          <div className="p-1.5 sm:p-2 bg-white/30 rounded-lg flex-shrink-0">
-                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
+                          <div className="p-1.5 sm:p-2 bg-white/10 rounded-lg flex-shrink-0 border border-white/5">
+                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-cyan-400" />
                           </div>
                           <div className="flex flex-col min-w-0">
-                            <span className="text-xs text-blue-100 font-medium hidden sm:inline">
+                            <span className="text-xs text-gray-400 font-medium hidden sm:inline">
                               Selected
                             </span>
                             <span className="text-white font-bold text-xs sm:text-sm md:text-base whitespace-nowrap">
@@ -337,24 +298,22 @@ export function BookingAvailability() {
               </div>
             </div>
 
-            {/* Bottom Section - Time Slots & Details */}
             <div className="p-4 sm:p-6 md:p-8">
-              {/* Time Slots Header */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-1.5 sm:p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-md">
-                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                  <div className="p-1.5 sm:p-2 bg-white/10 border border-white/10 rounded-lg shadow-md">
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-cyan-400" />
                   </div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                     Available Time Slots
                   </h3>
                 </div>
                 {statistics && (
                   <div className="flex items-center justify-center sm:justify-end">
-                    <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-xl border border-gray-200">
+                    <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-3 bg-white/5 rounded-xl border border-white/10">
                       <div className="flex items-center gap-1.5 sm:gap-2">
-                        <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 flex-shrink-0" />
-                        <span className="text-xs sm:text-sm font-bold text-gray-700 whitespace-nowrap">
+                        <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
+                        <span className="text-xs sm:text-sm font-bold text-gray-300 whitespace-nowrap">
                           {statistics.available > 0
                             ? `${statistics.available} Available`
                             : "0 Available"}
@@ -362,12 +321,12 @@ export function BookingAvailability() {
                       </div>
                       {statistics.booked > 0 && (
                         <>
-                          <span className="text-gray-300 hidden sm:inline">
+                          <span className="text-gray-500 hidden sm:inline">
                             •
                           </span>
                           <div className="flex items-center gap-1.5 sm:gap-2">
-                            <XCircle className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 flex-shrink-0" />
-                            <span className="text-xs sm:text-sm font-bold text-gray-700 whitespace-nowrap">
+                            <XCircle className="w-3 h-3 sm:w-4 sm:h-4 text-red-400 flex-shrink-0" />
+                            <span className="text-xs sm:text-sm font-bold text-gray-300 whitespace-nowrap">
                               {statistics.booked} Booked
                             </span>
                           </div>
@@ -378,11 +337,10 @@ export function BookingAvailability() {
                 )}
               </div>
 
-              {/* Time Slots Grid */}
               {loading ? (
                 <div className="flex flex-col items-center justify-center py-12 sm:py-16">
-                  <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 animate-spin mb-3 sm:mb-4" />
-                  <span className="text-sm sm:text-base text-gray-600 font-medium">
+                  <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400 animate-spin mb-3 sm:mb-4" />
+                  <span className="text-sm sm:text-base text-gray-400 font-medium">
                     Loading availability...
                   </span>
                 </div>
@@ -400,7 +358,6 @@ export function BookingAvailability() {
                             : "#"
                         }
                         onClick={(e) => {
-                          // Prevent navigation if slot is not available or is past
                           if (!slot.available || isTimeSlotPast(slot.time, selectedDate)) {
                             e.preventDefault();
                           }
@@ -411,10 +368,10 @@ export function BookingAvailability() {
                           animate={{ opacity: 1, scale: 1 }}
                           whileHover={{ scale: slot.available && !isTimeSlotPast(slot.time, selectedDate) ? 1.05 : 1 }}
                           whileTap={{ scale: slot.available && !isTimeSlotPast(slot.time, selectedDate) ? 0.95 : 1 }}
-                          className={`p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200 ${
+                          className={`p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border transition-all duration-200 ${
                             slot.available && !isTimeSlotPast(slot.time, selectedDate)
-                              ? "border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 hover:border-green-500 hover:bg-gradient-to-br hover:from-green-100 hover:to-emerald-100 cursor-pointer group shadow-sm hover:shadow-lg active:scale-95"
-                              : "border-red-200 bg-gradient-to-br from-red-50 to-rose-50 opacity-70 cursor-not-allowed"
+                              ? "border-green-500/30 bg-green-500/10 hover:border-green-400/50 hover:bg-green-500/20 cursor-pointer group shadow-sm hover:shadow-lg active:scale-95"
+                              : "border-red-500/20 bg-red-500/10 opacity-70 cursor-not-allowed"
                           }`}
                         >
                           <div className="flex flex-col items-center text-center gap-1.5 sm:gap-2">
@@ -422,16 +379,16 @@ export function BookingAvailability() {
                               <span
                                 className={`text-xs sm:text-sm md:text-base font-bold ${
                                   slot.available && !isTimeSlotPast(slot.time, selectedDate)
-                                    ? "text-green-800 group-hover:text-green-900"
-                                    : "text-red-600"
+                                    ? "text-green-400 group-hover:text-green-300"
+                                    : "text-red-400"
                                 }`}
                               >
                                 {slot.time}
                               </span>
                               {slot.available && !isTimeSlotPast(slot.time, selectedDate) ? (
-                                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0" />
+                                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
                               ) : (
-                                <XCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-red-500 flex-shrink-0" />
+                                <XCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-red-400 flex-shrink-0" />
                               )}
                             </div>
                           </div>
@@ -442,8 +399,8 @@ export function BookingAvailability() {
                 </>
               ) : (
                 <div className="text-center py-12">
-                  <Clock className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 font-medium mb-2">
+                  <Clock className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-300 font-medium mb-2">
                     No time slots available
                   </p>
                   <p className="text-sm text-gray-500">

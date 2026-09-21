@@ -169,11 +169,11 @@ export default function FAQ() {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="relative min-h-screen bg-[#030712] text-white">
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          className="absolute -right-20 -top-20 w-64 h-64 md:w-96 md:h-96 bg-blue-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -right-20 -top-20 w-64 h-64 md:w-96 md:h-96 bg-blue-500/10 rounded-full mix-blend-screen filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, 20, 0],
@@ -185,7 +185,7 @@ export default function FAQ() {
           }}
         />
         <motion.div
-          className="absolute -left-20 -bottom-20 w-64 h-64 md:w-96 md:h-96 bg-purple-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -left-20 -bottom-20 w-64 h-64 md:w-96 md:h-96 bg-cyan-500/10 rounded-full mix-blend-screen filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, -20, 0],
@@ -201,10 +201,10 @@ export default function FAQ() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 lg:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+      <section className="relative py-16 md:py-24 lg:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url(/images/backsection.webp)] bg-cover bg-center opacity-20"></div>
+          <div className="absolute inset-0 bg-[url('/images/backsection.webp')] bg-cover bg-center opacity-20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -256,13 +256,13 @@ export default function FAQ() {
               className="mb-6 md:mb-8 px-2 sm:px-0"
             >
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   type="text"
                   placeholder="Search for answers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 text-sm sm:text-base rounded-lg sm:rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 text-sm sm:text-base bg-[#0a0f1a] rounded-lg sm:rounded-xl border border-white/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-cyan-500 focus:border-transparent shadow-sm transition-all duration-200"
                 />
               </div>
             </motion.div>
@@ -282,8 +282,8 @@ export default function FAQ() {
                     onClick={() => setActiveCategory(category.id)}
                     className={`flex-shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base rounded-md sm:rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                       activeCategory === category.id
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-md'
+                        : 'bg-[#0a0f1a] text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -309,20 +309,20 @@ export default function FAQ() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3 }}
-                      className="bg-white rounded-lg sm:rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200"
+                      className="bg-[#0a0f1a] rounded-lg sm:rounded-xl overflow-hidden shadow-sm border border-white/10 hover:border-cyan-500/50 hover:shadow-md transition-all duration-200"
                     >
                       <button
-                        className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-start sm:items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg sm:rounded-xl"
+                        className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-start sm:items-center justify-between focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#030712] rounded-lg sm:rounded-xl"
                         onClick={() => toggleAccordion(index)}
                         aria-expanded={activeIndex === index}
                         aria-controls={`faq-${index}`}
                       >
-                        <h3 className="text-base sm:text-lg font-medium text-gray-900 pr-3 sm:pr-4 text-left">
+                        <h3 className="text-base sm:text-lg font-medium text-white pr-3 sm:pr-4 text-left group-hover:text-cyan-300 transition-colors">
                           {faq.question}
                         </h3>
                         <ChevronDown
-                          className={`flex-shrink-0 w-5 h-5 text-gray-400 transition-transform duration-200 mt-1 sm:mt-0 ${
-                            activeIndex === index ? 'transform rotate-180' : ''
+                          className={`flex-shrink-0 w-5 h-5 text-gray-500 transition-transform duration-200 mt-1 sm:mt-0 ${
+                            activeIndex === index ? 'transform rotate-180 text-cyan-400' : ''
                           }`}
                         />
                       </button>
@@ -336,7 +336,7 @@ export default function FAQ() {
                             className="overflow-hidden"
                             id={`faq-${index}`}
                           >
-                            <div className="px-4 sm:px-6 pb-5 pt-0 text-sm sm:text-base text-gray-600">
+                            <div className="px-4 sm:px-6 pb-5 pt-0 text-sm sm:text-base text-gray-400">
                               {faq.answer}
                             </div>
                           </motion.div>
@@ -347,11 +347,11 @@ export default function FAQ() {
                 </AnimatePresence>
               ) : (
                 <div className="text-center py-8 sm:py-12 px-4">
-                  <HelpCircle className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-300 mb-3 sm:mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900">
+                  <HelpCircle className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-500 mb-3 sm:mb-4" />
+                  <h3 className="text-lg font-medium text-white">
                     No results found
                   </h3>
-                  <p className="mt-1 text-sm sm:text-base text-gray-500">
+                  <p className="mt-1 text-sm sm:text-base text-gray-400">
                     We could not find any questions matching your search. Try a
                     different search term or category.
                   </p>
@@ -364,7 +364,7 @@ export default function FAQ() {
 
       {/* Contact CTA Section */}
     {/* CTA Section */}
-           <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+           <section className="relative py-20 bg-[#030712] border-t border-white/5 text-white overflow-hidden">
                 <div className="absolute inset-0 bg-black/30"></div>
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
         
@@ -376,17 +376,17 @@ export default function FAQ() {
                     variants={fadeInUp}
                     className="text-center max-w-3xl mx-auto"
                   >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
                       Ready to give your car the care it deserves?
                     </h2>
-                    <p className="text-xl text-blue-100 mb-8">
+                    <p className="text-xl text-gray-300 mb-8">
                       Book an appointment today and experience the difference of a
                       professional car wash service.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                       <a
                         href="tel:+919876543210"
-                        className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                        className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 rounded-lg transition shadow-md hover:shadow-lg"
                       >
                         <Phone className="w-5 h-5 mr-2" />
                         Call Us Now

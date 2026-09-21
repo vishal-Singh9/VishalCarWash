@@ -87,25 +87,21 @@ const TestimonialCard = ({ testimonial, index }) => {
     >
       <motion.div
         style={{ x, y }}
-        className={`h-full bg-gradient-to-br ${gradient} rounded-3xl shadow-2xl overflow-hidden group relative`}
+        className={`h-full bg-gradient-to-br ${gradient} p-[1px] rounded-3xl shadow-2xl overflow-hidden group relative`}
       >
-        {/* Animated background glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
-        {/* Shine effect */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
           initial={{ x: "-100%" }}
           whileHover={{ x: "100%" }}
         />
 
-        <div className="h-full bg-white/95 backdrop-blur-md p-[2px] rounded-[calc(1.5rem-2px)]">
-          <Card className="h-full bg-white/95 rounded-[1.375rem] border-0 shadow-none overflow-hidden group-hover:bg-white transition-all duration-500 relative">
-            {/* Decorative corner accent */}
+        <div className="h-full bg-[#030712]/90 backdrop-blur-xl rounded-[calc(1.5rem-1px)]">
+          <Card className="h-full bg-transparent rounded-[1.5rem] border-0 shadow-none overflow-hidden transition-all duration-500 relative">
             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <CardContent className="p-6 sm:p-8 h-full flex flex-col relative z-10">
-              {/* Header with quote icon */}
+            <CardContent className="p-6 sm:p-8 h-full flex flex-col relative z-10 text-white">
               <div className="flex items-start justify-between mb-4 sm:mb-6">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -122,11 +118,10 @@ const TestimonialCard = ({ testimonial, index }) => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15 + 0.3 }}
                 >
-                  <Quote className="h-6 w-6 sm:h-8 sm:w-8 text-gray-200 group-hover:text-blue-500 transition-all duration-300 transform -scale-x-100 group-hover:scale-110" />
+                  <Quote className="h-6 w-6 sm:h-8 sm:w-8 text-gray-700 group-hover:text-cyan-400 transition-all duration-300 transform -scale-x-100 group-hover:scale-110" />
                 </motion.div>
               </div>
 
-              {/* Rating stars */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -149,35 +144,33 @@ const TestimonialCard = ({ testimonial, index }) => {
                     <Star
                       className={`h-4 w-4 sm:h-5 sm:w-5 transition-all duration-300 ${
                         i < testimonial.rating
-                          ? "text-yellow-400 fill-current group-hover:text-yellow-500 group-hover:scale-110"
-                          : "text-gray-200"
+                          ? "text-yellow-400 fill-yellow-400 group-hover:text-yellow-300 group-hover:fill-yellow-300 group-hover:scale-110"
+                          : "text-gray-700"
                       }`}
                     />
                   </motion.div>
                 ))}
               </motion.div>
 
-              {/* Testimonial content */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 + 0.4 }}
-                className="text-gray-700 flex-grow text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 relative pl-4 sm:pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:h-[calc(100%-1rem)] before:w-1 before:bg-gradient-to-b before:from-blue-500 before:via-cyan-400 before:to-blue-500 before:rounded-full before:opacity-60 group-hover:before:opacity-100 transition-opacity duration-300"
+                className="text-gray-300 flex-grow text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 relative pl-4 sm:pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:h-[calc(100%-1rem)] before:w-1 before:bg-gradient-to-b before:from-cyan-400 before:via-blue-500 before:to-cyan-400 before:rounded-full before:opacity-60 group-hover:before:opacity-100 transition-opacity duration-300"
               >
                 {testimonial?.content}
               </motion.p>
 
-              {/* Author name */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 + 0.5 }}
-                className="flex items-center justify-between pt-4 sm:pt-6 border-t border-gray-100 group-hover:border-gray-200 transition-colors duration-300"
+                className="flex items-center justify-between pt-4 sm:pt-6 border-t border-white/10 group-hover:border-white/20 transition-colors duration-300"
               >
                 <div>
-                  <p className="font-bold text-gray-900 text-base sm:text-lg mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                  <p className="font-bold text-white text-base sm:text-lg mb-1 group-hover:text-cyan-400 transition-colors duration-300">
                     {testimonial.name}
                   </p>
                   {testimonial.service && (
@@ -190,7 +183,7 @@ const TestimonialCard = ({ testimonial, index }) => {
                   whileHover={{ scale: 1.2, rotate: 15 }}
                   className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
-                  <Sparkles className="h-5 w-5 text-blue-500" />
+                  <Sparkles className="h-5 w-5 text-cyan-400" />
                 </motion.div>
               </motion.div>
             </CardContent>
@@ -203,7 +196,6 @@ const TestimonialCard = ({ testimonial, index }) => {
 
 export function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -228,81 +220,37 @@ export function Testimonials() {
     fetchTestimonials();
   }, []);
 
-  const nextTestimonial = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex + 1) % Math.max(1, testimonials.length)
-    );
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + testimonials.length) % Math.max(1, testimonials.length)
-    );
-  };
-
   if (error) {
     return (
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <section className="py-20 bg-[#030712] relative overflow-hidden border-t border-white/5">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-red-500">{error}</p>
+          <p className="text-red-400">{error}</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-blue-50 via-blue-100/50 to-white relative overflow-hidden">
-      {/* Enhanced animated background elements */}
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#030712] relative overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute -top-1/2 -left-1/4 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 sm:opacity-30"
+          animate={{ x: [0, 100, 0], y: [0, 50, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-1/2 -left-1/4 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-blue-600/10 rounded-full blur-[100px]"
         />
         <motion.div
-          animate={{
-            x: [0, -100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-            delay: 2,
-          }}
-          className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 sm:opacity-30"
+          animate={{ x: [0, -100, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 2 }}
+          className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] bg-purple-600/10 rounded-full blur-[100px]"
         />
         <motion.div
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 100, 0],
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
-            delay: 4,
-          }}
-          className="absolute -bottom-1/4 left-1/4 w-[550px] h-[550px] sm:w-[700px] sm:h-[700px] bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 sm:opacity-30"
+          animate={{ x: [0, 50, 0], y: [0, 100, 0], scale: [1, 1.15, 1] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear", delay: 4 }}
+          className="absolute -bottom-1/4 left-1/4 w-[550px] h-[550px] sm:w-[700px] sm:h-[700px] bg-cyan-600/10 rounded-full blur-[100px]"
         />
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -315,11 +263,11 @@ export function Testimonials() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-blue-600 bg-white/90 backdrop-blur-md rounded-full mb-4 sm:mb-5 shadow-lg border border-blue-100/50 hover:shadow-xl transition-shadow duration-300"
+            className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-cyan-400 bg-white/5 backdrop-blur-md rounded-full mb-4 sm:mb-5 shadow-lg border border-white/10 hover:border-cyan-500/50 transition-colors duration-300"
           >
             <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
             </span>
             Customer Testimonials
           </motion.span>
@@ -329,14 +277,14 @@ export function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight"
           >
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-600 to-cyan-500 block"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 block"
             >
               Loved by our
             </motion.span>
@@ -356,14 +304,13 @@ export function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed px-4"
+            className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed px-4"
           >
             Do not just take our word for it. Here&apos;s what our amazing customers
             have to say about their experience with our premium car wash services.
           </motion.p>
         </motion.div>
 
-        {/* Testimonials Grid */}
         <div className="relative max-w-7xl mx-auto">
           {isLoading ? (
             <motion.div
@@ -375,7 +322,7 @@ export function Testimonials() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="h-12 w-12 sm:h-16 sm:w-16 border-4 border-blue-500 border-t-transparent rounded-full"
+                  className="h-12 w-12 sm:h-16 sm:w-16 border-4 border-cyan-500 border-t-transparent rounded-full"
                 />
                 <motion.div
                   animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
@@ -407,15 +354,14 @@ export function Testimonials() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12 sm:py-16 bg-white/60 backdrop-blur-md rounded-2xl shadow-lg border border-gray-100/50"
+              className="text-center py-12 sm:py-16 bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/10"
             >
-              <p className="text-gray-500 text-sm sm:text-base">
+              <p className="text-gray-400 text-sm sm:text-base">
                 No testimonials available at the moment.
               </p>
             </motion.div>
           )}
 
-          {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -425,18 +371,15 @@ export function Testimonials() {
           >
             <Link
               href="/reviews"
-              className="group relative inline-flex items-center px-6 py-3 sm:px-8 sm:py-3.5 border border-transparent text-sm sm:text-base font-medium rounded-full shadow-lg text-white bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-700 hover:via-blue-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl overflow-hidden"
+              className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 border border-white/20 text-base font-semibold rounded-full text-white bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 shadow-lg backdrop-blur-md group"
             >
-              {/* Button shine effect */}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              
               <span className="relative z-10 flex items-center">
                 View All Reviews
                 <motion.div
                   animate={{ x: [0, 4, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300 text-cyan-400" />
                 </motion.div>
               </span>
             </Link>

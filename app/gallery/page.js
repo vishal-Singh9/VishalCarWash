@@ -135,7 +135,6 @@ const MasonryItem = ({ image, onClick, index }) => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Content */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
           <span className="inline-block px-3 py-1 mb-2 text-xs font-semibold text-white bg-blue-600 rounded-full w-fit">
             {image.category.charAt(0).toUpperCase() + image.category.slice(1)}
@@ -219,12 +218,12 @@ export default function Gallery() {
   const columns = [getColumns(0), getColumns(1), getColumns(2)];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-[#030712]">
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url(/images/backsection.webp)] bg-cover bg-center opacity-20"></div>
+      <section className="relative py-24 md:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[120px]"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -254,12 +253,12 @@ export default function Gallery() {
               <input
                 type="text"
                 placeholder="Search our gallery..."
-                className="w-full pl-12 pr-16 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                className="w-full pl-12 pr-16 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition-colors"
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <Filter className="h-5 w-5" />
@@ -271,9 +270,9 @@ export default function Gallery() {
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    className="absolute left-0 right-0 mt-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-5 z-20"
+                    className="absolute left-0 right-0 mt-3 bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl p-5 z-20 border border-white/10"
                   >
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-300 mb-3">
                       Filter by category
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -288,8 +287,8 @@ export default function Gallery() {
                           }}
                           className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
                             selectedCategory === category.id
-                              ? "bg-blue-600 text-white shadow-lg"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
+                              : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
                           }`}
                         >
                           {category.name}
@@ -305,7 +304,7 @@ export default function Gallery() {
       </section>
 
       {/* Category Filter Bar */}
-      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 shadow-sm">
+      <div className="sticky top-0 z-20 bg-[#030712]/80 backdrop-blur-lg border-b border-white/10 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <div className="flex-1 overflow-x-auto scrollbar-hide">
@@ -319,13 +318,13 @@ export default function Gallery() {
                     className={`relative px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                       selectedCategory === category.id
                         ? "text-white shadow-lg"
-                        : "text-gray-700 hover:bg-gray-100"
+                        : "text-gray-400 hover:bg-white/5"
                     }`}
                   >
                     {selectedCategory === category.id && (
                       <motion.div
                         layoutId="activeCategory"
-                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full"
+                        className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full"
                         transition={{
                           type: "spring",
                           bounce: 0.2,
@@ -338,7 +337,7 @@ export default function Gallery() {
                 ))}
               </div>
             </div>
-            <div className="ml-4 text-sm font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded-full whitespace-nowrap">
+            <div className="ml-4 text-sm font-medium text-gray-400 bg-white/5 border border-white/10 px-4 py-2 rounded-full whitespace-nowrap">
               {filteredImages.length}{" "}
               {filteredImages.length === 1 ? "result" : "results"}
             </div>
@@ -357,7 +356,7 @@ export default function Gallery() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.1 }}
-                  className="aspect-[4/3] bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl animate-pulse"
+                  className="aspect-[4/3] bg-white/5 border border-white/10 rounded-2xl animate-pulse"
                 />
               ))}
             </div>
@@ -367,13 +366,13 @@ export default function Gallery() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-24"
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 mb-6">
-                <Search className="w-10 h-10 text-blue-400" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-cyan-500/10 mb-6">
+                <Search className="w-10 h-10 text-cyan-400" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              <h3 className="text-2xl font-bold text-white mb-3">
                 No Results Found
               </h3>
-              <p className="text-gray-500 mb-6">
+              <p className="text-gray-400 mb-6">
                 Try adjusting your filters or search term
               </p>
               <motion.button
@@ -383,7 +382,7 @@ export default function Gallery() {
                   setSelectedCategory("all");
                   setSearchQuery("");
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all"
               >
                 Reset Filters
               </motion.button>
@@ -408,9 +407,11 @@ export default function Gallery() {
           )}
         </div>
       </section>
-        <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
-              <div className="absolute inset-0 bg-black/30"></div>
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
+        <section className="relative py-20 bg-[#030712] border-t border-white/5 text-white overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[120px]"></div>
+              </div>
       
               <div className="container mx-auto px-4 relative z-10">
                 <motion.div
@@ -420,24 +421,24 @@ export default function Gallery() {
                   variants={fadeInUp}
                   className="text-center max-w-3xl mx-auto"
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
                     Ready to give your car the care it deserves?
                   </h2>
-                  <p className="text-xl text-blue-100 mb-8">
+                  <p className="text-xl text-gray-400 mb-8">
                     Book an appointment today and experience the difference of a
                     professional car wash service.
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <a
                       href="tel:+919876543210"
-                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-lg transition shadow-lg hover:shadow-xl"
                     >
                       <Phone className="w-5 h-5 mr-2" />
                       Call Us Now
                     </a>
                     <a
                       href="/booking"
-                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-transparent hover:bg-white/10 rounded-lg transition border-2 border-white"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-white/5 hover:bg-white/10 rounded-lg transition border border-white/10"
                     >
                       Book Online
                     </a>

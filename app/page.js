@@ -29,7 +29,7 @@ export default function Home() {
     <div className="overflow-hidden">
       
       <Hero />
-      {/* <Stats stats={stats} /> */}
+      <Stats stats={stats} />
       <BookingAvailability />
       <Services services={services} loading={loading} error={error} />
       <Features />

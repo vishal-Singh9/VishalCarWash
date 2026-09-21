@@ -155,11 +155,11 @@ export default function Blog() {
   }, [searchQuery, activeCategory]);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="relative min-h-screen bg-[#030712] text-white">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <motion.div
-          className="absolute -right-20 -top-20 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -right-20 -top-20 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-screen filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, 20, 0],
@@ -172,7 +172,7 @@ export default function Blog() {
           }}
         />
         <motion.div
-          className="absolute -left-20 -bottom-20 w-96 h-96 bg-purple-500/10 rounded-full mix-blend-overlay filter blur-3xl"
+          className="absolute -left-20 -bottom-20 w-96 h-96 bg-cyan-500/10 rounded-full mix-blend-screen filter blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             x: [0, -20, 0],
@@ -188,10 +188,10 @@ export default function Blog() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute inset-0 bg-[url(/images/backsection.webp)] bg-cover bg-center opacity-20"></div>
+          <div className="absolute inset-0 bg-[url('/images/backsection.webp')] bg-cover bg-center opacity-20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -243,13 +243,13 @@ export default function Blog() {
               className="mb-8"
             >
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200"
+                  className="w-full pl-12 pr-4 py-4 bg-[#0a0f1a] rounded-xl border border-white/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </motion.div>
@@ -267,8 +267,8 @@ export default function Blog() {
                   onClick={() => setActiveCategory(category.id)}
                   className={`px-5 py-2.5 rounded-lg font-medium transition-all duration-200 ${
                     activeCategory === category.id
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                      ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-md'
+                      : 'bg-[#0a0f1a] text-gray-400 hover:text-white border border-white/10 hover:border-white/20'
                   }`}
                 >
                   {category.name}
@@ -284,7 +284,7 @@ export default function Blog() {
                 transition={{ delay: 0.7 }}
                 className="mb-16"
               >
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                <div className="bg-[#0a0f1a] rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl border border-white/10 hover:border-cyan-500/50 transition-all duration-300">
                   <div className="grid md:grid-cols-2 gap-0">
                     <div className="relative h-64 md:h-full overflow-hidden">
                       <Image
@@ -294,13 +294,13 @@ export default function Blog() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
+                        <span className="px-3 py-1 bg-cyan-500 text-white text-xs font-semibold rounded-full">
                           Featured
                         </span>
                       </div>
                     </div>
                     <div className="p-8 md:p-10 flex flex-col justify-center">
-                      <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-4 mb-4 text-sm text-gray-400">
                         <span className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1.5" />
                           {new Date(featuredPost.date).toLocaleDateString('en-US', {
@@ -314,10 +314,10 @@ export default function Blog() {
                           {featuredPost.readTime}
                         </span>
                       </div>
-                      <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                      <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
                         {featuredPost?.title}
                       </h2>
-                      <p className="text-gray-600 mb-6 leading-relaxed">
+                      <p className="text-gray-400 mb-6 leading-relaxed">
                         {featuredPost?.excerpt}
                       </p>
                       <div className="flex items-center justify-between">
@@ -331,7 +331,7 @@ export default function Blog() {
                             {featuredPost.comments}
                           </span>
                         </div>
-                        <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
+                        <button className="flex items-center gap-2 text-cyan-400 font-semibold hover:gap-3 transition-all">
                           Read More
                           <ArrowRight className="w-4 h-4" />
                         </button>
@@ -351,7 +351,7 @@ export default function Blog() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white rounded-xl shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col"
+                    className="bg-[#0a0f1a] border border-white/10 rounded-xl shadow-md overflow-hidden group hover:border-cyan-500/50 hover:shadow-xl transition-all duration-300 flex flex-col"
                   >
                     <div className="relative h-48 overflow-hidden">
                       <Image
@@ -361,13 +361,13 @@ export default function Blog() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold rounded-full">
+                        <span className="px-3 py-1 bg-black/50 backdrop-blur-sm text-cyan-400 text-xs font-semibold rounded-full">
                           {categories.find((cat) => cat.id === post.category)?.name}
                         </span>
                       </div>
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-center gap-3 mb-3 text-xs text-gray-600">
+                      <div className="flex items-center gap-3 mb-3 text-xs text-gray-400">
                         <span className="flex items-center">
                           <Calendar className="w-3.5 h-3.5 mr-1" />
                           {new Date(post.date).toLocaleDateString('en-US', {
@@ -381,13 +381,13 @@ export default function Blog() {
                           {post.readTime}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors line-clamp-2">
                         {post?.title}
                       </h3>
-                      <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
+                      <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
                         {post?.excerpt}
                       </p>
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
                         <div className="flex items-center gap-3 text-xs text-gray-500">
                           <span className="flex items-center">
                             <Eye className="w-3.5 h-3.5 mr-1" />
@@ -398,7 +398,7 @@ export default function Blog() {
                             {post.comments}
                           </span>
                         </div>
-                        <button className="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
+                        <button className="text-cyan-400 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
                           Read
                           <ArrowRight className="w-4 h-4" />
                         </button>
@@ -411,11 +411,11 @@ export default function Blog() {
 
             {filteredPosts.length === 0 && (
               <div className="text-center py-12">
-                <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <Search className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">
                   No posts found
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-400">
                   Try adjusting your search or filter to find what you&apos;re
                   looking for.
                 </p>
@@ -426,7 +426,7 @@ export default function Blog() {
       </section>
 
      {/* CTA Section */}
-         <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+         <section className="relative py-20 bg-[#030712] border-t border-white/5 text-white overflow-hidden">
               <div className="absolute inset-0 bg-black/30"></div>
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
       
@@ -438,17 +438,17 @@ export default function Blog() {
                   variants={fadeInUp}
                   className="text-center max-w-3xl mx-auto"
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
                     Ready to give your car the care it deserves?
                   </h2>
-                  <p className="text-xl text-blue-100 mb-8">
+                  <p className="text-xl text-gray-300 mb-8">
                     Book an appointment today and experience the difference of a
                     professional car wash service.
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <a
                       href="tel:+919956414364"
-                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 rounded-lg transition shadow-md hover:shadow-lg"
                     >
                       <Phone className="w-5 h-5 mr-2" />
                       Call Us Now

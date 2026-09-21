@@ -39,11 +39,11 @@ export default function ResetPassword() {
   const passwordStrength = getPasswordStrength(password);
   const passwordStrengthText = ['Very Weak', 'Weak', 'Good', 'Strong', 'Very Strong'][passwordStrength];
   const passwordStrengthColor = [
-    'bg-red-500',
+    'bg-red-500/100',
     'bg-orange-500',
     'bg-yellow-500',
     'bg-blue-500',
-    'bg-green-500'
+    'bg-green-500/100'
   ][passwordStrength];
 
   const handleSubmit = async (e) => {
@@ -102,7 +102,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex relative overflow-hidden">
+    <div className="min-h-screen bg-[#030712] flex relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div 
         className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"
@@ -122,7 +122,7 @@ export default function ResetPassword() {
       />
 
       <div className="w-full max-w-7xl mx-auto flex items-center justify-center p-4 relative z-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-3xl shadow-2xl overflow-hidden max-w-6xl">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white/5 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10 overflow-hidden max-w-6xl">
           
           {/* Left Side - Reset Password Form */}
           <motion.div 
@@ -154,14 +154,14 @@ export default function ResetPassword() {
                       />
                     </div>
                     <div>
-                      <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                         Vishal Car Wash
                       </h1>
                     </div>
                   </motion.div>
                 </Link>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Reset Password</h2>
-                <p className="text-gray-600">
+                <h2 className="text-3xl font-bold text-white mb-2">Reset Password</h2>
+                <p className="text-gray-400">
                   {success 
                     ? "Your password has been reset successfully" 
                     : "Enter your new password below"
@@ -176,11 +176,11 @@ export default function ResetPassword() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    className="mb-6 bg-green-50 border border-green-200 rounded-xl p-6 text-center"
+                    className="mb-6 bg-green-500/10 border border-green-500/20 rounded-xl p-6 text-center"
                   >
                     <CheckCircle2 className="w-12 h-12 text-green-600 mx-auto mb-3" />
                     <h3 className="text-lg font-semibold text-green-900 mb-2">Password Reset!</h3>
-                    <p className="text-sm text-green-800 mb-4">
+                    <p className="text-sm text-green-400 mb-4">
                       Your password has been successfully reset.
                     </p>
                     <p className="text-xs text-green-700">
@@ -197,11 +197,11 @@ export default function ResetPassword() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4"
+                    className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4"
                   >
                     <div className="flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-red-800">{error}</p>
+                      <p className="text-sm text-red-400">{error}</p>
                     </div>
                   </motion.div>
                 )}
@@ -217,7 +217,7 @@ export default function ResetPassword() {
                       transition={{ delay: 0.3 }}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+                        <label htmlFor="password" className="block text-sm font-semibold text-gray-300">
                           New Password
                         </label>
                         {password && (
@@ -240,14 +240,14 @@ export default function ResetPassword() {
                           required
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                          className="block w-full pl-12 pr-12 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                           placeholder="••••••••"
                           disabled={isLoading}
                         />
                         <button
                           type="button"
                           onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-400 transition-colors"
                         >
                           {isPasswordVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                         </button>
@@ -273,7 +273,7 @@ export default function ResetPassword() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
                     >
-                      <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-300 mb-2">
                         Confirm New Password
                       </label>
                       <div className="relative">
@@ -286,14 +286,14 @@ export default function ResetPassword() {
                           required
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                          className="block w-full pl-12 pr-12 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                           placeholder="••••••••"
                           disabled={isLoading}
                         />
                         <button
                           type="button"
                           onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-400 transition-colors"
                         >
                           {isConfirmPasswordVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                         </button>
@@ -308,7 +308,7 @@ export default function ResetPassword() {
                       whileTap={{ scale: 0.98 }}
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
+                      className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       {isLoading ? (
                         <>
@@ -328,9 +328,9 @@ export default function ResetPassword() {
                     transition={{ delay: 0.6 }}
                     className="mt-6 text-center"
                   >
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-400">
                       Remember your password?{' '}
-                      <Link href="/auth/signin" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                      <Link href="/auth/signin" className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
                         Sign in
                       </Link>
                     </p>
@@ -346,7 +346,7 @@ export default function ResetPassword() {
                 >
                   <Link 
                     href="/auth/forgot-password"
-                    className="inline-flex items-center justify-center py-3 px-6 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                    className="inline-flex items-center justify-center py-3 px-6 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
                   >
                     Request New Reset Link
                   </Link>
@@ -360,7 +360,7 @@ export default function ResetPassword() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-12 hidden lg:flex flex-col justify-center items-center text-white overflow-hidden"
+            className="relative bg-white/5 border-l border-white/10 p-12 hidden lg:flex flex-col justify-center items-center text-white overflow-hidden"
           >
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl" />

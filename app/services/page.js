@@ -192,12 +192,12 @@ export default function Services() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center p-8 bg-red-50 rounded-lg">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Services</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
+        <div className="text-center p-8 bg-red-500/10 rounded-lg">
+          <h2 className="text-2xl font-bold text-red-400 mb-4">Error Loading Services</h2>
+          <p className="text-gray-400 mb-4">{error}</p>
           <button
             onClick={fetchServices}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded hover:from-cyan-400 hover:to-blue-500 transition"
           >
             Retry
           </button>
@@ -228,7 +228,7 @@ export default function Services() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden"
+        className="relative py-24 md:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden"
       >
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
@@ -236,7 +236,7 @@ export default function Services() {
         </div>
         
         {/* Decorative blobs */}
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -244,7 +244,7 @@ export default function Services() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center bg-blue-500/20 px-4 py-2 rounded-full mb-6"
+              className="inline-flex items-center bg-white/50/20 px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-5 h-5 mr-2" />
               <span>Premium Car Care Services</span>
@@ -273,7 +273,7 @@ export default function Services() {
             >
               <Link 
                 href="/booking" 
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white/5 text-blue-400 font-semibold rounded-full hover:bg-white/5 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Book Your Service Now
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -284,21 +284,21 @@ export default function Services() {
       </motion.section>
 
       {/* Services Grid */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-[#030712]">
         <div className="container mx-auto px-4 sm:px-6">
           {/* Search and Filter */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-12 bg-white rounded-xl shadow-md p-6  top-4 z-10"
+            className="mb-12 bg-white/5 rounded-xl shadow-md p-6  top-4 z-10"
           >
             <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="relative w-full sm:flex-1">
                 <input
                   type="text"
                   placeholder="Search services..."
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -319,7 +319,7 @@ export default function Services() {
               <div className="relative">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                  className="flex items-center gap-2 px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition"
                 >
                   <Filter size={18} />
                   <span>Filters</span>
@@ -336,13 +336,13 @@ export default function Services() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg p-4 z-20 border border-gray-100"
+                      className="absolute right-0 mt-2 w-72 bg-white/5 rounded-xl shadow-lg p-4 z-20 border border-white/10"
                     >
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="font-semibold">Filters</h3>
                         <button 
                           onClick={() => setShowFilters(false)}
-                          className="text-gray-500 hover:text-gray-700"
+                          className="text-gray-400 hover:text-gray-300"
                         >
                           <X size={18} />
                         </button>
@@ -350,7 +350,7 @@ export default function Services() {
                       
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-300 mb-2">
                             Category
                           </label>
                           <div className="flex flex-wrap gap-2">
@@ -360,8 +360,8 @@ export default function Services() {
                                 onClick={() => setActiveCategory(category)}
                                 className={`px-3 py-1.5 text-sm rounded-full capitalize transition ${
                                   activeCategory === category
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
+                                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
                                 }`}
                               >
                                 {category}
@@ -371,7 +371,7 @@ export default function Services() {
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                          <label className="block text-sm font-medium text-gray-300 mb-2">
                             Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}
                           </label>
                           <div className="px-2">
@@ -396,11 +396,11 @@ export default function Services() {
             {/* Active filters */}
             <div className="mt-4 flex flex-wrap gap-2">
               {searchQuery && (
-                <div className="flex items-center bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full">
+                <div className="flex items-center bg-white/5 text-blue-400 text-sm px-3 py-1.5 rounded-full">
                   Search: {searchQuery}
                   <button 
                     onClick={() => setSearchQuery('')}
-                    className="ml-2 text-blue-400 hover:text-blue-700"
+                    className="ml-2 text-blue-400 hover:text-blue-400"
                   >
                     <X size={14} />
                   </button>
@@ -408,11 +408,11 @@ export default function Services() {
               )}
               
               {activeCategory !== 'all' && (
-                <div className="flex items-center bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full">
+                <div className="flex items-center bg-white/5 text-blue-400 text-sm px-3 py-1.5 rounded-full">
                   Category: {activeCategory}
                   <button 
                     onClick={() => setActiveCategory('all')}
-                    className="ml-2 text-blue-400 hover:text-blue-700"
+                    className="ml-2 text-blue-400 hover:text-blue-400"
                   >
                     <X size={14} />
                   </button>
@@ -420,11 +420,11 @@ export default function Services() {
               )}
               
               {(priceRange[0] > 0 || priceRange[1] < 10000) && (
-                <div className="flex items-center bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full">
+                <div className="flex items-center bg-white/5 text-blue-400 text-sm px-3 py-1.5 rounded-full">
                   Price: ₹{priceRange[0]} - ₹{priceRange[1]}
                   <button 
                     onClick={() => setPriceRange([0, 10000])}
-                    className="ml-2 text-blue-400 hover:text-blue-700"
+                    className="ml-2 text-blue-400 hover:text-blue-400"
                   >
                     <X size={14} />
                   </button>
@@ -436,7 +436,7 @@ export default function Services() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
-              <p className="mt-4 text-gray-600">Loading services...</p>
+              <p className="mt-4 text-gray-400">Loading services...</p>
             </div>
           ) : (
             <>
@@ -451,7 +451,7 @@ export default function Services() {
                     <motion.div
                       key={service.id}
                       variants={fadeIn}
-                      className="service-card group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-md sm:shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border sm:hover:-translate-y-1.5 border-gray-100"
+                      className="service-card group bg-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-md sm:shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border sm:hover:-translate-y-1.5 border-white/10"
                     >
                       <div className="flex flex-col md:grid md:grid-cols-2 h-full">
                         <div className="relative h-48 sm:h-56 md:h-full overflow-hidden">
@@ -471,7 +471,7 @@ export default function Services() {
                             />
                           </div>
                           <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-                            <div className="inline-block bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                            <div className="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2">
                               {service.category || 'Standard'}
                             </div>
                             <h3 className="text-2xl font-bold text-white">{service.name}</h3>
@@ -480,43 +480,43 @@ export default function Services() {
                         
                         <div className="p-6 flex flex-col justify-between">
                           <div>
-                            <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base line-clamp-3">{service.description}</p>
+                            <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base line-clamp-3">{service.description}</p>
 
                             <div className="space-y-3 mb-6">
                               {service.features && Array.isArray(service.features) && service.features.slice(0, 3).map((feature, idx) => (
                                 <div key={idx} className="flex items-start group-hover:translate-x-1 transition-transform duration-300" style={{ transitionDelay: `${idx * 50}ms` }}>
                                   <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                                  <span className="text-gray-700">{feature}</span>
+                                  <span className="text-gray-300">{feature}</span>
                                 </div>
                               ))}
                               {service.features && service.features.length > 3 && (
-                                <div className="text-sm text-blue-600 font-medium">+{service.features.length - 3} more features</div>
+                                <div className="text-sm text-cyan-400 font-medium">+{service.features.length - 3} more features</div>
                               )}
                             </div>
 
                             {service.duration && (
-                              <div className="flex items-center text-gray-600 mb-6 bg-gray-50 p-3 rounded-lg">
+                              <div className="flex items-center text-gray-400 mb-6 bg-[#030712] p-3 rounded-lg">
                                 <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                                  <Clock className="w-5 h-5 text-blue-600" />
+                                  <Clock className="w-5 h-5 text-cyan-400" />
                                 </div>
                                 <div>
-                                  <div className="text-xs text-gray-500">Duration</div>
+                                  <div className="text-xs text-gray-400">Duration</div>
                                   <div className="font-medium">{service.duration} minutes</div>
                                 </div>
                               </div>
                             )}
                           </div>
 
-                          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                          <div className="flex items-center justify-between pt-4 border-t border-white/10">
                             <div>
-                              <div className="text-sm text-gray-500 mb-1">Starting from</div>
-                              <div className="text-3xl font-bold text-blue-600">₹{service.price}</div>
+                              <div className="text-sm text-gray-400 mb-1">Starting from</div>
+                              <div className="text-3xl font-bold text-cyan-400">₹{service.price}</div>
                             </div>
                             <Link
                               href={`/booking?service=${encodeURIComponent(service.name.toLowerCase().replace(/\s+/g, '-'))}`}
-                              className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-blue-600 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
+                              className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-cyan-400 transition duration-300 ease-out border-2 border-blue-500 rounded-full shadow-md group"
                             >
-                              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-500 group-hover:translate-x-0 ease">
+                              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-white/50 group-hover:translate-x-0 ease">
                                 <ArrowRight className="w-5 h-5" />
                               </span>
                               <span className="absolute flex items-center justify-center w-full h-full text-blue-500 transition-all duration-300 transform group-hover:translate-x-full ease">
@@ -531,21 +531,21 @@ export default function Services() {
                   ))}
                 </motion.div>
               ) : (
-                <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
-                  <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                <div className="text-center py-16 bg-white/5 rounded-2xl shadow-sm">
+                  <div className="mx-auto w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mb-6">
                     <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">No services found</h3>
-                  <p className="text-gray-500 max-w-md mx-auto">We could not find any services matching your filters. Try adjusting your search or filters.</p>
+                  <h3 className="text-xl font-semibold text-white mb-2">No services found</h3>
+                  <p className="text-gray-400 max-w-md mx-auto">We could not find any services matching your filters. Try adjusting your search or filters.</p>
                   <button 
                     onClick={() => {
                       setSearchQuery('');
                       setActiveCategory('all');
                       setPriceRange([0, 10000]);
                     }}
-                    className="mt-6 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                    className="mt-6 px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-400 hover:to-blue-500 transition font-medium"
                   >
                     Clear all filters
                   </button>
@@ -560,20 +560,20 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12 relative overflow-hidden"
+            className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 md:p-12 relative overflow-hidden"
           >
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-200 rounded-full opacity-20" />
             <div className="absolute -left-10 -bottom-10 w-60 h-60 bg-indigo-200 rounded-full opacity-20" />
             
             <div className="relative z-10">
               <div className="text-center mb-12">
-                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+                <span className="inline-block bg-blue-100 text-blue-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
                   More Services
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
                   Additional Services
                 </h2>
-                <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+                <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
                   Enhance your car care experience with our premium additional services
                 </p>
               </div>
@@ -586,21 +586,21 @@ export default function Services() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
-                    className="additional-service bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100 group"
+                    className="additional-service bg-white/5 p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-white/10 hover:border-blue-100 group"
                   >
                     <div className="flex items-start">
-                      <div className="p-2 bg-blue-50 rounded-lg mr-4 group-hover:bg-blue-100 transition-colors">
-                        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <div className="p-2 bg-white/5 rounded-lg mr-4 group-hover:bg-white/10 transition-colors">
+                        <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-1">{item}</h3>
-                        <p className="text-gray-500 text-sm">Professional {item.toLowerCase()} service for your vehicle</p>
+                        <h3 className="text-lg font-semibold text-white mb-1">{item}</h3>
+                        <p className="text-gray-400 text-sm">Professional {item.toLowerCase()} service for your vehicle</p>
                       </div>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                      <button className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center group-hover:translate-x-1 transition-transform duration-300">
+                    <div className="mt-4 pt-3 border-t border-white/10">
+                      <button className="text-sm font-medium text-cyan-400 hover:text-blue-400 flex items-center group-hover:translate-x-1 transition-transform duration-300">
                         Learn more
                         <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -612,8 +612,8 @@ export default function Services() {
               </div>
               
               <div className="mt-12 text-center">
-                <p className="text-gray-600 mb-6">Can not find what you are looking for?</p>
-                <button className="px-6 py-3 bg-white text-blue-600 font-medium rounded-full border-2 border-blue-100 hover:bg-blue-50 transition-all duration-300 hover:shadow-md">
+                <p className="text-gray-400 mb-6">Can not find what you are looking for?</p>
+                <button className="px-6 py-3 bg-white/5 text-cyan-400 font-medium rounded-full border-2 border-blue-100 hover:bg-white/5 transition-all duration-300 hover:shadow-md">
                   Contact us for custom services
                 </button>
               </div>
@@ -623,7 +623,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="relative py-12 sm:py-16 md:py-20 bg-white overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 bg-white/5 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
         </div>
@@ -635,13 +635,13 @@ export default function Services() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="inline-block bg-blue-50 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+            <span className="inline-block bg-white/5 text-blue-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               How It Works
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-              Our Simple <span className="text-blue-600">4-Step</span> Process
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+              Our Simple <span className="text-cyan-400">4-Step</span> Process
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Simple steps to get your car looking brand new
             </p>
           </motion.div>
@@ -654,13 +654,13 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 text-center"
+                className="bg-white/5 p-8 rounded-xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 text-center"
               >
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-6">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-cyan-400 text-2xl font-bold mx-auto mb-6">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+                <p className="text-sm sm:text-base text-gray-400">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -670,7 +670,7 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-         <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+         <section className="relative py-20 bg-[#030712] border-t border-white/5 text-white overflow-hidden">
               <div className="absolute inset-0 bg-black/30"></div>
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
       
@@ -692,7 +692,7 @@ export default function Services() {
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <a
                       href="tel:+919876543210"
-                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-cyan-400 bg-white/5 hover:bg-white/10 rounded-lg transition shadow-md hover:shadow-lg"
                     >
                       <Phone className="w-5 h-5 mr-2" />
                       Call Us Now

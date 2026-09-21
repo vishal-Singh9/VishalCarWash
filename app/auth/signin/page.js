@@ -67,7 +67,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex relative overflow-hidden">
+    <div className="min-h-screen bg-[#030712] flex relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div 
         className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"
@@ -87,7 +87,7 @@ export default function SignIn() {
       />
 
       <div className="w-full max-w-7xl mx-auto flex items-center justify-center p-4 relative z-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-3xl shadow-2xl overflow-hidden max-w-6xl">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white/5 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10 overflow-hidden max-w-6xl">
           
           {/* Left Side - Sign In Form */}
           <motion.div 
@@ -119,14 +119,14 @@ export default function SignIn() {
                       />
                     </div>
                     <div>
-                      <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                         Vishal Car Wash
                       </h1>
                     </div>
                   </motion.div>
                 </Link>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-                <p className="text-gray-600">Sign in to your account to continue</p>
+                <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+                <p className="text-gray-400">Sign in to your account to continue</p>
               </motion.div>
 
               {/* Success Message */}
@@ -136,11 +136,11 @@ export default function SignIn() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 bg-green-50 border border-green-200 rounded-xl p-4"
+                    className="mb-6 bg-green-500/10 border border-green-500/20 rounded-xl p-4"
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2 className="w-5 h-5 text-green-600" />
-                      <p className="text-sm text-green-800">{successMessage}</p>
+                      <p className="text-sm text-green-400">{successMessage}</p>
                     </div>
                   </motion.div>
                 )}
@@ -153,9 +153,9 @@ export default function SignIn() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4"
+                    className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4"
                   >
-                    <p className="text-sm text-red-800">{error}</p>
+                    <p className="text-sm text-red-400">{error}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -165,7 +165,7 @@ export default function SignIn() {
                 <motion.button 
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-xl py-3 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+                  className="flex items-center justify-center gap-2 bg-white/5 border-2 border-white/10 rounded-xl py-3 px-4 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/10 transition-all duration-200"
                   onClick={() => signIn('google', { callbackUrl })}
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -190,10 +190,10 @@ export default function SignIn() {
               
               <div className="relative my-8">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
+                  <div className="w-full border-t border-white/10"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500 font-medium">Or continue with email</span>
+                  <span className="px-4 bg-white/5 text-gray-400 font-medium">Or continue with email</span>
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ export default function SignIn() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
                     Email Address
                   </label>
                   <div className="relative">
@@ -217,7 +217,7 @@ export default function SignIn() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="you@example.com"
                       disabled={isLoading}
                     />
@@ -230,10 +230,10 @@ export default function SignIn() {
                   transition={{ delay: 0.4 }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+                    <label htmlFor="password" className="block text-sm font-semibold text-gray-300">
                       Password
                     </label>
-                    <Link href="/auth/forgot-password" className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                    <Link href="/auth/forgot-password" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors">
                       Forgot?
                     </Link>
                   </div>
@@ -247,14 +247,14 @@ export default function SignIn() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="block w-full pl-12 pr-12 py-3.5 border-2 border-gray-200 rounded-xl placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="block w-full pl-12 pr-12 py-3.5 bg-white/5 border-2 border-white/10 rounded-xl placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
                       placeholder="••••••••"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={togglePasswordVisibility}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-400 transition-colors"
                     >
                       {isPasswordVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -271,9 +271,9 @@ export default function SignIn() {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-white/10 rounded"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
                     Remember me for 30 days
                   </label>
                 </motion.div>
@@ -286,7 +286,7 @@ export default function SignIn() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   {isLoading ? (
                     <>
@@ -306,9 +306,9 @@ export default function SignIn() {
                 transition={{ delay: 0.7 }}
                 className="mt-6 text-center"
               >
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-400">
                   Do not have an account?{' '}
-                  <Link href="/auth/signup" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                  <Link href="/auth/signup" className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
                     Sign up for free
                   </Link>
                 </p>
@@ -321,7 +321,7 @@ export default function SignIn() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-12 hidden lg:flex flex-col justify-center items-center text-white overflow-hidden"
+            className="relative bg-white/5 border-l border-white/10 p-12 hidden lg:flex flex-col justify-center items-center text-white overflow-hidden"
           >
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl" />

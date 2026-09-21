@@ -129,23 +129,21 @@ export default function About() {
     {
       name: "Pradeep Singh",
       role: "Founder & CEO",
-      image:
-        "",
+      image: "/images/Papa.png",
       bio: "With over 5+ years in the automotive industry, Pradeep founded Vishal Car Wash with a vision to revolutionize car care services.",
       linkedin:""
     },
     {
       name: "Vishal Singh",
       role: "Operation Head",
-      image: "/images/Vishal.jpg",
+      image: "/images/Vishal.png",
       bio: "Vishal ensures our operations run smoothly and efficiently, maintaining our high standards of service.",
       linkedin:"https://www.linkedin.com/in/vishal-singh-1b6914223"
     },
     {
       name: "Vineet Singh",
       role: "Customer Service Head",
-      image:
-        "",
+      image: "/images/Vineet.jpg",
       bio: "Vineet leads our customer service team, ensuring every client receives exceptional support and care.",
       linkedin:""
     },
@@ -234,7 +232,7 @@ export default function About() {
       variants={staggerContainer}
     >
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="absolute inset-0 bg-[url('/images/backsection.webp')] bg-cover bg-center opacity-20"></div>
@@ -246,13 +244,13 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
+            <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-gray-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full backdrop-blur-sm">
               Our Journey Since 2021
             </span>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
               About Us
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Your trusted partner in vishal car wash, delivering excellence in every detail since 2021
             </p>
             <motion.div
@@ -262,7 +260,7 @@ export default function About() {
             >
               <a
                 href="/contact"
-                className="inline-flex items-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold rounded-full hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Get in Touch
                 <ChevronRight className="ml-2 w-5 h-5" />
@@ -273,7 +271,7 @@ export default function About() {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 bg-[#030712]">
         <div className="container mx-auto px-4">
           <motion.div
             className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
@@ -285,13 +283,13 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="mb-2 text-blue-600 font-semibold">
+              <div className="mb-2 text-cyan-400 font-semibold">
                 Our Journey
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-                More Than Just a <span className="text-blue-600">Car Wash</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white group-hover:text-cyan-300 transition-colors leading-tight">
+                More Than Just a <span className="text-cyan-400">Car Wash</span>
               </h2>
-              <div className="space-y-6 text-gray-600">
+              <div className="space-y-6 text-gray-400">
                 <p className="text-lg">
                   Founded in 2021, Vishal Car Wash began with a simple mission:
                   to provide the best car wash and detailing services in the
@@ -306,19 +304,19 @@ export default function About() {
                   eco-friendly products to ensure your vehicle gets the care it
                   deserves.
                 </p>
-                <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
-                  <p className="text-blue-800 font-medium">
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <p className="text-cyan-100 font-medium">
                     We believe in building relationships, not just cleaning
                     cars. Every vehicle that comes through our doors is treated
                     with the utmost care and attention to detail.
                   </p>
                   <div className="mt-4 flex items-center">
-                    <div className="h-10 w-10 rounded-full bg-blue-200 flex items-center justify-center text-blue-800 font-bold">
+                    <div className="h-10 w-10 rounded-full bg-blue-200 flex items-center justify-center text-cyan-100 font-bold">
                       PS
                     </div>
                     <div className="ml-3">
                       <div className="font-semibold">Pradeep Singh</div>
-                      <div className="text-sm text-blue-600">Founder & CEO</div>
+                      <div className="text-sm text-cyan-400">Founder & CEO</div>
                     </div>
                   </div>
                 </div>
@@ -345,7 +343,7 @@ export default function About() {
                     <h3 className="text-2xl font-bold mb-2">
                       State-of-the-Art Facility
                     </h3>
-                    <p className="text-blue-100">
+                    <p className="text-gray-300">
                       Eco-friendly equipment and premium products
                     </p>
                   </div>
@@ -358,7 +356,7 @@ export default function About() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#030712]">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -367,13 +365,13 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-cyan-400 bg-white/5 rounded-full mb-4">
               Our Foundation
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Core <span className="text-blue-600">Values</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-4">
+              Core <span className="text-cyan-400">Values</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               The principles that guide every service we provide and every
               interaction we have
             </p>
@@ -389,21 +387,22 @@ export default function About() {
             {values.map((value, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
+                className="group relative bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/10 hover:border-cyan-500/50 hover:shadow-2xl transition-all duration-500 overflow-hidden"
                 variants={fadeInUp}
                 whileHover={{ y: -10 }}
               >
+                <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/0 to-cyan-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-300"></div>
-                <div className="w-16 h-16 flex items-center justify-center bg-blue-50 text-blue-600 rounded-xl mb-6 group-hover:bg-blue-100 transition-colors duration-300">
+                <div className="w-16 h-16 flex items-center justify-center bg-white/5 text-cyan-400 rounded-xl mb-6 group-hover:bg-white/10 transition-colors duration-300">
                   <value.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-3">
                   {value.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed">
                   {value.description}
                 </p>
-                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center text-cyan-400 font-medium group-hover:text-blue-700 transition-colors">
                   <span>Learn more</span>
                   <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -414,13 +413,13 @@ export default function About() {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-20">
+      <section className="py-20 bg-[#030712] border-t border-white/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white group-hover:text-cyan-300 transition-colors">
               Our Journey
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Key milestones in our growth story
             </p>
           </div>
@@ -429,19 +428,19 @@ export default function About() {
             {milestones.map((milestone, index) => (
               <div key={index} className="flex items-start mb-8 last:mb-0">
                 <div className="flex-shrink-0 w-32 text-right mr-8">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-cyan-400">
                     {milestone.year}
                   </div>
                 </div>
                 <div className="flex-shrink-0 relative">
-                  <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-blue-100"></div>
+                  <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-white/10"></div>
                   {index < milestones.length - 1 && (
                     <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-blue-200"></div>
                   )}
                 </div>
                 <div className="flex-1 ml-8 pb-8">
-                  <div className="bg-white p-6 rounded-lg shadow-md">
-                    <p className="text-lg text-gray-700">{milestone.event}</p>
+                  <div className="bg-white/5 backdrop-blur-md p-6 rounded-lg shadow-md border border-white/10">
+                    <p className="text-lg text-gray-300">{milestone.event}</p>
                   </div>
                 </div>
               </div>
@@ -451,7 +450,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-20 bg-[#030712] border-t border-white/5">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -460,97 +459,82 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-cyan-400 bg-white/5 rounded-full mb-4">
               Our Experts
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Meet Our <span className="text-blue-600">Team</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-4">
+              Meet Our <span className="text-cyan-400">Team</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               The passionate professionals dedicated to keeping your vehicle in
               pristine condition
             </p>
           </motion.div>
 
-          <div className="relative py-12 sm:py-16 lg:py-20 w-full bg-gray-50">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-blue-500/5 -skew-y-3 -rotate-1 rounded-3xl transform-gpu"></div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-                <div className="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
-              </div>
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                {teamMembers.map((member, index) => (
-                  <motion.div
-                    key={index}
-                    className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
-                    variants={fadeInUp}
-                    whileHover={{ 
-                      y: -8,
-                      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                    }}
-                  >
-                    <div className="relative w-full aspect-square overflow-hidden">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover w-full h-full transition-all duration-700 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        priority={index < 2}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                        <div className="space-y-2 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                          <h3 className="text-2xl font-bold">{member.name}</h3>
-                          <p className="text-blue-300 font-medium">{member.role}</p>
-                          <div className="flex space-x-3 mt-4">
-                            <a
-                              href={member.twitter || "#"}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-10 h-10 rounded-full bg-white/20 hover:bg-blue-600 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
-                              aria-label={`${member.name}'s Twitter`}
-                            >
-                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-                              </svg>
-                            </a>
-                            <a
-                              href={member.linkedin || ""}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-10 h-10 rounded-full bg-white/20 hover:bg-blue-600 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
-                              aria-label={`${member.name}'s LinkedIn`}
-                            >
-                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
+          <div className="max-w-7xl mx-auto w-full">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              {teamMembers.map((member, index) => (
+                <motion.div
+                  key={index}
+                  className="group bg-[#0a0f1a] rounded-2xl overflow-hidden shadow-lg border border-white/10 hover:border-cyan-500/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
+                  variants={fadeInUp}
+                >
+                  <div className="relative w-full aspect-[4/5] overflow-hidden bg-white/5">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover w-full h-full transition-all duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      priority={index < 2}
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                      <div className="flex space-x-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <a
+                          href={member.twitter || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-12 h-12 rounded-full bg-white/10 hover:bg-cyan-500 flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 backdrop-blur-sm"
+                          aria-label={`${member.name}'s Twitter`}
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                          </svg>
+                        </a>
+                        <a
+                          href={member.linkedin || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-12 h-12 rounded-full bg-white/10 hover:bg-cyan-500 flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110 backdrop-blur-sm"
+                          aria-label={`${member.name}'s LinkedIn`}
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                          </svg>
+                        </a>
                       </div>
                     </div>
-                    <div className="p-6 text-center bg-gradient-to-b from-white to-gray-50">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                        {member.name}
-                      </h3>
-                      <p className="text-blue-600 font-medium mt-1">{member.role}</p>
-                      {member.department && (
-                        <span className="inline-block mt-2 px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full">
-                          {member.department}
-                        </span>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
+                  </div>
+                  <div className="p-6 text-center bg-[#0a0f1a] border-t border-white/5 flex-grow flex flex-col justify-center">
+                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+                      {member.name}
+                    </h3>
+                    <p className="text-cyan-400 font-medium mt-1">{member.role}</p>
+                    {member.department && (
+                      <span className="inline-block mt-3 px-3 py-1 text-xs font-medium text-gray-400 bg-white/5 rounded-full">
+                        {member.department}
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
 
           <motion.div
@@ -560,7 +544,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-400 mb-6">
               Join our team of passionate professionals
             </p>
             <motion.a
@@ -577,7 +561,7 @@ export default function About() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#030712]">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -586,13 +570,13 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-full mb-4">
+            <span className="inline-block px-4 py-1.5 text-sm font-semibold text-cyan-400 bg-white/5 rounded-full mb-4">
               Our Advantages
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-blue-600">Vishal Car Wash</span>?
+            <h2 className="text-4xl md:text-5xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-4">
+              Why Choose <span className="text-cyan-400">Vishal Car Wash</span>?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               We go beyond just cleaning cars - we deliver exceptional
               experiences
             </p>
@@ -611,7 +595,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
                   <div className="text-white">
                     <h3 className="text-2xl font-bold mb-2">Premium Service</h3>
-                    <p className="text-blue-100">
+                    <p className="text-gray-300">
                       Experience the difference of professional car care
                     </p>
                   </div>
@@ -621,7 +605,7 @@ export default function About() {
             <div className="space-y-6">
               {[
                 {
-                  icon: <Sparkles className="w-6 h-6 text-blue-600" />,
+                  icon: <Sparkles className="w-6 h-6 text-cyan-400" />,
                   title: "Expert Team",
                   description:
                     "Our certified professionals are trained in the latest car care techniques and use only premium products.",
@@ -647,20 +631,20 @@ export default function About() {
               ].map((feature, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-start p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                  className="flex items-start p-4 bg-white/5 backdrop-blur-md rounded-xl shadow-sm hover:shadow-md border border-white/10 hover:border-cyan-500/50 transition-shadow group"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mt-1 mr-4 transition-colors">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/5 group-hover:bg-white/10 flex items-center justify-center mt-1 mr-4 transition-colors">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-cyan-300 transition-colors mb-1">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p className="text-gray-400">{feature.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -674,7 +658,7 @@ export default function About() {
               >
                 <a
                   href="/services"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:shadow-lg transition-all"
+                  className="inline-flex items-center px-6 py-3 bg-[#030712] border-t border-white/5 text-white font-medium rounded-lg hover:shadow-lg transition-all"
                 >
                   Explore Our Services
                   <ChevronRight className="ml-2 w-5 h-5" />
@@ -689,7 +673,7 @@ export default function About() {
 
 
       {/* CTA Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+      <section className="relative py-20 bg-[#030712] border-t border-white/5 text-white overflow-hidden">
               <div className="absolute inset-0 bg-black/30"></div>
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483721310020-03333e577078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80')] bg-cover bg-center opacity-20"></div>
       
@@ -704,14 +688,14 @@ export default function About() {
                   <h2 className="text-3xl md:text-4xl font-bold mb-6">
                     Ready to give your car the care it deserves?
                   </h2>
-                  <p className="text-xl text-blue-100 mb-8">
+                  <p className="text-xl text-gray-300 mb-8">
                     Book an appointment today and experience the difference of a
                     professional car wash service.
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <a
                       href="tel:+919956414364"
-                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-blue-600 bg-white hover:bg-gray-100 rounded-lg transition shadow-md hover:shadow-lg"
+                      className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 rounded-lg transition shadow-md hover:shadow-lg"
                     >
                       <Phone className="w-5 h-5 mr-2" />
                       Call Us Now

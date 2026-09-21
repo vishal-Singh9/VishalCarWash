@@ -647,9 +647,9 @@ export default function BookingPage() {
   // Loading state
   if (status === "loading" || (status === "authenticated" && loading)) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#030712]">
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
-        <p className="mt-4 text-gray-600">Loading...</p>
+        <p className="mt-4 text-gray-400">Loading...</p>
       </div>
     );
   }
@@ -660,7 +660,7 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
+    <div className="min-h-screen bg-[#030712]">
       {/* Booking Summary Modal */}
       {showBookingSummary && (
         <motion.div
@@ -680,10 +680,10 @@ export default function BookingPage() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-2xl sm:rounded-3xl max-w-lg sm:max-w-2xl w-full shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto"
+            className="bg-white/5 rounded-2xl sm:rounded-3xl max-w-lg sm:max-w-2xl w-full shadow-2xl border border-white/10 max-h-[95vh] overflow-y-auto"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-4 sm:p-5 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-r from-cyan-400 to-blue-500 p-4 sm:p-5 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl -mr-24 -mt-24"></div>
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-2">
@@ -693,7 +693,7 @@ export default function BookingPage() {
                       setShowBookingSummary(false);
                       setAutoConfirmTimer(30);
                     }}
-                    className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors"
+                    className="p-1.5 sm:p-2 hover:bg-white/5 rounded-lg transition-colors"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -714,7 +714,7 @@ export default function BookingPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-amber-50 border-2 border-amber-200 rounded-lg sm:rounded-xl p-3"
+                  className="bg-white/5 border-2 border-white/10 rounded-lg sm:rounded-xl p-3"
                 >
                   <div className="flex items-start gap-2 sm:gap-3">
                     <div className="p-1.5 sm:p-2 bg-amber-100 rounded-lg flex-shrink-0">
@@ -729,7 +729,7 @@ export default function BookingPage() {
                       </p>
                       <div className="w-full bg-amber-200 rounded-full h-1.5 sm:h-2">
                         <motion.div
-                          className="bg-amber-500 h-full rounded-full"
+                          className="bg-white/50 h-full rounded-full"
                           initial={{ width: "100%" }}
                           animate={{ width: `${(autoConfirmTimer / 60) * 100}%` }}
                           transition={{ duration: 1, ease: "linear" }}
@@ -741,14 +741,14 @@ export default function BookingPage() {
               )}
 
               {/* Service & Price */}
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-gray-500 mb-0.5">Service</p>
-                  <p className="text-base sm:text-lg font-bold text-gray-900 truncate">{selectedService?.name}</p>
+                  <p className="text-xs text-gray-400 mb-0.5">Service</p>
+                  <p className="text-base sm:text-lg font-bold text-white truncate">{selectedService?.name}</p>
                 </div>
                 <div className="text-right ml-4 flex-shrink-0">
-                  <p className="text-xs text-gray-500 mb-0.5">Price</p>
-                  <p className="text-xl sm:text-2xl font-bold text-blue-600">
+                  <p className="text-xs text-gray-400 mb-0.5">Price</p>
+                  <p className="text-xl sm:text-2xl font-bold text-cyan-400">
                     ₹{selectedService?.price?.toFixed(2) || "0.00"}
                   </p>
                 </div>
@@ -758,40 +758,40 @@ export default function BookingPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {/* Personal Info */}
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base flex items-center gap-1.5">
-                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                  <h4 className="font-semibold text-white text-sm sm:text-base flex items-center gap-1.5">
+                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                     Personal Info
                   </h4>
-                  <div className="bg-gray-50 rounded-lg p-3 space-y-2">
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 space-y-2">
                     <div>
-                      <p className="text-xs text-gray-500">Name</p>
-                      <p className="font-medium text-gray-900 text-sm truncate">{formData.customer_name}</p>
+                      <p className="text-xs text-gray-400">Name</p>
+                      <p className="font-medium text-white text-sm truncate">{formData.customer_name}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Email</p>
-                      <p className="font-medium text-gray-900 text-sm truncate">{formData.customer_email}</p>
+                      <p className="text-xs text-gray-400">Email</p>
+                      <p className="font-medium text-white text-sm truncate">{formData.customer_email}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Phone</p>
-                      <p className="font-medium text-gray-900 text-sm">{formData.customer_phone}</p>
+                      <p className="text-xs text-gray-400">Phone</p>
+                      <p className="font-medium text-white text-sm">{formData.customer_phone}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Vehicle Info */}
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base flex items-center gap-1.5">
-                    <CarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+                  <h4 className="font-semibold text-white text-sm sm:text-base flex items-center gap-1.5">
+                    <CarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                     Vehicle Info
                   </h4>
-                  <div className="bg-gray-50 rounded-lg p-3 space-y-2">
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 space-y-2">
                     <div>
-                      <p className="text-xs text-gray-500">Type</p>
-                      <p className="font-medium text-gray-900 text-sm">{formData.vehicle_type}</p>
+                      <p className="text-xs text-gray-400">Type</p>
+                      <p className="font-medium text-white text-sm">{formData.vehicle_type}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Number</p>
-                      <p className="font-medium text-gray-900 text-sm font-mono">{formData.vehicle_number}</p>
+                      <p className="text-xs text-gray-400">Number</p>
+                      <p className="font-medium text-white text-sm font-mono">{formData.vehicle_number}</p>
                     </div>
                   </div>
                 </div>
@@ -799,14 +799,14 @@ export default function BookingPage() {
 
               {/* Booking Schedule */}
               <div className="space-y-2">
-                <h4 className="font-semibold text-gray-900 text-sm sm:text-base flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+                <h4 className="font-semibold text-white text-sm sm:text-base flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                   Schedule
                 </h4>
-                <div className="bg-gray-50 rounded-lg p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-white/5 border border-white/10 rounded-lg p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-gray-500 mb-0.5">Date</p>
-                    <p className="font-medium text-gray-900 text-sm">
+                    <p className="text-xs text-gray-400 mb-0.5">Date</p>
+                    <p className="font-medium text-white text-sm">
                       {new Date(formData.booking_date + "T00:00:00").toLocaleDateString("en-IN", {
                         weekday: "short",
                         month: "short",
@@ -816,8 +816,8 @@ export default function BookingPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 mb-0.5">Time</p>
-                    <p className="font-medium text-gray-900 text-sm">{formData.booking_time}</p>
+                    <p className="text-xs text-gray-400 mb-0.5">Time</p>
+                    <p className="font-medium text-white text-sm">{formData.booking_time}</p>
                   </div>
                 </div>
               </div>
@@ -825,34 +825,34 @@ export default function BookingPage() {
               {/* Notes */}
               {formData.notes && (
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base flex items-center gap-1.5">
+                  <h4 className="font-semibold text-white text-sm sm:text-base flex items-center gap-1.5">
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                     Notes
                   </h4>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs sm:text-sm text-gray-700 line-clamp-3">{formData.notes}</p>
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-3">{formData.notes}</p>
                   </div>
                 </div>
               )}
 
               {/* Total */}
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg sm:rounded-xl p-3 sm:p-4 border-2 border-blue-200">
+              <div className="bg-white/5 border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 border-2 border-white/10">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-base sm:text-lg font-semibold text-gray-700">Total</span>
-                  <span className="text-2xl sm:text-3xl font-bold text-blue-600">
+                  <span className="text-base sm:text-lg font-semibold text-gray-300">Total</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-cyan-400">
                     ₹{selectedService?.price?.toFixed(2) || "0.00"}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 text-center">
+                <p className="text-xs text-gray-400 text-center">
                   * Payment at service time
                 </p>
               </div>
             </div>
 
             {/* Footer Actions */}
-            <div className="p-4 sm:p-6 border-t border-gray-200 bg-gray-50">
+            <div className="p-4 sm:p-6 border-t border-white/10 bg-white/5">
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <Button
                   type="button"
@@ -861,7 +861,7 @@ export default function BookingPage() {
                     setShowBookingSummary(false);
                     setAutoConfirmTimer(30);
                   }}
-                  className="h-11 sm:h-12 px-4 sm:px-6 rounded-xl text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-all duration-200 font-medium text-sm sm:text-base"
+                  className="h-11 sm:h-12 px-4 sm:px-6 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 font-medium text-sm sm:text-base"
                 >
                   Cancel
                 </Button>
@@ -870,8 +870,8 @@ export default function BookingPage() {
                   onClick={handleConfirmBooking}
                   disabled={submitting}
                   className="flex-1 h-11 sm:h-12 px-4 sm:px-6 rounded-xl font-bold text-white text-sm sm:text-base
-                    bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
-                    hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700
+                    bg-gradient-to-r from-cyan-400 to-blue-500
+                    hover:from-cyan-400 hover:to-blue-500
                     shadow-lg hover:shadow-xl
                     transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-105
                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
@@ -912,7 +912,7 @@ export default function BookingPage() {
               duration: 0.5,
               bounce: 0.3,
             }}
-            className="bg-white p-8 rounded-2xl max-w-md w-full shadow-2xl border border-gray-100"
+            className="bg-white/5 p-8 rounded-2xl max-w-md w-full shadow-2xl border border-white/10"
           >
             <div className="text-center">
               <motion.div
@@ -937,7 +937,7 @@ export default function BookingPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
-                className="text-3xl font-bold text-gray-900 mb-3"
+                className="text-3xl font-bold text-white mb-3"
               >
                 Booking Confirmed! 🎉
               </motion.h3>
@@ -945,10 +945,10 @@ export default function BookingPage() {
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.3 }}
-                className="text-gray-600 mb-8 leading-relaxed"
+                className="text-gray-400 mb-8 leading-relaxed"
               >
                 We have sent a confirmation to{" "}
-                <span className="font-semibold text-blue-600">
+                <span className="font-semibold text-cyan-400">
                   {formData.customer_email}
                 </span>
                 . Please check your inbox and spam folder.
@@ -979,8 +979,8 @@ export default function BookingPage() {
                   asChild
                   variant="ghost"
                   className="h-11 w-full sm:w-auto rounded-lg
-               text-gray-600 hover:text-gray-900
-               hover:bg-gray-100 transition-all duration-300"
+               text-gray-400 hover:text-white
+               hover:bg-white/10 transition-all duration-300"
                 >
                   <Link href="/my-bookings">View My Bookings →</Link>
                 </Button>
@@ -991,7 +991,7 @@ export default function BookingPage() {
       )}
 
       {/* Hero Section */}
-    <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+    <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 bg-[#030712] border-b border-white/5 text-white overflow-hidden">
   {/* Background Layers */}
   <div className="absolute inset-0 z-0">
     <div className="absolute inset-0 bg-black/30" />
@@ -1006,7 +1006,7 @@ export default function BookingPage() {
       className="max-w-4xl mx-auto text-center"
     >
       {/* Badge */}
-      <span className="inline-flex items-center justify-center px-4 py-2 mb-6 text-xs sm:text-sm font-semibold text-blue-100 bg-blue-500/30 rounded-full backdrop-blur-sm">
+      <span className="inline-flex items-center justify-center px-4 py-2 mb-6 text-xs sm:text-sm font-semibold text-blue-100 bg-white/5 rounded-full backdrop-blur-sm">
         Our Journey Since 2008
       </span>
 
@@ -1073,25 +1073,25 @@ export default function BookingPage() {
       {/* Booking Form Section */}
       <section
         id="booking-form"
-        className="py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden"
+        className="py-8 sm:py-12 md:py-16 lg:py-20 bg-[#030712] relative overflow-hidden"
       >
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl -mr-48 -mt-48"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl -ml-48 -mb-48"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
-            className="max-w-6xl mx-auto bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/50 hover:shadow-3xl transition-all duration-500"
+            className="max-w-6xl mx-auto bg-white/5 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/10 hover:shadow-3xl transition-all duration-500"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             {/* Modern decorative header with gradient */}
-            <div className="relative h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 animate-pulse"></div>
+            <div className="relative h-1 bg-gradient-to-r from-cyan-500 to-blue-600">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 animate-pulse"></div>
             </div>
 
             <div className="p-4 sm:p-6 md:p-8 lg:p-10">
@@ -1104,10 +1104,10 @@ export default function BookingPage() {
                 <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-4 shadow-lg">
                   <Calendar className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
                   Book Your Service
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-medium">
+                <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto font-medium">
                   {activeStep === 1
                     ? "Choose from our premium car care services and get your vehicle sparkling clean"
                     : "Complete your booking details to secure your appointment"}
@@ -1123,9 +1123,9 @@ export default function BookingPage() {
               >
                 <div className="flex items-center justify-between relative">
                   {/* Progress line */}
-                  <div className="absolute top-6 left-0 right-0 h-1 bg-gray-200 rounded-full -z-10">
+                  <div className="absolute top-6 left-0 right-0 h-1 bg-white/5 rounded-full -z-10">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full shadow-lg"
+                      className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full shadow-lg"
                       initial={{ width: activeStep === 1 ? "0%" : "100%" }}
                       animate={{ width: activeStep === 1 ? "0%" : "100%" }}
                       transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -1151,8 +1151,8 @@ export default function BookingPage() {
                       <motion.div
                         className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-bold text-base sm:text-lg transition-all duration-300 shadow-lg ${
                           activeStep >= step
-                            ? "bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white shadow-blue-500/50 transform scale-110 ring-4 ring-blue-500/20"
-                            : "bg-white text-gray-400 border-2 border-gray-200"
+                            ? "bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-blue-500/50 transform scale-110 ring-4 ring-blue-500/20"
+                            : "bg-white/5 text-gray-400 border-2 border-white/10"
                         }`}
                         whileHover={activeStep >= step ? { scale: 1.15, rotate: 5 } : { scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -1172,8 +1172,8 @@ export default function BookingPage() {
                       <span
                         className={`text-xs sm:text-sm font-semibold mt-3 text-center px-2 py-1 rounded-lg transition-all ${
                           activeStep >= step
-                            ? "text-gray-900 bg-blue-50"
-                            : "text-gray-500"
+                            ? "text-white bg-white/5"
+                            : "text-gray-400"
                         }`}
                       >
                         {label}
@@ -1206,7 +1206,7 @@ export default function BookingPage() {
                       <div className="relative">
                         {/* Scrollable container for mobile */}
                         <div className="overflow-x-auto scrollbar-hide -mx-2 px-2 pb-2 sm:pb-0 sm:mx-0 sm:px-0">
-                          <TabsList className="inline-flex w-full sm:w-auto min-w-full sm:min-w-0 sm:justify-center gap-2 sm:gap-3 p-1.5 sm:p-2 bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 rounded-2xl border border-gray-200/50 shadow-inner">
+                          <TabsList className="inline-flex w-full sm:w-auto min-w-full sm:min-w-0 sm:justify-center gap-2 sm:gap-3 p-1.5 sm:p-2 bg-white/5 rounded-2xl border border-white/10 shadow-inner">
                             {SERVICE_CATEGORIES.map((category, index) => (
                               <motion.div
                                 key={category.id}
@@ -1218,8 +1218,8 @@ export default function BookingPage() {
                                   value={category.id}
                                   className={`px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-300 flex-shrink-0 ${
                                     activeCategory === category.id
-                                      ? "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/30"
-                                      : "text-gray-600 hover:bg-white hover:text-gray-900 hover:shadow-md bg-white/50"
+                                      ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-white shadow-lg shadow-blue-500/30"
+                                      : "text-gray-400 hover:bg-white/5 hover:text-white hover:shadow-md bg-white/5"
                                   }`}
                                 >
                                   <motion.span
@@ -1232,7 +1232,7 @@ export default function BookingPage() {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                        className="w-1.5 h-1.5 bg-white rounded-full"
+                                        className="w-1.5 h-1.5 bg-white/5 rounded-full"
                                       />
                                     )}
                                   </motion.span>
@@ -1256,14 +1256,14 @@ export default function BookingPage() {
                       [...Array(6)].map((_, i) => (
                         <div
                           key={i}
-                          className="bg-gray-50 rounded-2xl p-6 animate-pulse h-64 border border-gray-100"
+                          className="bg-[#030712] rounded-2xl p-6 animate-pulse h-64 border border-white/10"
                         >
-                          <div className="h-5 bg-gray-200 rounded-full w-3/4 mb-4"></div>
-                          <div className="h-3 bg-gray-200 rounded-full w-1/4 mb-6"></div>
+                          <div className="h-5 bg-white/5 rounded-full w-3/4 mb-4"></div>
+                          <div className="h-3 bg-white/5 rounded-full w-1/4 mb-6"></div>
                           <div className="space-y-2">
-                            <div className="h-3 bg-gray-200 rounded-full"></div>
-                            <div className="h-3 bg-gray-200 rounded-full w-5/6"></div>
-                            <div className="h-3 bg-gray-200 rounded-full w-4/6"></div>
+                            <div className="h-3 bg-white/5 rounded-full"></div>
+                            <div className="h-3 bg-white/5 rounded-full w-5/6"></div>
+                            <div className="h-3 bg-white/5 rounded-full w-4/6"></div>
                           </div>
                         </div>
                       ))
@@ -1286,14 +1286,14 @@ export default function BookingPage() {
                               "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
                           }}
                           whileTap={{ scale: 0.97 }}
-                          className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 cursor-pointer overflow-hidden border-2 border-gray-100 hover:border-blue-300 transition-all duration-300 h-full flex flex-col shadow-md hover:shadow-xl"
+                          className="group relative bg-white/5 rounded-2xl sm:rounded-3xl p-5 sm:p-6 cursor-pointer overflow-hidden border-2 border-white/10 hover:border-white/20 transition-all duration-300 h-full flex flex-col shadow-md hover:shadow-xl"
                         >
                           {/* Gradient overlay on hover */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                           {/* Animated gradient blob */}
                           <motion.div
-                            className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl group-hover:from-blue-500/30 group-hover:to-purple-500/30 transition-all duration-700"
+                            className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl group-hover:bg-white/100/30 0/30 transition-all duration-700"
                             animate={{
                               scale: [1, 1.3, 1],
                               rotate: [0, 15, 0],
@@ -1306,12 +1306,12 @@ export default function BookingPage() {
                           />
 
                           {/* Top accent bar */}
-                          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                           <div className="relative z-10 flex-1 flex flex-col">
                             {/* Service header with price */}
                             <div className="flex items-start justify-between mb-4 gap-3">
-                              <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors flex-1">
+                              <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-400 transition-colors flex-1">
                                 {service.name}
                               </h4>
                               <motion.span
@@ -1320,24 +1320,24 @@ export default function BookingPage() {
                                   rotate: [0, -5, 5, 0],
                                   transition: { duration: 0.5 },
                                 }}
-                                className="px-3 sm:px-4 py-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg group-hover:shadow-xl whitespace-nowrap flex-shrink-0"
+                                className="px-3 sm:px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl text-sm font-bold shadow-lg group-hover:shadow-xl whitespace-nowrap flex-shrink-0"
                               >
                                 ₹{service.price ? service.price.toFixed(2) : "0.00"}
                               </motion.span>
                             </div>
 
                             {/* Service description */}
-                            <p className="text-gray-600 text-sm sm:text-base mb-5 line-clamp-3 flex-1 leading-relaxed">
+                            <p className="text-gray-400 text-sm sm:text-base mb-5 line-clamp-3 flex-1 leading-relaxed">
                               {service.description ||
                                 "Professional cleaning service for your vehicle"}
                             </p>
 
                             {/* Service footer */}
-                            <div className="mt-auto pt-4 border-t-2 border-gray-100 group-hover:border-blue-200 transition-colors">
+                            <div className="mt-auto pt-4 border-t-2 border-white/10 group-hover:border-white/10 transition-colors">
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-[#030712] rounded-lg group-hover:bg-white/5 transition-colors">
                                   <Clock className="w-4 h-4 text-blue-500" />
-                                  <span className="text-sm font-medium text-gray-700">{service.duration || 30} min</span>
+                                  <span className="text-sm font-medium text-gray-300">{service.duration || 30} min</span>
                                 </div>
                                 <motion.span
                                   className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md group-hover:shadow-lg group-hover:from-blue-600 group-hover:to-indigo-600 transition-all"
@@ -1379,17 +1379,17 @@ export default function BookingPage() {
                         <div className="flex justify-center mb-4">
                           <CarIcon className="w-14 h-14 text-gray-300" />
                         </div>
-                        <h4 className="text-lg font-medium text-gray-700 mb-2">
+                        <h4 className="text-lg font-medium text-gray-300 mb-2">
                           No services found
                         </h4>
-                        <p className="text-gray-500 max-w-md mx-auto">
+                        <p className="text-gray-400 max-w-md mx-auto">
                           We could not find any services matching your
                           selection. Try choosing a different category or check
                           back later.
                         </p>
                         <Button
                           variant="outline"
-                          className="mt-4 border-gray-300"
+                          className="mt-4 border-white/20"
                           onClick={() => setActiveCategory("all")}
                         >
                           Show All Services
@@ -1413,7 +1413,7 @@ export default function BookingPage() {
                   <div className="max-w-5xl mx-auto">
                     {/* Modern Gradient Header */}
                     <motion.div
-                      className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 p-6 sm:p-8 md:p-10 lg:p-12 text-white"
+                      className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-cyan-400 to-blue-500 p-6 sm:p-8 md:p-10 lg:p-12 text-white"
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
@@ -1426,7 +1426,7 @@ export default function BookingPage() {
                       <div className="relative z-10">
                         <div className="flex items-center justify-center mb-5">
                           <motion.div 
-                            className="p-4 bg-white/20 rounded-2xl backdrop-blur-md shadow-xl border border-white/30"
+                            className="p-4 bg-white/5 rounded-2xl backdrop-blur-md shadow-xl border border-white/30"
                             whileHover={{ scale: 1.1, rotate: 5 }}
                             transition={{ type: "spring", stiffness: 300 }}
                           >
@@ -1443,7 +1443,7 @@ export default function BookingPage() {
                     </motion.div>
 
                     {/* Form Card */}
-                    <div className="bg-white rounded-b-3xl shadow-2xl border-t-0 p-4 sm:p-6 md:p-8 lg:p-10">
+                    <div className="bg-white/5 rounded-b-3xl shadow-2xl border-t-0 p-4 sm:p-6 md:p-8 lg:p-10">
 
                     <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
                       {/* Personal Information Section */}
@@ -1453,11 +1453,11 @@ export default function BookingPage() {
                         transition={{ delay: 0.2 }}
                         className="mb-6 sm:mb-8"
                       >
-                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-blue-200 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
+                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-white/10 bg-white/5 border border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
                           <div className="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
                             <User className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                           </div>
-                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Personal Information</h4>
+                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Personal Information</h4>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Reusable input wrapper style */}
@@ -1473,12 +1473,12 @@ export default function BookingPage() {
 
                           {/* Full Name */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <User className="h-4 w-4 text-blue-600" />
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <User className="h-4 w-4 text-cyan-400" />
                               Full Name <span className="text-red-500">*</span>
                             </Label>
                             <div className="relative group">
-                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-blue-600 transition">
+                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition">
                                 <User className="h-5 w-5" />
                               </span>
                               <Input
@@ -1487,23 +1487,23 @@ export default function BookingPage() {
                                 onChange={handleInputChange}
                                 placeholder="John Doe"
                                 required
-                                className="pl-12 h-12 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-800 placeholder-gray-400 text-base
-                             focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-blue-300 hover:shadow-md"
+                                className="pl-12 h-12 rounded-xl bg-white/5 border-2 border-white/10 text-white placeholder-gray-400 text-base
+                             focus:bg-white/5 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-white/20 hover:shadow-md"
                               />
                             </div>
                           </div>
 
                           {/* Email */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <svg className="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <svg className="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                               </svg>
                               Email Address{" "}
                               <span className="text-red-500">*</span>
                             </Label>
                             <div className="relative group">
-                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-blue-600 transition">
+                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition">
                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
@@ -1516,22 +1516,22 @@ export default function BookingPage() {
                                 placeholder="your@email.com"
                                 disabled={!!session?.user?.email}
                                 required
-                                className="pl-12 h-12 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-800 placeholder-gray-400 text-base
-                             focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-blue-300 hover:shadow-md disabled:opacity-60"
+                                className="pl-12 h-12 rounded-xl bg-white/5 border-2 border-white/10 text-white placeholder-gray-400 text-base
+                             focus:bg-white/5 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-white/20 hover:shadow-md disabled:opacity-60"
                               />
                             </div>
                           </div>
 
                           {/* Phone */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <svg className="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <svg className="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                               </svg>
                               Phone Number <span className="text-red-500">*</span>
                             </Label>
                             <div className="relative group">
-                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-blue-600 transition">
+                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition">
                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
@@ -1543,8 +1543,8 @@ export default function BookingPage() {
                                 onChange={handleInputChange}
                                 placeholder="+91 98765 43210"
                                 required
-                                className="pl-12 h-12 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-800 placeholder-gray-400 text-base
-                             focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-blue-300 hover:shadow-md"
+                                className="pl-12 h-12 rounded-xl bg-white/5 border-2 border-white/10 text-white placeholder-gray-400 text-base
+                             focus:bg-white/5 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 hover:border-white/20 hover:shadow-md"
                               />
                             </div>
                           </div>
@@ -1558,20 +1558,20 @@ export default function BookingPage() {
                         transition={{ delay: 0.3 }}
                         className="mb-6 sm:mb-8"
                       >
-                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-indigo-200 bg-gradient-to-r from-indigo-50/50 to-purple-50/50 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
+                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-white/10 bg-white/5 border border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
                           <div className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg">
                             <CarIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                           </div>
-                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Vehicle Information</h4>
+                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Vehicle Information</h4>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
                           {/* Vehicle Type - Custom Dropdown */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <CarIcon className="h-4 w-4 text-indigo-600" />
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <CarIcon className="h-4 w-4 text-cyan-400" />
                               Vehicle Type <span className="text-red-500">*</span>
                               {formData.vehicle_type && (
-                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
                                   <CheckCircle className="h-3 w-3" />
                                   Selected
                                 </span>
@@ -1581,20 +1581,20 @@ export default function BookingPage() {
                               <button
                                 type="button"
                                 onClick={() => setIsVehicleTypeOpen(!isVehicleTypeOpen)}
-                                className={`w-full h-12 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 ${
-                                  formData.vehicle_type ? 'text-gray-800 border-indigo-300 bg-gradient-to-r from-indigo-50 to-purple-50 shadow-md' : 'text-gray-400 border-gray-200'
+                                className={`w-full h-12 rounded-xl bg-white/5 border-2 ${
+                                  formData.vehicle_type ? 'text-white border-white/20 bg-white/5 border border-white/10 shadow-md' : 'text-gray-400 border-white/10'
                                 } pl-12 pr-12 text-left flex items-center justify-between ${
                                   isVehicleTypeOpen 
-                                    ? 'border-indigo-500 ring-4 ring-indigo-500/20 bg-white shadow-lg' 
-                                    : 'hover:border-indigo-300 hover:shadow-md'
+                                    ? 'border-indigo-500 ring-4 ring-indigo-500/20 bg-white/5 shadow-lg' 
+                                    : 'hover:border-white/20 hover:shadow-md'
                                 } transition-all duration-200 group`}
                               >
-                                <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-hover:text-indigo-600 transition">
+                                <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-hover:text-cyan-400 transition">
                                   <CarIcon className="h-5 w-5" />
                                 </span>
                                 <span className="font-medium">{formData.vehicle_type || 'Select vehicle type'}</span>
                                 <svg 
-                                  className={`fill-current h-5 w-5 text-gray-500 transition-transform duration-200 ${
+                                  className={`fill-current h-5 w-5 text-gray-400 transition-transform duration-200 ${
                                     isVehicleTypeOpen ? 'transform rotate-180' : ''
                                   }`} 
                                   xmlns="http://www.w3.org/2000/svg" 
@@ -1612,7 +1612,7 @@ export default function BookingPage() {
                                   animate={{ opacity: 1, y: 0 }}
                                   exit={{ opacity: 0, y: -10 }}
                                   transition={{ duration: 0.2 }}
-                                  className="absolute z-10 mt-1 w-full rounded-xl bg-white shadow-xl border border-gray-200 max-h-60 overflow-auto"
+                                  className="absolute z-50 mt-1 w-full rounded-xl bg-[#030712] shadow-xl shadow-black/50 border border-white/10 max-h-60 overflow-auto"
                                 >
                                   {VEHICLE_TYPES.map((type) => (
                                     <div
@@ -1623,12 +1623,12 @@ export default function BookingPage() {
                                       }}
                                       className={`px-4 py-3 text-sm cursor-pointer transition-colors flex items-center gap-2 ${
                                         formData.vehicle_type === type 
-                                          ? 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-semibold border-l-4 border-blue-500' 
-                                          : 'text-gray-700 hover:bg-gray-50'
+                                          ? 'bg-white/5 text-cyan-400 font-semibold border-l-4 border-cyan-500' 
+                                          : 'text-gray-300 hover:bg-white/5'
                                       }`}
                                     >
                                       {formData.vehicle_type === type && (
-                                        <CheckCircle className="w-4 h-4 text-blue-600" />
+                                        <CheckCircle className="w-4 h-4 text-cyan-400" />
                                       )}
                                       <span>{type}</span>
                                     </div>
@@ -1641,21 +1641,21 @@ export default function BookingPage() {
 
                           {/* Vehicle Number */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <svg className="h-4 w-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <svg className="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                               </svg>
                               Vehicle Number{" "}
                               <span className="text-red-500">*</span>
                               {formData.vehicle_number && validateVehicleNumber(formData.vehicle_number) && (
-                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
                                   <CheckCircle className="h-3 w-3" />
                                   Valid
                                 </span>
                               )}
                             </Label>
                             <div className="relative group">
-                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-indigo-600 transition">
+                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition">
                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                                 </svg>
@@ -1667,17 +1667,17 @@ export default function BookingPage() {
                                 placeholder="UP 65 AB 5678"
                                 maxLength={13}
                                 required
-                                className={`pl-12 h-12 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 font-mono uppercase text-base
-                             focus:bg-white focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 hover:shadow-md
+                                className={`pl-12 h-12 rounded-xl bg-white/5 border-2 font-mono uppercase text-base
+                             focus:bg-white/5 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-200 hover:shadow-md
                              ${formData.vehicle_number && validateVehicleNumber(formData.vehicle_number) 
                                ? 'border-green-400 focus:border-green-500' 
                                : formData.vehicle_number && formData.vehicle_number.length > 0
                                ? 'border-yellow-400 focus:border-yellow-500'
-                               : 'border-gray-200 focus:border-indigo-500 hover:border-indigo-300'
+                               : 'border-white/10 focus:border-indigo-500 hover:border-white/20'
                              }`}
                               />
                             </div>
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-gray-400 mt-1">
                               Format: <span className="font-mono font-semibold">UP 65 AB 5678</span>
                             </p>
                             {formData.vehicle_number && !validateVehicleNumber(formData.vehicle_number) && formData.vehicle_number.length > 0 && (
@@ -1697,28 +1697,28 @@ export default function BookingPage() {
                         transition={{ delay: 0.4 }}
                         className="mb-6 sm:mb-8"
                       >
-                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-purple-200 bg-gradient-to-r from-purple-50/50 to-pink-50/50 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
+                        <div className="flex items-center gap-3 mb-5 sm:mb-6 pb-3 border-b-2 border-white/10 bg-white/5 border border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
                           <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg">
                             <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                           </div>
-                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Booking Schedule</h4>
+                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Booking Schedule</h4>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
 
                           {/* Date */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <Calendar className="h-4 w-4 text-purple-600" />
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <Calendar className="h-4 w-4 text-cyan-400" />
                               Booking Date <span className="text-red-500">*</span>
                               {formData.booking_date && (
-                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
                                   <CheckCircle className="h-3 w-3" />
                                   Selected
                                 </span>
                               )}
                             </Label>
                             <div className="relative group">
-                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-purple-600 transition pointer-events-none">
+                              <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition pointer-events-none">
                                 <Calendar className="h-5 w-5" />
                               </span>
                               <Input
@@ -1728,26 +1728,26 @@ export default function BookingPage() {
                                 onChange={handleInputChange}
                                 min={getMinBookingDate()}
                                 required
-                                className={`pl-12 h-12 rounded-xl border-2 text-gray-800 placeholder-gray-400 text-base
-                             focus:bg-white focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-200
-                             ${formData.booking_date ? 'bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-300 shadow-md' : 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-purple-300 hover:shadow-md'}`}
+                                className={`pl-12 h-12 rounded-xl border-2 text-white placeholder-gray-400 text-base
+                             focus:bg-white/5 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-200
+                             ${formData.booking_date ? 'bg-white/5 border border-white/10 border-white/20 shadow-md' : 'bg-white/5 border-white/10 hover:border-white/20 hover:shadow-md'}`}
                               />
                             </div>
                           </div>
 
                           {/* Preferred Time - Custom Dropdown */}
                           <div className="space-y-2">
-                            <Label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                              <Clock className="h-4 w-4 text-purple-600" />
+                            <Label className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                              <Clock className="h-4 w-4 text-cyan-400" />
                               Preferred Time <span className="text-red-500">*</span>
                               {loadingAvailability && (
-                                <span className="ml-auto text-xs text-gray-500 flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+                                <span className="ml-auto text-xs text-gray-400 flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full">
                                   <Loader2 className="h-3 w-3 animate-spin" />
                                   Checking...
                                 </span>
                               )}
                               {formData.booking_time && !loadingAvailability && (
-                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-green-50 px-2 py-1 rounded-full">
+                                <span className="ml-auto text-xs text-green-600 font-semibold flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
                                   <CheckCircle className="h-3 w-3" />
                                   Selected
                                 </span>
@@ -1759,19 +1759,19 @@ export default function BookingPage() {
                                 onClick={() => setIsTimeSlotOpen(!isTimeSlotOpen)}
                                 disabled={loadingAvailability}
                                 className={`w-full h-12 rounded-xl border-2 ${
-                                  formData.booking_time ? 'text-gray-800 bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-300 shadow-md' : 'text-gray-400 bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200'
+                                  formData.booking_time ? 'text-white bg-white/5 border border-white/10 border-white/20 shadow-md' : 'text-gray-400 bg-white/5 border-white/10'
                                 } pl-12 pr-12 text-left flex items-center justify-between ${
                                   isTimeSlotOpen 
-                                    ? 'border-purple-500 ring-4 ring-purple-500/20 bg-white shadow-lg' 
-                                    : 'hover:border-purple-300 hover:shadow-md'
+                                    ? 'border-purple-500 ring-4 ring-purple-500/20 bg-white/5 shadow-lg' 
+                                    : 'hover:border-white/20 hover:shadow-md'
                                 } transition-all duration-200 ${loadingAvailability ? 'opacity-50 cursor-not-allowed' : ''} group`}
                               >
-                                <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-hover:text-purple-600 transition">
+                                <span className="absolute inset-y-0 left-4 flex items-center text-gray-400 group-hover:text-cyan-400 transition">
                                   <Clock className="h-5 w-5" />
                                 </span>
                                 <span className="font-medium">{formData.booking_time || 'Select time slot'}</span>
                                 <svg 
-                                  className={`fill-current h-5 w-5 text-gray-500 transition-transform duration-200 ${
+                                  className={`fill-current h-5 w-5 text-gray-400 transition-transform duration-200 ${
                                     isTimeSlotOpen ? 'transform rotate-180' : ''
                                   }`} 
                                   xmlns="http://www.w3.org/2000/svg" 
@@ -1789,7 +1789,7 @@ export default function BookingPage() {
                                   animate={{ opacity: 1, y: 0 }}
                                   exit={{ opacity: 0, y: -10 }}
                                   transition={{ duration: 0.2 }}
-                                  className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto"
+                                  className="absolute z-50 mt-1 w-full rounded-xl bg-[#030712] shadow-xl shadow-black/50 border border-white/10 max-h-60 overflow-auto"
                                 >
                                   {availability.length > 0 ? (
                                     availability.map((slot) => {
@@ -1807,10 +1807,10 @@ export default function BookingPage() {
                                           }}
                                           className={`px-4 py-2 text-sm flex items-center justify-between ${
                                             isSelected 
-                                              ? 'bg-blue-50 text-blue-700' 
+                                              ? 'bg-white/5 text-blue-400' 
                                               : isAvailable
-                                              ? 'text-gray-700 hover:bg-gray-100 cursor-pointer'
-                                              : 'text-gray-400 bg-gray-50 cursor-not-allowed opacity-60'
+                                              ? 'text-gray-300 hover:bg-white/10 cursor-pointer'
+                                              : 'text-gray-400 bg-[#030712] cursor-not-allowed opacity-60'
                                           }`}
                                         >
                                           <span className="flex items-center gap-2">
@@ -1826,7 +1826,7 @@ export default function BookingPage() {
                                       );
                                     })
                                   ) : (
-                                    <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                                    <div className="px-4 py-3 text-sm text-gray-400 text-center">
                                       No time slots available. Please select a different date.
                                     </div>
                                   )}
@@ -1835,8 +1835,8 @@ export default function BookingPage() {
                             </AnimatePresence>
                           </div>
                           {availability.length > 0 && (
-                            <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                              <span className="font-semibold text-purple-600">{availability.filter(s => s.available).length}</span>
+                            <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
+                              <span className="font-semibold text-cyan-400">{availability.filter(s => s.available).length}</span>
                               <span>of</span>
                               <span className="font-semibold">{availability.filter(s => !s.past).length}</span>
                               <span>slots available</span>
@@ -1853,16 +1853,16 @@ export default function BookingPage() {
                         transition={{ delay: 0.5 }}
                         className="mb-6 sm:mb-8"
                       >
-                        <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-amber-200 bg-gradient-to-r from-amber-50/50 to-orange-50/50 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
+                        <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-white/10 bg-white/5 border border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 rounded-t-xl">
                           <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl shadow-lg">
                             <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                           </div>
-                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Additional Notes</h4>
+                          <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Additional Notes</h4>
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-sm font-semibold text-gray-700">
+                          <Label className="text-sm font-semibold text-gray-300">
                             Special Instructions <span className="text-gray-400 font-normal">(Optional)</span>
                           </Label>
                           <Textarea
@@ -1871,8 +1871,8 @@ export default function BookingPage() {
                             onChange={handleInputChange}
                             rows={4}
                             placeholder="Any special requests, notes, or instructions for our team..."
-                            className="w-full rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-200 text-gray-800 placeholder-gray-400 text-base
-                         focus:bg-white focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 transition-all duration-200 hover:border-amber-300 hover:shadow-md resize-none"
+                            className="w-full rounded-xl bg-white/5 border-2 border-white/10 text-white placeholder-gray-400 text-base
+                         focus:bg-white/5 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 transition-all duration-200 hover:border-white/20 hover:shadow-md resize-none"
                           />
                         </div>
                       </motion.div>
@@ -1882,14 +1882,14 @@ export default function BookingPage() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
-                        className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-6 sm:pt-8 mt-6 sm:mt-8 border-t-2 border-gray-200 bg-gradient-to-r from-gray-50/50 to-blue-50/50 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 py-4 sm:py-6 rounded-b-xl"
+                        className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-6 sm:pt-8 mt-6 sm:mt-8 border-t-2 border-white/10 bg-white/5 border border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10 py-4 sm:py-6 rounded-b-xl"
                       >
                         {/* Back Button */}
                         <Button
                           type="button"
                           variant="ghost"
                           onClick={() => setActiveStep(1)}
-                          className="h-12 sm:h-14 px-6 sm:px-8 rounded-xl text-gray-700 hover:text-gray-900 hover:bg-white hover:shadow-md transition-all duration-200 font-semibold border-2 border-gray-200 hover:border-gray-300"
+                          className="h-12 sm:h-14 px-6 sm:px-8 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 hover:shadow-md transition-all duration-200 font-semibold border-2 border-white/10 hover:border-white/20"
                         >
                           <span className="mr-2 text-xl">←</span>
                           <span className="text-sm sm:text-base">Back to Services</span>
@@ -1900,8 +1900,8 @@ export default function BookingPage() {
                           type="submit"
                           disabled={submitting}
                           className="relative h-12 sm:h-14 px-8 sm:px-12 rounded-xl font-bold text-white text-base sm:text-lg
-               bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
-               hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700
+               bg-gradient-to-r from-cyan-400 to-blue-500
+               hover:from-cyan-400 hover:to-blue-500
                shadow-xl hover:shadow-2xl
                transition-all duration-300 transform hover:-translate-y-1 hover:scale-105
                disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none
@@ -1926,7 +1926,7 @@ export default function BookingPage() {
       </section>
 
       {/* Modern Info Section with Enhanced UI */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#030712] relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
@@ -1946,12 +1946,12 @@ export default function BookingPage() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 rounded-full mb-4 sm:mb-6 shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-400 rounded-full mb-4 sm:mb-6 shadow-sm"
               >
                 <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                 What to Expect
               </motion.span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
                 Your Car Deserves the Best Care
               </h2>
               <motion.div
@@ -1959,7 +1959,7 @@ export default function BookingPage() {
                 whileInView={{ width: "80px" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 mx-auto rounded-full"
+                className="h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto rounded-full"
               />
             </motion.div>
 
@@ -1983,13 +1983,13 @@ export default function BookingPage() {
                     boxShadow:
                       "0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 10px 20px -5px rgba(0, 0, 0, 0.05)",
                   }}
-                  className="group relative bg-white/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-200 overflow-hidden"
+                  className="group relative bg-white/5 backdrop-blur-sm p-5 sm:p-6 rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-white/10 hover:border-white/10 overflow-hidden"
                 >
                   {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 via-indigo-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:via-indigo-50/50 group-hover:to-purple-50/50 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-white/5 border border-white/10 group-hover:bg-white/10   transition-all duration-500"></div>
                   
                   {/* Top accent bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                   <div className="relative z-10 flex items-start gap-4 sm:gap-5">
                     <motion.div
@@ -2062,10 +2062,10 @@ export default function BookingPage() {
                       )}
                     </motion.div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-base sm:text-lg md:text-xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                      <h3 className="font-bold text-base sm:text-lg md:text-xl text-white mb-2 group-hover:text-cyan-400 transition-colors">
                         {info.title}
                       </h3>
-                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
                         {info.description}
                       </p>
                     </div>
@@ -2083,20 +2083,20 @@ export default function BookingPage() {
               transition={{ delay: 0.3, duration: 0.6 }}
             >
               <motion.div
-                className="inline-block p-6 sm:p-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl border-2 border-blue-100 shadow-xl"
+                className="inline-block p-6 sm:p-8 bg-white/5 border border-white/10 rounded-3xl border-2 border-blue-100 shadow-xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">
                   Ready to Get Started?
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto">
                   Book your car wash service today and experience the difference
                   of professional car care.
                 </p>
                 <Button
                   asChild
-                  className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-bold rounded-xl"
+                  className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-400 hover:to-blue-500 text-white shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-bold rounded-xl"
                 >
                   <Link href="#booking-form" className="flex items-center justify-center gap-2 sm:gap-3">
                     <span>Book Your Wash Now</span>
